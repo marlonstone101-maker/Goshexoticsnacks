@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gosh Exotic Snacks | Kingston, Jamaica 🇯🇲</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts: Outfit & Space Grotesk -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
+    <!-- Firebase SDKs (Compat) -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-storage-compat.js"></script>
+
+    <!-- Stripe Checkout SDK -->
+    <script src="https://js.stripe.com/v3/"></script>
+    
+    <!-- Tailwind Custom Theme Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        neonPurple: '#8b5cf6',
+                        neonMagenta: '#d946ef',
+                        neonCyan: '#06b6d4',
+                        neonGold: '#facc15',
+                        darkBg: '#0d0714',
+                        darkCard: '#160b24',
+                        darkAccent: '#22113b'
+                    },
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #0d0714;
+            color: #ffffff;
+            font-family: 'Outfit', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .glass-card {
+            background: rgba(22, 11, 36, 0.75);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(217, 70, 239, 0.25);
+            box-shadow: 0 8px 32px 0 rgba(139, 92, 246, 0.2);
+        }
+
+        .glass-card:hover {
+            border-color: rgba(6, 182, 212, 0.6);
+            box-shadow: 0 0 25px rgba(6, 182, 212, 0.35);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
+        }
+
+        .animate-float {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0d0714;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d946ef;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="relative min-h-screen">
+
+    <!-- Top Announcement Bar (Double-click the flag 🇯🇲 to open admin passcode prompt) -->
+    <div class="bg-gradient-to-r from-neonMagenta via-neonPurple to-neonCyan text-black font-extrabold text-xs sm:text-sm py-2 px-4 text-center tracking-wide flex justify-between items-center z-50 relative shadow-md">
+        <div class="flex items-center gap-2 mx-auto">
+            <span>BARGAIN MALL SHOP #1, CLOCK TOWER PLAZA, JAMAICA <span ondblclick="triggerHiddenAdmin()" class="cursor-pointer select-none" title="Hidden Admin Passcode">🇯🇲</span></span>
+            <span class="hidden md:inline font-black ml-2">1(876) 425-4849</span>
+        </div>
+    </div>
+
+    <!-- Sticky Header -->
+    <header class="sticky top-0 z-40 bg-darkBg/90 backdrop-blur-md border-b border-neonMagenta/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="relative group cursor-pointer" onclick="document.getElementById('logoFileInput').click()" title="Click to upload your custom logo image">
+                    <img id="storeLogoImg" src="logo.png" alt="Gosh Exotic Snacks Logo" class="w-12 h-12 rounded-full border-2 border-neonMagenta object-cover shadow-lg group-hover:scale-105 transition-transform">
+                    <div class="absolute inset-0 bg-black/60 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity text-[10px] text-white font-bold">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                </div>
+                <input type="file" id="logoFileInput" accept="image/*" class="hidden" onchange="handleLogoUpload(event)">
+                
+                <div>
+                    <h1 class="font-display text-lg sm:text-2xl font-extrabold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-neonMagenta via-neonCyan to-neonGold leading-none">
+                        GOSH EXOTIC
+                    </h1>
+                    <span class="text-[10px] sm:text-xs font-bold text-neonCyan tracking-widest block mt-0.5">SNACKS, CLOTHING & COSMETICS</span>
+                </div>
+            </div>
+
+            <nav class="hidden md:flex items-center gap-8 font-semibold text-sm">
+                <a href="#hero" class="hover:text-neonMagenta transition-colors">Home</a>
+                <a href="#menu" class="hover:text-neonMagenta transition-colors">Shop & Menu</a>
+                <a href="#builder" class="text-neonGold hover:text-white transition-colors flex items-center gap-1.5 font-bold">
+                    <i class="fas fa-bowl-food animate-pulse"></i> Spicy Bowl Builder
+                </a>
+                <a href="#location" class="hover:text-neonMagenta transition-colors">Visit Us 📍</a>
+            </nav>
+
+            <div class="flex items-center gap-3">
+                <a href="https://wa.me/18764254849" target="_blank" class="hidden sm:flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-black font-extrabold px-3.5 py-2 rounded-full text-xs transition-all shadow-md">
+                    <i class="fab fa-whatsapp text-base"></i>
+                    <span>Direct Chat</span>
+                </a>
+
+                <button onclick="toggleCartDrawer()" class="relative bg-gradient-to-r from-neonMagenta to-neonPurple p-3 rounded-2xl font-bold flex items-center gap-2 hover:opacity-90 transition-all shadow-lg text-white">
+                    <i class="fas fa-shopping-bag text-lg"></i>
+                    <span class="hidden sm:inline text-sm font-extrabold">Cart</span>
+                    <span id="cartItemCount" class="bg-neonCyan text-black font-extrabold text-xs px-2 py-0.5 rounded-full">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="relative py-12 lg:py-24 overflow-hidden">
+        <div class="absolute top-1/4 left-1/4 w-80 h-80 bg-neonMagenta/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-10 right-10 w-96 h-96 bg-neonCyan/20 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <div class="lg:col-span-7 text-center lg:text-left">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-neonPurple/30 border border-neonMagenta/40 text-neonCyan text-xs sm:text-sm font-bold mb-6 animate-pulse">
+                    <i class="fas fa-map-pin text-neonGold"></i>
+                    <span>BARGAIN MALL SHOP #1, CLOCK TOWER PLAZA</span>
+                </div>
+
+                <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black font-display tracking-tight leading-none mb-6">
+                    SHOP EXOTIC SNACKS, <span class="text-transparent bg-clip-text bg-gradient-to-r from-neonMagenta via-neonCyan to-neonGold">CLOTHING & COSMETICS!</span>
+                </h1>
+
+                <p id="heroDescriptionText" class="text-gray-300 text-base sm:text-lg mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                    Satisfy your wild cravings with Kingston’s viral loaded slushies, spicy instant ramen bowls, trendy clothing, cosmetics, and exclusive imported goodies.
+                </p>
+
+                <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+                    <a href="#builder" class="w-full sm:w-auto bg-gradient-to-r from-neonMagenta via-purple-600 to-neonCyan text-white font-extrabold text-base px-8 py-4 rounded-2xl shadow-xl hover:scale-105 transition-transform flex items-center justify-center gap-3 border border-white/20">
+                        <i class="fas fa-pepper-hot text-neonGold text-xl"></i>
+                        <span>Build Spicy Bowl</span>
+                    </a>
+                    <a href="#menu" class="w-full sm:w-auto glass-card hover:bg-darkCard text-white font-bold text-base px-8 py-4 rounded-2xl border border-neonCyan/40 hover:border-neonCyan transition-all flex items-center justify-center gap-2">
+                        <i class="fas fa-store text-neonCyan"></i>
+                        <span>Shop All Categories</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Hero Featured Product Card (Dynamic) -->
+            <div class="lg:col-span-5 relative">
+                <div class="glass-card rounded-3xl p-6 relative z-10 border-2 border-neonMagenta/40 animate-float">
+                    <div class="absolute -top-4 -right-4 bg-neonMagenta text-black font-black px-4 py-1.5 rounded-full text-xs shadow-lg uppercase tracking-wider">
+                        TikTok Viral 🔥
+                    </div>
+                    
+                    <img id="heroFeaturedImage" src="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=800&q=80" alt="Spicy Bowl" class="w-full h-72 object-cover rounded-2xl mb-4 border border-neonPurple">
+                    
+                    <div class="flex justify-between items-start mb-2">
+                        <div>
+                            <h3 id="heroFeaturedTitle" class="text-xl font-extrabold text-white">Gosh Signature Spicy Bowl</h3>
+                            <p id="heroFeaturedDesc" class="text-xs text-neonCyan font-medium mt-1">Hot Noodles • Pickled Egg • Jalapeños • Sausage • Melted Cheese</p>
+                        </div>
+                        <span id="heroFeaturedPrice" class="text-xl font-black text-neonGold">$2,500 JMD</span>
+                    </div>
+
+                    <button onclick="quickAddHeroItem()" class="w-full mt-4 bg-gradient-to-r from-neonMagenta to-neonPurple hover:opacity-90 text-white font-extrabold py-3 rounded-xl transition-all flex items-center justify-center gap-2">
+                        <i class="fas fa-cart-plus"></i>
+                        <span>Order Spicy Bowl Now</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Spicy Bowl Builder Section -->
+    <section id="builder" class="py-16 bg-gradient-to-b from-darkBg via-darkCard to-darkBg relative border-y border-neonPurple/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <span class="bg-neonMagenta/20 text-neonMagenta text-xs font-black uppercase tracking-widest px-4 py-1.5 rounded-full border border-neonMagenta/30">
+                    Custom Creation Station
+                </span>
+                <h2 class="text-3xl sm:text-5xl font-black font-display text-white mt-3 mb-4">
+                    BUILD YOUR <span class="text-transparent bg-clip-text bg-gradient-to-r from-neonMagenta via-neonGold to-neonCyan">SPICY BOWL</span> 🍜
+                </h2>
+                <p class="text-gray-300 text-sm sm:text-base">
+                    Customize your viral noodle bowl step-by-step. Pick your noodle base, spice intensity, loaded toppings, and signature sauces!
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <div class="lg:col-span-7 space-y-8 glass-card p-6 sm:p-8 rounded-3xl border border-neonMagenta/30">
+                    <div>
+                        <h3 class="text-lg font-extrabold text-neonCyan mb-3 flex items-center gap-2">
+                            <span class="w-6 h-6 rounded-full bg-neonCyan text-black text-xs flex items-center justify-center font-black">1</span>
+                            Choose Your Noodle Base
+                        </h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3" id="builderNoodleOptions"></div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-extrabold text-neonMagenta mb-3 flex items-center gap-2">
+                            <span class="w-6 h-6 rounded-full bg-neonMagenta text-white text-xs flex items-center justify-center font-black">2</span>
+                            Select Spice Intensity
+                        </h3>
+                        <div class="grid grid-cols-3 gap-3" id="builderSpiceOptions"></div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-extrabold text-neonGold mb-3 flex items-center gap-2">
+                            <span class="w-6 h-6 rounded-full bg-neonGold text-black text-xs flex items-center justify-center font-black">3</span>
+                            Select Loaded Toppings (Multiple)
+                        </h3>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3" id="builderToppingOptions"></div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-extrabold text-neonPurple mb-3 flex items-center gap-2">
+                            <span class="w-6 h-6 rounded-full bg-neonPurple text-white text-xs flex items-center justify-center font-black">4</span>
+                            Extra Dripping Sauce
+                        </h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3" id="builderSauceOptions"></div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-5 sticky top-28">
+                    <div class="glass-card p-6 rounded-3xl border-2 border-neonGold/40 bg-darkCard/95 shadow-2xl">
+                        <div class="flex justify-between items-center pb-4 border-b border-gray-700">
+                            <h3 class="text-xl font-black text-white flex items-center gap-2">
+                                <i class="fas fa-fire text-neonMagenta"></i> Custom Bowl Summary
+                            </h3>
+                            <span class="text-xs bg-neonGold/20 text-neonGold font-bold px-2.5 py-1 rounded-md">Live Price</span>
+                        </div>
+
+                        <div class="py-4 space-y-3 text-sm">
+                            <div class="flex justify-between text-gray-300">
+                                <span>Noodle Base:</span>
+                                <span id="summaryNoodle" class="font-bold text-white">-</span>
+                            </div>
+                            <div class="flex justify-between text-gray-300">
+                                <span>Spice Level:</span>
+                                <span id="summarySpice" class="font-bold text-neonMagenta">-</span>
+                            </div>
+                            <div>
+                                <span class="text-gray-300">Toppings:</span>
+                                <div id="summaryToppings" class="font-semibold text-neonCyan mt-1 pl-2 text-xs flex flex-wrap gap-1">None</div>
+                            </div>
+                            <div class="flex justify-between text-gray-300 pt-2 border-t border-gray-800">
+                                <span>Extra Sauce:</span>
+                                <span id="summarySauce" class="font-bold text-white">None</span>
+                            </div>
+                        </div>
+
+                        <div class="pt-4 border-t border-gray-700 flex justify-between items-center mb-6">
+                            <span class="text-gray-400 font-bold">Total Price:</span>
+                            <span id="summaryTotalPrice" class="text-2xl font-black text-neonGold">$0 JMD</span>
+                        </div>
+
+                        <button onclick="addCustomBowlToCart()" class="w-full bg-gradient-to-r from-neonMagenta via-neonPurple to-neonCyan text-white font-black py-4 rounded-2xl shadow-xl hover:opacity-95 transition-all text-base flex items-center justify-center gap-2">
+                            <i class="fas fa-plus-circle text-lg"></i>
+                            <span>Add Custom Bowl To Cart</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu & Shop Section -->
+    <section id="menu" class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-10">
+            <h2 class="text-3xl sm:text-5xl font-black font-display text-white mb-4">
+                EXPLORE <span class="text-transparent bg-clip-text bg-gradient-to-r from-neonMagenta to-neonCyan">SHOP & MENU</span> 🛍️
+            </h2>
+            <p class="text-gray-400 text-sm sm:text-base">
+                Shop viral snacks, trendy clothing, cosmetics, icy slushies, and exclusive items!
+            </p>
+        </div>
+
+        <div class="flex flex-wrap justify-center gap-2 sm:gap-3 mb-10" id="categoryFilterButtons"></div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="productsGridContainer"></div>
+    </section>
+
+    <!-- Location Section -->
+    <section id="location" class="py-16 bg-darkCard/80 border-t border-neonMagenta/20 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <div class="lg:col-span-6 space-y-6">
+                    <span class="bg-neonCyan/20 text-neonCyan font-extrabold text-xs px-3 py-1 rounded-full uppercase tracking-wider">
+                        Physical Storefront 📍
+                    </span>
+                    <h2 class="text-3xl sm:text-4xl font-black text-white font-display">
+                        PULL UP TO <span class="text-neonMagenta">CLOCK TOWER PLAZA!</span>
+                    </h2>
+                    <p class="text-gray-300 leading-relaxed text-sm sm:text-base">
+                        Come grab your icy frosty cups, spicy bowls, clothing, cosmetics, and exotic snacks in person! We are located right inside Bargain Mall, Shop #1.
+                    </p>
+
+                    <div class="space-y-4">
+                        <div class="flex items-start gap-4 p-4 glass-card rounded-2xl">
+                            <i class="fas fa-map-marker-alt text-neonMagenta text-2xl mt-1"></i>
+                            <div>
+                                <h4 class="font-bold text-white text-base">Store Address</h4>
+                                <p class="text-xs sm:text-sm text-gray-300">BARGAIN MALL SHOP #1, CLOCK TOWER PLAZA, JAMAICA 🇯🇲</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4 p-4 glass-card rounded-2xl">
+                            <i class="fas fa-clock text-neonGold text-2xl mt-1"></i>
+                            <div>
+                                <h4 class="font-bold text-white text-base">Opening Hours</h4>
+                                <p class="text-xs sm:text-sm text-gray-300">Monday – Saturday: 10:00 AM – 8:00 PM</p>
+                                <p class="text-xs text-neonCyan mt-0.5">Walk-ins & Order Pickups Welcome!</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4 p-4 glass-card rounded-2xl">
+                            <i class="fas fa-phone-alt text-neonCyan text-2xl mt-1"></i>
+                            <div>
+                                <h4 class="font-bold text-white text-base">Direct Phone & WhatsApp</h4>
+                                <a href="tel:18764254849" class="text-sm font-bold text-neonGold hover:underline">1 (876) 425-4849</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-6">
+                    <div class="glass-card p-3 rounded-3xl border-2 border-neonMagenta/30 h-80 sm:h-96 relative overflow-hidden shadow-2xl">
+                        <iframe 
+                            class="w-full h-full rounded-2xl"
+                            src="https://maps.google.com/maps?q=Clock%20Tower%20Plaza%20Kingston%20Jamaica&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+                            frameborder="0" 
+                            scrolling="no" 
+                            marginheight="0" 
+                            marginwidth="0">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hidden Admin Modal Dashboard -->
+    <div id="hiddenAdminModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="glass-card max-w-4xl w-full max-h-[90vh] overflow-y-auto p-6 sm:p-8 rounded-3xl border-2 border-neonCyan shadow-2xl relative">
+            <div class="flex justify-between items-center pb-4 border-b border-gray-800 mb-6">
+                <h3 class="text-xl font-extrabold text-white flex items-center gap-2">
+                    <i class="fas fa-tools text-neonCyan"></i> Gosh Client Admin Dashboard (Firebase Cloud Sync Enabled)
+                </h3>
+                <button onclick="toggleHiddenAdminModal(false)" class="text-gray-400 hover:text-white p-2 text-lg">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <!-- Manage Featured Hero Spicy Bowl Section -->
+            <div class="mb-8 p-4 glass-card rounded-2xl border border-neonGold/50">
+                <h4 class="text-base font-bold text-neonGold mb-3">🔥 Manage "Order Spicy Bowl" Hero Section (Price & Description)</h4>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-300 mb-1">Spicy Bowl Title:</label>
+                        <input type="text" id="adminHeroTitle" class="w-full bg-darkBg border border-gray-700 rounded-xl px-3 py-2 text-xs text-white">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-300 mb-1">Price (JMD):</label>
+                        <input type="number" id="adminHeroPrice" class="w-full bg-darkBg border border-gray-700 rounded-xl px-3 py-2 text-xs text-neonGold font-bold">
+                    </div>
+                    <div class="sm:col-span-2">
+                        <label class="block text-xs font-bold text-gray-300 mb-1">Description Ingredients:</label>
+                        <input type="text" id="adminHeroDesc" class="w-full bg-darkBg border border-gray-700 rounded-xl px-3 py-2 text-xs text-neonCyan">
+                    </div>
+                    <div class="sm:col-span-2">
+                        <label class="block text-xs font-bold text-gray-300 mb-1">Update Bowl Image (Optional):</label>
+                        <input type="file" id="adminHeroFile" accept="image/*" class="w-full bg-darkBg border border-gray-700 rounded-xl px-3 py-2 text-xs text-white file:mr-4 file:py-1 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-neonGold file:text-black hover:file:bg-neonMagenta transition-all cursor-pointer">
+                    </div>
+                </div>
+                <button onclick="saveHeroSpicyBowl()" class="mt-4 bg-neonGold text-black font-extrabold text-xs px-5 py-2.5 rounded-xl cursor-pointer hover:bg-neonMagenta hover:text-white transition-all">Update Spicy Bowl Hero Section</button>
+            </div>
+
+            <!-- Add New Item Section -->
+            <div class="mb-8 p-4 glass-card rounded-2xl border border-neonCyan/40">
+                <h4 class="text-base font-bold text-neonCyan mb-3">➕ Add Permanent Product to Firebase Firestore</h4>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-300 mb-1">Item Name:</label>
+                        <input type="text" id="newProdName" placeholder="e.g. Designer Hoodie or Matte Lipstick" class="w-full bg-darkBg border border-gray-700 rounded-xl px-3 py-2 text-xs text-white">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-300 mb-1">Category:</label>
+                        <select id="newProdCategory" class="w-full bg-darkBg border border-gray-700 rounded-xl px-3 py-2 text-xs text-white">
+                            <option value="Clothing 👕">Clothing 👕</option>
+                            <option value="Shoes 👟">Shoes 👟</option>
+                            <option value="Cosmetics 💄">Cosmetics 💄</option>
+                            <option value="Slushies 🥤">Slushies 🥤</option>
+                            <option value="Spicy Bowls 🍜">Spicy Bowls 🍜</option>
+                            <option value="Mini Treats 🥞">Mini Treats 🥞</option>
+                            <option value="Frosty Cups 🍨">Frosty Cups 🍨</option>
+                            <option value="Exotic Snacks 🧀">Exotic Snacks 🧀</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-300 mb-1">Price (JMD):</label>
+                        <input type="number" id="newProdPrice" placeholder="3500" class="w-full bg-darkBg border border-gray-700 rounded-xl px-3 py-2 text-xs text-white">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-300 mb-1">Badge Tag:</label>
+                        <input type="text" id="newProdBadge" placeholder="🔥 New Arrival" class="w-full bg-darkBg border border-gray-700 rounded-xl px-3 py-2 text-xs text-white" value="🔥 New Arrival">
+                    </div>
+                    <div class="sm:col-span-2">
+                        <label class="block text-xs font-bold text-gray-300 mb-1">Product Description:</label>
+                        <textarea id="newProdDesc" placeholder="Write detailed product description here..." class="w-full bg-darkBg border border-gray-700 rounded-xl px-3 py-2 text-xs text-white h-16 resize-none"></textarea>
+                    </div>
+                    <div class="sm:col-span-2">
+                        <label class="block text-xs font-bold text-gray-300 mb-1">Upload Direct Image (Syncs to Cloud):</label>
+                        <input type="hidden" id="newProdImage" value="https://images.unsplash.com/photo-1553787499-6f9133860278?auto=format&fit=crop&w=600&q=80">
+                        <input type="file" id="newProdDirectFile" accept="image/*" class="w-full bg-darkBg border border-gray-700 rounded-xl px-3 py-2 text-xs text-white file:mr-4 file:py-1 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-neonCyan file:text-black hover:file:bg-neonMagenta transition-all cursor-pointer">
+                    </div>
+                </div>
+                <button onclick="addNewProductItem()" class="mt-4 bg-neonCyan text-black font-extrabold text-xs px-5 py-2.5 rounded-xl cursor-pointer hover:bg-neonMagenta transition-all">Save to Firebase Cloud</button>
+            </div>
+
+            <!-- Menu Inventory Manager -->
+            <div>
+                <h4 class="text-base font-bold text-neonGold mb-3">📦 Manage & Edit Firebase Inventory Catalog</h4>
+                <div class="space-y-4" id="adminProductListContainer"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide-out Cart Drawer -->
+    <div id="cartDrawer" class="fixed inset-y-0 right-0 w-full sm:w-96 bg-darkCard/95 backdrop-blur-2xl border-l border-neonMagenta/40 z-50 transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col shadow-2xl">
+        <div class="p-4 border-b border-gray-800 flex justify-between items-center bg-darkBg">
+            <h3 class="text-lg font-extrabold text-white flex items-center gap-2">
+                <i class="fas fa-shopping-bag text-neonMagenta"></i> Your Shopping Bag
+            </h3>
+            <button onclick="toggleCartDrawer()" class="text-gray-400 hover:text-white p-2 text-base">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <div class="flex-1 overflow-y-auto p-4 space-y-3 max-h-[42vh] sm:max-h-[50vh]" id="cartItemsListContainer"></div>
+
+        <div class="p-4 border-t border-gray-800 bg-darkBg space-y-3">
+            <div>
+                <label class="block text-[11px] font-bold text-gray-300 mb-1">Order Fulfillment:</label>
+                <div class="grid grid-cols-2 gap-2">
+                    <button type="button" id="btnPickup" onclick="setOrderFulfillment('Pickup')" class="py-1.5 px-2 rounded-xl text-xs font-bold border border-neonMagenta bg-neonMagenta text-black transition-all">Store Pickup 🛍️</button>
+                    <button type="button" id="btnDelivery" onclick="setOrderFulfillment('Delivery')" class="py-1.5 px-2 rounded-xl text-xs font-bold border border-gray-700 text-gray-300 hover:border-neonCyan transition-all">Kingston Delivery 🛵</button>
+                </div>
+            </div>
+
+            <div class="space-y-2">
+                <input type="text" id="customerNameInput" placeholder="Your Name" class="w-full bg-darkCard border border-gray-700 rounded-xl px-3 py-1.5 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-neonMagenta">
+                <input type="tel" id="customerPhoneInput" placeholder="Your Phone / WhatsApp Number" class="w-full bg-darkCard border border-gray-700 rounded-xl px-3 py-1.5 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-neonMagenta">
+                
+                <div id="deliveryAddressContainer" class="hidden">
+                    <textarea id="customerAddressInput" placeholder="Enter your Kingston delivery address & landmark..." class="w-full bg-darkCard border border-neonCyan rounded-xl px-3 py-1.5 text-xs text-white placeholder-gray-500 focus:outline-none h-12 resize-none"></textarea>
+                </div>
+            </div>
+
+            <div class="flex justify-between items-center pt-1">
+                <span class="text-gray-400 font-bold text-xs">Estimated Total:</span>
+                <span id="cartGrandTotal" class="text-xl font-black text-neonGold">$0 JMD</span>
+            </div>
+
+            <div class="space-y-2 pt-1">
+                <button onclick="checkoutViaStripeCard()" class="w-full bg-gradient-to-r from-neonCyan via-indigo-600 to-neonPurple hover:opacity-95 text-white font-black py-2.5 px-3 rounded-xl shadow-md transition-all flex items-center justify-center gap-2 text-xs uppercase tracking-wider">
+                    <i class="fas fa-credit-card text-sm"></i>
+                    <span>Pay with Card</span>
+                </button>
+
+                <button onclick="checkoutViaWhatsApp()" class="w-full bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 text-black font-black py-2.5 px-3 rounded-xl shadow-md transition-all flex items-center justify-center gap-2 text-xs uppercase tracking-wider">
+                    <i class="fab fa-whatsapp text-sm"></i>
+                    <span>Checkout via WhatsApp</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Backdrop Overlay -->
+    <div id="cartBackdrop" onclick="toggleCartDrawer()" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-40 hidden"></div>
+
+    <!-- Toast Notification Box -->
+    <div id="toastNotification" class="fixed bottom-6 right-6 bg-neonMagenta text-white font-extrabold px-6 py-3 rounded-2xl shadow-2xl z-50 transform translate-y-20 opacity-0 transition-all duration-300 flex items-center gap-2">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessageText">Item added successfully!</span>
+    </div>
+
+    <!-- Main Application Scripts with Firebase Firestore Cloud Sync -->
+    <script>
+        // Initialize Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyB8Zrb0UI8YRUUJVnVBDQGHOjHfWeGU5ZQ",
+            authDomain: "gosh-exotic.firebaseapp.com",
+            projectId: "gosh-exotic",
+            storageBucket: "gosh-exotic.firebasestorage.app",
+            messagingSenderId: "254850720322",
+            appId: "1:254850720322:web:9c9fe67b6c58b35931c3db",
+            measurementId: "G-0Q8BZLN2LT"
+        };
+        
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+        const db = firebase.firestore();
+
+        const stripe = Stripe('pk_test_YOUR_STRIPE_PUBLISHABLE_KEY_HERE');
+
+        let menuProducts = [];
+        let selectedCategoryFilter = 'All';
+        let fulfillmentType = 'Pickup';
+
+        let heroBowl = {
+            title: 'Gosh Signature Spicy Bowl',
+            price: 2500,
+            description: 'Hot Noodles • Pickled Egg • Jalapeños • Sausage • Melted Cheese',
+            image: 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=800&q=80'
+        };
+
+        const builderOptions = {
+            noodles: [
+                { id: 'n1', name: 'Buldak 2x Spicy 🍜', price: 1200 },
+                { id: 'n2', name: 'Carbonara Buldak 🧀', price: 1300 },
+                { id: 'n3', name: 'Shin Ramyun Classic 🌶️', price: 1000 }
+            ],
+            spiceLevels: [
+                { id: 's1', name: 'Mild Flavor 🟢' },
+                { id: 's2', name: 'Hot Krazy 🔥' },
+                { id: 's3', name: 'Extreme Krazy 🌶️🔥' }
+            ],
+            toppings: [
+                { id: 't1', name: 'Spicy Pickled Egg 🥚', price: 400 },
+                { id: 't2', name: 'Sliced Jalapeños 🫑', price: 250 },
+                { id: 't3', name: 'Smoked Sausage 🌭', price: 500 },
+                { id: 't4', name: 'Melted Cheddar 🧀', price: 350 },
+                { id: 't5', name: 'Crushed Hot Chips 🍟', price: 300 }
+            ],
+            sauces: [
+                { id: 'sau1', name: 'Signature Gosh Spicy Drip', price: 200 },
+                { id: 'sau2', name: 'Garlic Mayo Drip', price: 150 },
+                { id: 'sau3', name: 'No Extra Sauce', price: 0 }
+            ]
+        };
+
+        let shoppingCart = [];
+        let chosenNoodle = builderOptions.noodles[0];
+        let chosenSpice = builderOptions.spiceLevels[1];
+        let chosenToppings = [builderOptions.toppings[0], builderOptions.toppings[1]];
+        let chosenSauce = builderOptions.sauces[0];
+
+        // Fetch Live Products and Hero Bowl Settings from Firebase Firestore on Load
+        window.addEventListener('DOMContentLoaded', () => {
+            fetchProductsFromFirebase();
+            fetchHeroBowlFromFirebase();
+            renderCategoryFilters();
+            initBowlBuilderUI();
+            updateCartDisplay();
+        });
+
+        function fetchHeroBowlFromFirebase() {
+            db.collection("settings").doc("heroSpicyBowl").get().then((doc) => {
+                if (doc.exists) {
+                    heroBowl = doc.data();
+                    updateHeroUI();
+                }
+            }).catch((error) => {
+                console.error("Error loading hero bowl settings:", error);
+            });
+        }
+
+        function saveHeroSpicyBowl() {
+            const title = document.getElementById('adminHeroTitle').value.trim() || heroBowl.title;
+            const price = parseFloat(document.getElementById('adminHeroPrice').value) || heroBowl.price;
+            const description = document.getElementById('adminHeroDesc').value.trim() || heroBowl.description;
+            const fileInput = document.getElementById('adminHeroFile');
+
+            const saveSettings = (imgUrl) => {
+                heroBowl = { title, price, description, image: imgUrl };
+                db.collection("settings").doc("heroSpicyBowl").set(heroBowl).then(() => {
+                    updateHeroUI();
+                    showToastNotification("Spicy Bowl Hero Section updated successfully!");
+                }).catch((error) => {
+                    alert("Error saving settings: " + error.message);
+                });
+            };
+
+            if (fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = new Image();
+                    img.onload = function() {
+                        const canvas = document.createElement('canvas');
+                        let w = img.width, h = img.height;
+                        if (w > 800) { h *= 800 / w; w = 800; }
+                        canvas.width = w; canvas.height = h;
+                        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+                        saveSettings(canvas.toDataURL('image/jpeg', 0.8));
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(fileInput.files[0]);
+            } else {
+                saveSettings(heroBowl.image);
+            }
+        }
+
+        function fetchProductsFromFirebase() {
+            db.collection("products").onSnapshot((snapshot) => {
+                menuProducts = [];
+                snapshot.forEach((doc) => {
+                    menuProducts.push({ firestoreId: doc.id, ...doc.data() });
+                });
+
+                if (menuProducts.length === 0) {
+                    const defaults = [
+                        { id: 'cloth-1', name: 'Gosh Neon Signature Hoodie 👕', category: 'Clothing 👕', price: 6500, badge: '✨ Best Seller', image: 'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=600&q=80', description: 'Heavyweight custom cotton fleece hoodie with vibrant neon magenta & cyan branding.', available: true },
+                        { id: 'shoe-1', name: 'Neon Streetwear Kicks 👟', category: 'Shoes 👟', price: 12500, badge: '🔥 Drop', image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=600&q=80', description: 'Limited edition comfortable streetwear sneakers designed for all-day city walking.', available: true },
+                        { id: 'cos-1', name: 'Glossy Hydrating Lip Tint Set 💄', category: 'Cosmetics 💄', price: 2200, badge: '💋 Trending', image: 'https://images.unsplash.com/photo-1586495777744-4413f21062fa?auto=format&fit=crop&w=600&q=80', description: 'Long-lasting high-shine glossy lip tints with a sweet tropical fruit flavor.', available: true },
+                        { id: 'slushie-1', name: 'Loaded Krazy Slushie 🍧', category: 'Slushies 🥤', price: 1500, badge: '🔥 Hot Seller', image: 'https://images.unsplash.com/photo-1553787499-6f9133860278?auto=format&fit=crop&w=600&q=80', description: 'Signature layered icy slushie topped with gummy bears and sour candy belts.', available: true }
+                    ];
+                    defaults.forEach(item => db.collection("products").add(item));
+                } else {
+                    renderProductsGrid();
+                    if (!document.getElementById('hiddenAdminModal').classList.contains('hidden')) {
+                        renderAdminDashboard();
+                    }
+                }
+            }, (error) => {
+                console.error("Error fetching from Firebase Firestore:", error);
+            });
+        }
+
+        // Trigger Admin Panel with Passcode Prompt
+        function triggerHiddenAdmin() {
+            const pin = prompt("Enter Admin Passcode:");
+            if (pin === "1234") { 
+                toggleHiddenAdminModal(true);
+                renderAdminDashboard();
+                // Populate current hero values into the admin form fields
+                document.getElementById('adminHeroTitle').value = heroBowl.title;
+                document.getElementById('adminHeroPrice').value = heroBowl.price;
+                document.getElementById('adminHeroDesc').value = heroBowl.description;
+            } else if (pin !== null) {
+                alert("Incorrect Passcode!");
+            }
+        }
+
+        function toggleHiddenAdminModal(show) {
+            const modal = document.getElementById('hiddenAdminModal');
+            if (show) {
+                modal.classList.remove('hidden');
+            } else {
+                modal.classList.add('hidden');
+            }
+        }
+
+        function updateHeroUI() {
+            document.getElementById('heroFeaturedTitle').innerText = heroBowl.title;
+            document.getElementById('heroFeaturedPrice').innerText = `$${heroBowl.price.toLocaleString()} JMD`;
+            document.getElementById('heroFeaturedDesc').innerText = heroBowl.description;
+            document.getElementById('heroFeaturedImage').src = heroBowl.image;
+        }
+
+        // Add New Product Directly to Firebase Firestore Cloud Storage
+        function addNewProductItem() {
+            const fileInput = document.getElementById('newProdDirectFile');
+            const name = document.getElementById('newProdName').value.trim();
+            const category = document.getElementById('newProdCategory').value;
+            const price = parseFloat(document.getElementById('newProdPrice').value) || 0;
+            const badge = document.getElementById('newProdBadge').value.trim() || '🔥 New Item';
+            const description = document.getElementById('newProdDesc').value.trim();
+
+            if (!name || price <= 0) {
+                alert("Please enter a valid item name and price!");
+                return;
+            }
+
+            const saveToFirestore = (imageUrl) => {
+                const newProduct = {
+                    id: 'item-' + Date.now(),
+                    name,
+                    category,
+                    price,
+                    badge,
+                    description,
+                    image: imageUrl,
+                    available: true
+                };
+
+                db.collection("products").add(newProduct)
+                    .then(() => {
+                        showToastNotification(`Successfully saved ${name} to Firebase Cloud!`);
+                        document.getElementById('newProdName').value = '';
+                        document.getElementById('newProdPrice').value = '';
+                        document.getElementById('newProdDesc').value = '';
+                        document.getElementById('newProdDirectFile').value = '';
+                    })
+                    .catch((error) => {
+                        alert("Error saving to Firestore: " + error.message);
+                    });
+            };
+
+            if (fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = new Image();
+                    img.onload = function() {
+                        const canvas = document.createElement('canvas');
+                        let width = img.width;
+                        let height = img.height;
+                        const MAX_SIZE = 700;
+
+                        if (width > height) {
+                            if (width > MAX_SIZE) { height *= MAX_SIZE / width; width = MAX_SIZE; }
+                        } else {
+                            if (height > MAX_SIZE) { width *= MAX_SIZE / height; height = MAX_SIZE; }
+                        }
+
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+                        
+                        const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.7);
+                        saveToFirestore(compressedDataUrl);
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(fileInput.files[0]);
+            } else {
+                const fallbackImage = document.getElementById('newProdImage').value;
+                saveToFirestore(fallbackImage);
+            }
+        }
+
+        function renderAdminDashboard() {
+            const container = document.getElementById('adminProductListContainer');
+            container.innerHTML = menuProducts.map((p, index) => `
+                <div class="p-4 glass-card rounded-2xl border border-gray-800 space-y-3">
+                    <div class="flex flex-col sm:flex-row gap-4 items-center justify-between">
+                        <img src="${p.image}" class="w-16 h-16 object-cover rounded-xl border border-neonMagenta">
+                        <div class="flex-1 space-y-2 w-full">
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                                <input type="text" id="adminName-${index}" value="${p.name}" class="bg-darkBg border border-gray-700 rounded-lg px-2 py-1 text-xs text-white font-bold">
+                                <input type="number" id="adminPrice-${index}" value="${p.price}" class="bg-darkBg border border-gray-700 rounded-lg px-2 py-1 text-xs text-neonGold font-bold">
+                                <select id="adminCat-${index}" class="bg-darkBg border border-gray-700 rounded-lg px-2 py-1 text-xs text-neonCyan">
+                                    <option value="Clothing 👕" ${p.category === 'Clothing 👕' ? 'selected' : ''}>Clothing 👕</option>
+                                    <option value="Shoes 👟" ${p.category === 'Shoes 👟' ? 'selected' : ''}>Shoes 👟</option>
+                                    <option value="Cosmetics 💄" ${p.category === 'Cosmetics 💄' ? 'selected' : ''}>Cosmetics 💄</option>
+                                    <option value="Slushies 🥤" ${p.category === 'Slushies 🥤' ? 'selected' : ''}>Slushies 🥤</option>
+                                    <option value="Spicy Bowls 🍜" ${p.category === 'Spicy Bowls 🍜' ? 'selected' : ''}>Spicy Bowls 🍜</option>
+                                    <option value="Mini Treats 🥞" ${p.category === 'Mini Treats 🥞' ? 'selected' : ''}>Mini Treats 🥞</option>
+                                    <option value="Frosty Cups 🍨" ${p.category === 'Frosty Cups 🍨' ? 'selected' : ''}>Frosty Cups 🍨</option>
+                                    <option value="Exotic Snacks 🧀" ${p.category === 'Exotic Snacks 🧀' ? 'selected' : ''}>Exotic Snacks 🧀</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold text-gray-400 mb-1">Update Image File (Optional):</label>
+                                <input type="file" id="adminFile-${index}" accept="image/*" class="w-full bg-darkBg border border-gray-700 rounded-lg px-2 py-1 text-xs text-gray-300 file:mr-2 file:py-0.5 file:px-2 file:rounded file:border-0 file:text-[11px] file:font-semibold file:bg-neonPurple file:text-white hover:file:bg-neonCyan cursor-pointer">
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <textarea id="adminDesc-${index}" class="w-full bg-darkBg border border-gray-700 rounded-lg px-2 py-1 text-xs text-gray-200 h-14 resize-none">${p.description}</textarea>
+                    </div>
+                    <div class="flex justify-between items-center pt-2 border-t border-gray-800">
+                        <label class="flex items-center gap-2 text-xs text-gray-300 cursor-pointer">
+                            <input type="checkbox" id="adminAvail-${index}" ${p.available ? 'checked' : ''} class="accent-neonCyan"> Available on Website
+                        </label>
+                        <div class="flex gap-2">
+                            <button onclick="saveAdminProduct('${p.firestoreId}', ${index})" class="bg-neonCyan text-black font-bold text-xs px-4 py-1.5 rounded-lg cursor-pointer hover:bg-neonMagenta transition-all">Save Changes</button>
+                            <button onclick="deleteProductItem('${p.firestoreId}')" class="bg-red-500/20 text-red-400 border border-red-500/30 font-bold text-xs px-3 py-1.5 rounded-lg cursor-pointer hover:bg-red-500/30 transition-all">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function saveAdminProduct(firestoreId, index) {
+            const p = menuProducts[index];
+            const fileInput = document.getElementById(`adminFile-${index}`);
+
+            const updatedName = document.getElementById(`adminName-${index}`).value;
+            const updatedPrice = parseFloat(document.getElementById(`adminPrice-${index}`).value) || 0;
+            const updatedCat = document.getElementById(`adminCat-${index}`).value;
+            const updatedDesc = document.getElementById(`adminDesc-${index}`).value;
+            const updatedAvail = document.getElementById(`adminAvail-${index}`).checked;
+
+            const commitUpdate = (imgUrl) => {
+                db.collection("products").doc(firestoreId).update({
+                    name: updatedName,
+                    price: updatedPrice,
+                    category: updatedCat,
+                    description: updatedDesc,
+                    available: updatedAvail,
+                    image: imgUrl
+                }).then(() => {
+                    showToastNotification("Changes saved to Firebase Cloud!");
+                });
+            };
+
+            if (fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = new Image();
+                    img.onload = function() {
+                        const canvas = document.createElement('canvas');
+                        let w = img.width, h = img.height;
+                        if (w > 700) { h *= 700 / w; w = 700; }
+                        canvas.width = w; canvas.height = h;
+                        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+                        commitUpdate(canvas.toDataURL('image/jpeg', 0.7));
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(fileInput.files[0]);
+            } else {
+                commitUpdate(p.image);
+            }
+        }
+
+        function deleteProductItem(firestoreId) {
+            if (confirm("Are you sure you want to delete this item from Firebase?")) {
+                db.collection("products").doc(firestoreId).delete().then(() => {
+                    showToastNotification("Item deleted from Firebase!");
+                });
+            }
+        }
+
+        function handleLogoUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('storeLogoImg').src = e.target.result;
+                    showToastNotification("Logo updated successfully!");
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function renderCategoryFilters() {
+            const categories = ['All', 'Clothing 👕', 'Shoes 👟', 'Cosmetics 💄', 'Slushies 🥤', 'Spicy Bowls 🍜', 'Mini Treats 🥞', 'Frosty Cups 🍨', 'Exotic Snacks 🧀'];
+            const container = document.getElementById('categoryFilterButtons');
+            
+            container.innerHTML = categories.map(cat => `
+                <button 
+                    onclick="filterMenuCategory('${cat}')"
+                    class="px-4 py-2 rounded-2xl text-xs sm:text-sm font-extrabold transition-all duration-300 ${selectedCategoryFilter === cat ? 'bg-gradient-to-r from-neonMagenta to-neonCyan text-black shadow-lg scale-105' : 'glass-card text-gray-300 hover:text-white border-gray-800'}"
+                >
+                    ${cat}
+                </button>
+            `).join('');
+        }
+
+        function filterMenuCategory(category) {
+            selectedCategoryFilter = category;
+            renderCategoryFilters();
+            renderProductsGrid();
+        }
+
+        function renderProductsGrid() {
+            const container = document.getElementById('productsGridContainer');
+            const itemsToDisplay = selectedCategoryFilter === 'All' 
+                ? menuProducts 
+                : menuProducts.filter(p => p.category === selectedCategoryFilter);
+
+            if (itemsToDisplay.length === 0) {
+                container.innerHTML = `<div class="col-span-full text-center py-12 text-gray-400">No items available in this category yet. Add items via the Admin dashboard!</div>`;
+                return;
+            }
+
+            container.innerHTML = itemsToDisplay.map(product => `
+                <div class="glass-card rounded-3xl p-5 border border-neonMagenta/20 transition-all flex flex-col justify-between ${!product.available ? 'opacity-60 grayscale' : ''}">
+                    <div>
+                        <div class="relative mb-4 overflow-hidden rounded-2xl">
+                            <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover hover:scale-110 transition-transform duration-500">
+                            <span class="absolute top-3 left-3 bg-black/80 backdrop-blur-md text-neonCyan font-bold text-[10px] px-3 py-1 rounded-full border border-neonCyan/30">
+                                ${product.badge}
+                            </span>
+                            ${!product.available ? '<span class="absolute inset-0 bg-black/70 flex items-center justify-center text-red-400 font-black text-sm uppercase tracking-wider">Out of Stock</span>' : ''}
+                        </div>
+                        <h3 class="text-lg font-extrabold text-white mb-1">${product.name}</h3>
+                        <p class="text-xs text-gray-400 mb-4 line-clamp-2">${product.description}</p>
+                    </div>
+                    <div>
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-xs font-bold text-gray-400">Price:</span>
+                            <span class="text-xl font-black text-neonGold">$${product.price.toLocaleString()} JMD</span>
+                        </div>
+                        <button onclick="addToCart('${product.id}')" ${!product.available ? 'disabled' : ''} class="w-full ${product.available ? 'bg-darkCard hover:bg-neonMagenta text-white border-neonMagenta/40' : 'bg-gray-800 text-gray-500 cursor-not-allowed border-gray-800'} border font-bold py-2.5 rounded-xl transition-all flex items-center justify-center gap-2 text-xs">
+                            <i class="fas fa-plus"></i> ${product.available ? 'Add To Order' : 'Unavailable'}
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function initBowlBuilderUI() {
+            document.getElementById('builderNoodleOptions').innerHTML = builderOptions.noodles.map(n => `
+                <button onclick="selectBuilderNoodle('${n.id}')" id="noodle-btn-${n.id}" class="p-3 rounded-2xl border text-left text-xs font-bold transition-all ${chosenNoodle.id === n.id ? 'border-neonCyan bg-neonCyan/20 text-white' : 'border-gray-800 bg-darkCard text-gray-400'}">
+                    <div>${n.name}</div>
+                    <div class="text-neonGold text-[11px] mt-1">+$${n.price} JMD</div>
+                </button>
+            `).join('');
+
+            document.getElementById('builderSpiceOptions').innerHTML = builderOptions.spiceLevels.map(s => `
+                <button onclick="selectBuilderSpice('${s.id}')" id="spice-btn-${s.id}" class="p-3 rounded-2xl border text-center text-xs font-bold transition-all ${chosenSpice.id === s.id ? 'border-neonMagenta bg-neonMagenta/20 text-white' : 'border-gray-800 bg-darkCard text-gray-400'}">
+                    ${s.name}
+                </button>
+            `).join('');
+
+            document.getElementById('builderToppingOptions').innerHTML = builderOptions.toppings.map(t => {
+                const isSelected = chosenToppings.some(item => item.id === t.id);
+                return `
+                    <button onclick="toggleBuilderTopping('${t.id}')" id="topping-btn-${t.id}" class="p-3 rounded-2xl border text-left text-xs font-bold transition-all ${isSelected ? 'border-neonGold bg-neonGold/20 text-white' : 'border-gray-800 bg-darkCard text-gray-400'}">
+                        <div>${t.name}</div>
+                        <div class="text-neonGold text-[11px] mt-1">+$${t.price} JMD</div>
+                    </button>
+                `;
+            }).join('');
+
+            document.getElementById('builderSauceOptions').innerHTML = builderOptions.sauces.map(sau => `
+                <button onclick="selectBuilderSauce('${sau.id}')" id="sauce-btn-${sau.id}" class="p-3 rounded-2xl border text-left text-xs font-bold transition-all ${chosenSauce.id === sau.id ? 'border-neonPurple bg-neonPurple/20 text-white' : 'border-gray-800 bg-darkCard text-gray-400'}">
+                    <div>${sau.name}</div>
+                    <div class="text-neonGold text-[11px] mt-1">${sau.price > 0 ? '+$' + sau.price + ' JMD' : 'Free'}</div>
+                </button>
+            `).join('');
+
+            updateBowlBuilderSummary();
+        }
+
+        function selectBuilderNoodle(id) {
+            chosenNoodle = builderOptions.noodles.find(n => n.id === id);
+            initBowlBuilderUI();
+        }
+
+        function selectBuilderSpice(id) {
+            chosenSpice = builderOptions.spiceLevels.find(s => s.id === id);
+            initBowlBuilderUI();
+        }
+
+        function toggleBuilderTopping(id) {
+            const topping = builderOptions.toppings.find(t => t.id === id);
+            const index = chosenToppings.findIndex(t => t.id === id);
+            if (index > -1) {
+                chosenToppings.splice(index, 1);
+            } else {
+                chosenToppings.push(topping);
+            }
+            initBowlBuilderUI();
+        }
+
+        function selectBuilderSauce(id) {
+            chosenSauce = builderOptions.sauces.find(sau => sau.id === id);
+            initBowlBuilderUI();
+        }
+
+        function updateBowlBuilderSummary() {
+            document.getElementById('summaryNoodle').innerText = chosenNoodle.name;
+            document.getElementById('summarySpice').innerText = chosenSpice.name;
+            document.getElementById('summaryToppings').innerHTML = chosenToppings.length 
+                ? chosenToppings.map(t => `<span class="bg-neonGold/20 px-2 py-0.5 rounded border border-neonGold/30 mr-1">${t.name}</span>`).join('') 
+                : 'None Selected';
+            document.getElementById('summarySauce').innerText = chosenSauce.name;
+
+            const total = chosenNoodle.price + chosenSauce.price + chosenToppings.reduce((sum, t) => sum + t.price, 0);
+            document.getElementById('summaryTotalPrice').innerText = `$${total.toLocaleString()} JMD`;
+        }
+
+        function addCustomBowlToCart() {
+            const totalPrice = chosenNoodle.price + chosenSauce.price + chosenToppings.reduce((sum, t) => sum + t.price, 0);
+            const toppingNames = chosenToppings.map(t => t.name).join(', ') || 'No extra toppings';
+            
+            const customItem = {
+                id: 'custom-bowl-' + Date.now(),
+                name: `Custom Spicy Bowl (${chosenNoodle.name.split(' ')[0]})`,
+                price: totalPrice,
+                quantity: 1,
+                details: `Spice: ${chosenSpice.name} | Toppings: ${toppingNames} | Sauce: ${chosenSauce.name}`
+            };
+
+            shoppingCart.push(customItem);
+            updateCartDisplay();
+            showToastNotification("Custom Spicy Bowl added to Cart!");
+            toggleCartDrawer();
+        }
+
+        function quickAddHeroItem() {
+            const customHeroItem = {
+                id: 'hero-bowl-' + Date.now(),
+                name: heroBowl.title,
+                price: heroBowl.price,
+                quantity: 1,
+                details: heroBowl.description
+            };
+            shoppingCart.push(customHeroItem);
+            updateCartDisplay();
+            showToastNotification("Added Spicy Bowl to cart!");
+            toggleCartDrawer();
+        }
+
+        function addToCart(productId) {
+            const product = menuProducts.find(p => p.id === productId);
+            if (!product || !product.available) return;
+
+            const existing = shoppingCart.find(item => item.id === productId);
+            if (existing) {
+                existing.quantity += 1;
+            } else {
+                shoppingCart.push({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    quantity: 1,
+                    details: product.category
+                });
+            }
+
+            updateCartDisplay();
+            showToastNotification(`Added ${product.name} to cart!`);
+        }
+
+        function updateItemQuantity(id, delta) {
+            const item = shoppingCart.find(i => i.id === id);
+            if (!item) return;
+
+            item.quantity += delta;
+            if (item.quantity <= 0) {
+                shoppingCart = shoppingCart.filter(i => i.id !== id);
+            }
+            updateCartDisplay();
+        }
+
+        function updateCartDisplay() {
+            const totalCount = shoppingCart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cartItemCount').innerText = totalCount;
+
+            const container = document.getElementById('cartItemsListContainer');
+            if (shoppingCart.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12 text-gray-500">
+                        <i class="fas fa-shopping-basket text-4xl mb-3 text-neonMagenta/40"></i>
+                        <p class="text-sm font-bold">Your shopping bag is empty!</p>
+                        <p class="text-xs">Add clothing, cosmetics, or snacks to begin.</p>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = shoppingCart.map(item => `
+                    <div class="p-3 glass-card rounded-2xl border border-gray-800 flex justify-between items-center gap-3">
+                        <div class="flex-1">
+                            <h4 class="font-bold text-white text-xs sm:text-sm">${item.name}</h4>
+                            <p class="text-[11px] text-neonCyan font-medium mt-0.5">${item.details}</p>
+                            <p class="text-xs font-black text-neonGold mt-1">$${(item.price * item.quantity).toLocaleString()} JMD</p>
+                        </div>
+                        <div class="flex items-center gap-2 bg-darkBg p-1.5 rounded-xl border border-gray-700">
+                            <button onclick="updateItemQuantity('${item.id}', -1)" class="w-6 h-6 rounded-lg bg-gray-800 text-white font-bold hover:bg-neonMagenta text-xs">-</button>
+                            <span class="text-xs font-bold text-white w-4 text-center">${item.quantity}</span>
+                            <button onclick="updateItemQuantity('${item.id}', 1)" class="w-6 h-6 rounded-lg bg-gray-800 text-white font-bold hover:bg-neonMagenta text-xs">+</button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            const grandTotal = shoppingCart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            document.getElementById('cartGrandTotal').innerText = `$${grandTotal.toLocaleString()} JMD`;
+        }
+
+        function toggleCartDrawer() {
+            const drawer = document.getElementById('cartDrawer');
+            const backdrop = document.getElementById('cartBackdrop');
+            drawer.classList.toggle('translate-x-full');
+            backdrop.classList.toggle('hidden');
+        }
+
+        function setOrderFulfillment(type) {
+            fulfillmentType = type;
+            const btnP = document.getElementById('btnPickup');
+            const btnD = document.getElementById('btnDelivery');
+            const addressContainer = document.getElementById('deliveryAddressContainer');
+
+            if (type === 'Pickup') {
+                btnP.className = 'py-1.5 px-2 rounded-xl text-xs font-bold border border-neonMagenta bg-neonMagenta text-black transition-all';
+                btnD.className = 'py-1.5 px-2 rounded-xl text-xs font-bold border border-gray-700 text-gray-300 hover:border-neonCyan transition-all';
+                addressContainer.classList.add('hidden');
+            } else {
+                btnD.className = 'py-1.5 px-2 rounded-xl text-xs font-bold border border-neonCyan bg-neonCyan text-black transition-all';
+                btnP.className = 'py-1.5 px-2 rounded-xl text-xs font-bold border border-gray-700 text-gray-300 hover:border-neonMagenta transition-all';
+                addressContainer.classList.remove('hidden');
+            }
+        }
+
+        function checkoutViaStripeCard() {
+            if (shoppingCart.length === 0) {
+                showToastNotification("Please add items to your bag before checking out!");
+                return;
+            }
+
+            const customerName = document.getElementById('customerNameInput').value.trim();
+            const customerPhone = document.getElementById('customerPhoneInput').value.trim();
+
+            if (!customerName || !customerPhone) {
+                alert("Please enter your Name and Phone Number before paying with card!");
+                document.getElementById('customerNameInput').focus();
+                return;
+            }
+
+            showToastNotification("Redirecting to secure Stripe Checkout...");
+            setTimeout(() => {
+                alert(`Stripe Checkout Session Initiated!\nCustomer: ${customerName}\nTotal: ${document.getElementById('cartGrandTotal').innerText}`);
+            }, 1000);
+        }
+
+        function checkoutViaWhatsApp() {
+            if (shoppingCart.length === 0) {
+                showToastNotification("Please add items to cart before ordering!");
+                return;
+            }
+
+            const customerName = document.getElementById('customerNameInput').value.trim() || 'Valued Customer';
+            const customerPhone = document.getElementById('customerPhoneInput').value.trim() || 'Not specified';
+            const customerAddress = document.getElementById('customerAddressInput').value.trim();
+
+            if (fulfillmentType === 'Delivery' && !customerAddress) {
+                alert("Please enter your delivery address!");
+                document.getElementById('customerAddressInput').focus();
+                return;
+            }
+
+            let message = `*NEW ORDER - GOSH EXOTIC SNACKS & SHOP* 🛍️🔥\n`;
+            message += `---------------------------------\n`;
+            message += `👤 *Name:* ${customerName}\n`;
+            message += `📞 *Phone:* ${customerPhone}\n`;
+            message += `📍 *Fulfillment:* ${fulfillmentType}\n`;
+            if (fulfillmentType === 'Delivery') {
+                message += `🏠 *Delivery Address:* ${customerAddress}\n`;
+            }
+            message += `\n*ORDER ITEMS:*\n`;
+
+            shoppingCart.forEach((item, index) => {
+                message += `${index + 1}. *${item.name}* (x${item.quantity})\n`;
+                message += `   _${item.details}_\n`;
+                message += `   Price: $${(item.price * item.quantity).toLocaleString()} JMD\n\n`;
+            });
+
+            const totalAmount = shoppingCart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            message += `---------------------------------\n`;
+            message += `💰 *TOTAL:* $${totalAmount.toLocaleString()} JMD\n\n`;
+            message += `Please confirm availability & order details! 🇯🇲`;
+
+            const encodedURL = encodeURIComponent(message);
+            window.open(`https://wa.me/18764254849?text=${encodedURL}`, '_blank');
+        }
+
+        function showToastNotification(text) {
+            const toast = document.getElementById('toastNotification');
+            document.getElementById('toastMessageText').innerText = text;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
