@@ -531,6 +531,7 @@
         }
         const db = firebase.firestore();
 
+        // REPLACE WITH YOUR ACTUAL STRIPE PUBLISHABLE KEY (pk_live_... or pk_test_...)
         const stripe = Stripe('pk_test_YOUR_STRIPE_PUBLISHABLE_KEY_HERE');
 
         let menuProducts = [];
@@ -1117,7 +1118,8 @@
             }
         }
 
-        function checkoutViaStripeCard() {
+        // Updated Stripe Checkout function to communicate with your Render backend server
+        async function checkoutViaStripeCard() {
             if (shoppingCart.length === 0) {
                 showToastNotification("Please add items to your bag before checking out!");
                 return;
@@ -1132,10 +1134,41 @@
                 return;
             }
 
-            showToastNotification("Redirecting to secure Stripe Checkout...");
-            setTimeout(() => {
-                alert(`Stripe Checkout Session Initiated!\nCustomer: ${customerName}\nTotal: ${document.getElementById('cartGrandTotal').innerText}`);
-            }, 1000);
+            showToastNotification("Connecting to secure Stripe Checkout...");
+
+            try {
+                // Change this URL to your live Render backend URL once deployed (e.g., https://gosh-backend.onrender.com/create-checkout-session)
+                // If testing locally alongside your backend, use your local server port (e.g., 'http://localhost:3000/create-checkout-session')
+                const backendUrl = 'https://goshexoticsnacks.onrender.com/create-checkout-session';
+
+                const response = await fetch(backendUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        items: shoppingCart,
+                        customerName: customerName,
+                        customerPhone: customerPhone,
+                        fulfillment: fulfillmentType
+                    })
+                });
+
+                const session = await response.json();
+
+                if (session.id) {
+                    // Redirect to official Stripe Checkout page
+                    const result = await stripe.redirectToCheckout({ sessionId: session.id });
+                    if (result.error) {
+                        alert(result.error.message);
+                    }
+                } else {
+                    alert('Error creating Stripe checkout session: ' + (session.error || 'Unknown error'));
+                }
+            } catch (error) {
+                console.error('Stripe Checkout Error:', error);
+                alert('Could not connect to payment server. Make sure your Render backend endpoint is running and reachable.');
+            }
         }
 
         function checkoutViaWhatsApp() {

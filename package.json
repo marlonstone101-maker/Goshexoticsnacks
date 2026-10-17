@@ -1,12 +1,14 @@
 {
   "name": "gosh-exotic-snacks",
   "version": "1.0.0",
+  "description": "Gosh Exotic Snacks E-commerce",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.18.2",
-    "stripe": "^14.0.0"
+    "stripe": "^12.0.0"
   }
 }
