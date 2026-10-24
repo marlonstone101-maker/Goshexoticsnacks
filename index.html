@@ -575,7 +575,7 @@
                     </a>
 
                     <!-- TikTok -->
-                    <a href="url?id=4" target="_blank" class="glass-card p-6 rounded-3xl border border-cyan-500/30 hover:border-cyan-500 transition-all group flex flex-col items-center text-center">
+                    <a href="https://www.tiktok.com/@goshexoticsnacks" target="_blank" class="glass-card p-6 rounded-3xl border border-cyan-500/30 hover:border-cyan-500 transition-all group flex flex-col items-center text-center">
                         <div class="w-14 h-14 rounded-2xl bg-black border border-cyan-400/40 flex items-center justify-center text-neonCyan text-2xl mb-4 group-hover:scale-110 transition-transform shadow-lg">
                             <i class="fab fa-tiktok"></i>
                         </div>
@@ -1665,6 +1665,48 @@
         function updateDeliveryFee() {
             updateCartDisplay();
         }
+
+        // Handle WiPay Success Return & WhatsApp Order Dispatch
+        window.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            
+            if (urlParams.get('status') === 'success') {
+                const customerName = document.getElementById('customerName')?.value || localStorage.getItem('gosh_customer_name') || 'Valued Customer';
+                const customerPhone = document.getElementById('customerPhone')?.value || localStorage.getItem('gosh_customer_phone') || '';
+                const fulfillmentMethod = typeof fulfillmentType !== 'undefined' ? fulfillmentType : 'Delivery';
+                const deliveryAddress = typeof deliveryArea !== 'undefined' ? deliveryArea : 'N/A';
+
+                if (typeof shoppingCart !== 'undefined' && shoppingCart.length > 0) {
+                    let message = `*NEW PAID ORDER (WiPay)* \n`;
+                    message += `*Customer:* ${customerName} \n`;
+                    message += `*Phone:* ${customerPhone} \n`;
+                    message += `*Fulfillment:* ${fulfillmentMethod} \n`;
+                    if (fulfillmentMethod === 'delivery') {
+                        message += `*Address:* ${deliveryAddress} \n`;
+                    }
+                    message += `\n*Items Purchased:*\n`;
+
+                    let total = 0;
+                    shoppingCart.forEach(item => {
+                        message += `- ${item.name} (x${item.quantity}): $${item.price * item.quantity} JMD\n`;
+                        total += item.price * item.quantity;
+                    });
+
+                    message += `\n*Total Paid:* $${total} JMD`;
+
+                    // Clear cart
+                    shoppingCart = [];
+                    
+                    // Clean up URL
+                    window.history.replaceState({}, document.title, window.location.pathname);
+
+                    const clientWhatsAppNumber = '18764254849'; 
+
+                    alert('Payment Successful! Click OK to forward your order to WhatsApp.');
+                    window.location.href = `https://wa.me/${clientWhatsAppNumber}?text=` + encodeURIComponent(message);
+                }
+            }
+        });
 
         async function checkoutViaWiPayCard() {
             if (shoppingCart.length === 0) {
