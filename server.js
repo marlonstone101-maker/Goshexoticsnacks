@@ -21,7 +21,7 @@ app.post('/create-wipay-payment', async (req, res) => {
     const payload = {
       account_number: process.env.WIPAY_ACCOUNT_NUMBER || '1234567890', 
       country_code: 'JM',
-      currency: 'jmd',
+      currency: 'JMD',
       fee_structure: 'customer',
       method: 'credit_card',
       amount: amount,
