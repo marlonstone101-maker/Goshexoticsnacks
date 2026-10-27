@@ -19,12 +19,12 @@ app.post('/create-wipay-payment', async (req, res) => {
     const { amount, orderId, customerEmail, customerPhone, fulfillment } = req.body;
 
     const payload = {
-      account_number: process.env.WIPAY_ACCOUNT_NUMBER || '1234567890', 
+      account_number: process.env.WIPAY_ACCOUNT_NUMBER || '1600852078', 
       country_code: 'JM',
       currency: 'JMD',
-      fee_structure: 'customer',
+      fee_structure: 'customer_pay',
       method: 'credit_card',
-      amount: amount,
+      total: amount,
       order_id: orderId || 'GOSH-' + Date.now(),
       return_url: `${req.headers.origin || 'https://goshexotics.onrender.com'}?status=success`,
       email: customerEmail || 'customer@goshexotics.com',

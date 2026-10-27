@@ -45,59 +45,12 @@
     </script>
 
     <style>
-        /* --- Seasonal Theme Custom Properties & Particle Animations --- */
         :root {
             --bg-primary: #0d0714;
             --bg-card: #160b24;
             --text-main: #ffffff;
             --accent-primary: #d946ef;
             --accent-secondary: #8b5cf6;
-            --accent-cyan: #06b6d4;
-        }
-
-        [data-theme="cancer-awareness"] {
-            --bg-primary: #1a0f18;
-            --bg-card: #2d182b;
-            --text-main: #fff0f5;
-            --accent-primary: #ff69b4;
-            --accent-secondary: #ffb6c1;
-            --accent-cyan: #ff1493;
-        }
-
-        [data-theme="valentines"] {
-            --bg-primary: #1f0a0d;
-            --bg-card: #361118;
-            --text-main: #ffffff;
-            --accent-primary: #ef4444;
-            --accent-secondary: #dc2626;
-            --accent-cyan: #fca5a5;
-        }
-
-        [data-theme="halloween"] {
-            --bg-primary: #0a0806;
-            --bg-card: #1c1209;
-            --text-main: #f97316;
-            --accent-primary: #ea580c;
-            --accent-secondary: #c2410c;
-            --accent-cyan: #a855f7;
-        }
-
-        [data-theme="christmas"] {
-            --bg-primary: #06140c;
-            --bg-card: #0f291a;
-            --text-main: #ffffff;
-            --accent-primary: #ef4444;
-            --accent-secondary: #22c55e;
-            --accent-cyan: #facc15;
-        }
-
-        [data-theme="summer-sale"] {
-            --bg-primary: #08111f;
-            --bg-card: #10233f;
-            --text-main: #ffffff;
-            --accent-primary: #eab308;
-            --accent-secondary: #f97316;
-            --accent-cyan: #38bdf8;
         }
 
         body {
@@ -122,32 +75,6 @@
         @keyframes float {
             0%, 100% { transform: translateY(0px) rotate(0deg); }
             50% { transform: translateY(-15px) rotate(5deg); }
-        }
-
-        @keyframes fall {
-            0% { transform: translateY(-10vh) translateX(0); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(105vh) translateX(20px); opacity: 0; }
-        }
-
-        #seasonalAnimationLayer {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            pointer-events: none;
-            z-index: 45;
-            overflow: hidden;
-        }
-
-        .seasonal-particle {
-            position: absolute;
-            top: -50px;
-            user-select: none;
-            animation-timing-function: linear;
-            animation-iteration-count: infinite;
         }
 
         .animate-float {
@@ -332,7 +259,7 @@
             <div class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6" id="productsGridContainer"></div>
         </section>
 
-        <!-- Interactive Gift Card Vault Section (New Addition) -->
+        <!-- Interactive Gift Card Vault Section -->
         <section id="giftcards" class="py-16 bg-gradient-to-b from-darkBg via-darkCard/50 to-darkBg border-t border-neonMagenta/20 relative">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                 <span class="bg-neonMagenta/20 text-neonMagenta font-extrabold text-xs px-3 py-1 rounded-full uppercase tracking-wider">
@@ -366,7 +293,7 @@
                     </div>
                 </div>
 
-                <!-- Revealed Gift Cards Vault (Hidden by default, shown on click) -->
+                <!-- Revealed Gift Cards Vault -->
                 <div id="revealedGiftCardsVault" class="hidden space-y-10 animate-fadeIn">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center max-w-5xl mx-auto">
                         
@@ -447,7 +374,7 @@
                 </div>
 
                 <div class="space-y-4 max-w-3xl mx-auto">
-                    <!-- FAQ Item 1: Delivery Rates & Locations (Kingston & Portmore) -->
+                    <!-- FAQ Item 1 -->
                     <div class="glass-card rounded-2xl border border-neonCyan/50 overflow-hidden transition-all duration-300">
                         <button onclick="toggleFaqAccordion(1)" class="w-full p-5 text-left flex justify-between items-center gap-4 bg-darkBg/60 hover:bg-darkCard/80 transition-colors">
                             <div class="flex items-center gap-3">
@@ -462,7 +389,6 @@
                             <p class="font-semibold text-white text-sm sm:text-base">GOSH DELIVERY RATES 🇯🇲</p>
                             <p>We offer convenient local delivery to the following locations in and around Kingston and Portmore:</p>
                             
-                            <!-- Clean Responsive Pricing Table -->
                             <div class="overflow-x-auto rounded-xl border border-neonCyan/30 my-3">
                                 <table class="w-full text-left border-collapse">
                                     <thead>
@@ -511,9 +437,6 @@
                                     <li>Delivery times and availability will be confirmed after your order is placed.</li>
                                 </ul>
                             </div>
-                            <div class="text-[11px] text-neonGold font-bold pt-1">
-                                Shop online with GOSH and have your favourite items delivered conveniently! 🛍️
-                            </div>
                         </div>
                     </div>
 
@@ -538,7 +461,6 @@
                                     <li>The $1,000 bearer fee is charged by our store and is NOT affiliated with Knutsford Express.</li>
                                     <li>This fee does NOT include Knutsford Express shipping charges.</li>
                                     <li>Customers are responsible for paying Knutsford Express shipping fees separately.</li>
-                                    <li>Delivery is subject to Knutsford Express service availability at the selected destination.</li>
                                 </ul>
                             </div>
                         </div>
@@ -558,8 +480,6 @@
                         <div id="faqContent-3" class="hidden px-6 pb-6 pt-2 text-xs sm:text-sm text-gray-300 leading-relaxed border-t border-gray-800/80 space-y-3">
                             <p class="font-semibold text-white">Yes, absolutely! 🍭🍫🌎</p>
                             <p>At Gosh Exotic Snacks, we love bringing you unique treats from around the world! If there’s a specific exotic snack or drink you’re craving, feel free to send us a picture or the name of the item.</p>
-                            <p>We’ll do our best to source it for you, subject to availability. 💜✨</p>
-                            <div class="text-[11px] text-neonGold font-bold pt-2">Your cravings, our mission! 🚀</div>
                         </div>
                     </div>
 
@@ -576,7 +496,6 @@
                         </button>
                         <div id="faqContent-4" class="hidden px-6 pb-6 pt-2 text-xs sm:text-sm text-gray-300 leading-relaxed border-t border-gray-800/80 space-y-3">
                             <p>Yes, we do! 💕 At Gosh, we offer wholesale options on selected items. Whether you’re purchasing for resale or buying in bulk, we’ve got you covered! For wholesale inquiries, pricing, and minimum order quantities, please contact us directly.</p>
-                            <div class="text-[11px] text-neonGold font-bold pt-2">Shop more, save more with Gosh! 🛍️💜</div>
                         </div>
                     </div>
 
@@ -593,7 +512,6 @@
                         </button>
                         <div id="faqContent-5" class="hidden px-6 pb-6 pt-2 text-xs sm:text-sm text-gray-300 leading-relaxed border-t border-gray-800/80 space-y-3">
                             <p>Yes! 💜 Gosh gift cards are the perfect way to treat someone special! 🎁 Whether it’s for a birthday, holiday, or just because, let your loved ones choose something they’ll love. Contact us directly to purchase.</p>
-                            <div class="text-[11px] text-neonMagenta font-bold pt-2">Give the gift of choice with Gosh! 🛍️💕</div>
                         </div>
                     </div>
 
@@ -610,7 +528,6 @@
                         </button>
                         <div id="faqContent-6" class="hidden px-6 pb-6 pt-2 text-xs sm:text-sm text-gray-300 leading-relaxed border-t border-gray-800/80 space-y-3">
                             <p>At Gosh, we make shopping easy, safe, and convenient! 💜🛍️ We accept cash, bank transfers, debit/credit cards, and direct online checkout through our website!</p>
-                            <div class="text-[11px] text-neonCyan font-bold pt-2">Shop with confidence at Gosh! 💕</div>
                         </div>
                     </div>
                 </div>
@@ -836,20 +753,20 @@
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-gray-300 mb-1">Category:</label>
-                        <select id="newProdCategory" class="w-full bg-darkBg border border-gray-700 rounded-xl px-3 py-2 text-xs text-white">
+                        <select id="newProdCategory" onchange="toggleInventoryInputVisibility()" class="w-full bg-darkBg border border-gray-700 rounded-xl px-3 py-2 text-xs text-white">
                             <option value="Clothing 👕">Clothing 👕</option>
                             <option value="Groceries 🥦">Groceries 🥦</option>
                             <option value="Gifts 💄">Gifts 💄</option>
-                            <option value="Slushies 🥤">Slushies 🥤</option>
-                            <option value="Spicy Bowls 🍜">Spicy Bowls 🍜</option>
-                            <option value="Mini Treats 🥞">Mini Treats 🥞</option>
-                            <option value="Frosty Cups 🍨">Frosty Cups 🍨</option>
-                            <option value="Exotic Snacks 🧀">Exotic Snacks 🧀</option>
+                            <option value="Menu 🍔">Menu 🍔</option>
                         </select>
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-gray-300 mb-1">Price (JMD):</label>
                         <input type="number" id="newProdPrice" placeholder="3500" class="w-full bg-darkBg border border-gray-700 rounded-xl px-3 py-2 text-xs text-white">
+                    </div>
+                    <div id="newProdInventoryWrapper">
+                        <label class="block text-xs font-bold text-neonGold mb-1">📦 Inventory (Stock Amount):</label>
+                        <input type="number" id="newProdInventory" placeholder="50" class="w-full bg-darkBg border border-neonGold/50 rounded-xl px-3 py-2 text-xs text-white" value="10">
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-gray-300 mb-1">Badge Tag:</label>
@@ -936,14 +853,12 @@
                 <div id="deliveryAddressContainer" class="hidden space-y-2">
                     <select id="customerParishSelect" onchange="updateDeliveryFee()" class="w-full bg-darkCard border border-neonCyan rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none">
                         <option value="" disabled selected>Select Your Delivery Area / Parish 🛵</option>
-                        <!-- Local Kingston & Portmore Options -->
                         <option value="Round Town">Round Town (Local) - $1,000 JMD</option>
                         <option value="Downtown Kingston">Downtown Kingston (Local) - $1,000 JMD</option>
                         <option value="Papine">Papine (Local) - $1,200 JMD</option>
                         <option value="Portmore">Portmore (Local) - $1,800 JMD</option>
                         <option value="Spanish Town">Spanish Town (Local) - $1,800 JMD</option>
                         <option value="Old Harbour">Old Harbour (Local) - $2,500 JMD</option>
-                        <!-- Knutsford Express All 14 Parishes ($1,000 Bearer Fee) -->
                         <option value="Kingston (Knutsford)">Knutsford Express – Kingston - $1,000 JMD</option>
                         <option value="St. Andrew (Knutsford)">Knutsford Express – St. Andrew - $1,000 JMD</option>
                         <option value="St. Catherine (Knutsford)">Knutsford Express – St. Catherine - $1,000 JMD</option>
@@ -1183,6 +1098,9 @@
             if (!product) return;
 
             const modalContent = document.getElementById('modalProductContent');
+            const hasInventory = product.category !== 'Menu 🍔';
+            const inventoryDisplay = hasInventory ? `<p class="text-xs text-neonGold font-bold mb-2">📦 Stock Available: ${product.inventory ?? 10} units</p>` : '';
+
             modalContent.innerHTML = `
                 <img src="${product.image}" alt="${product.name}" class="w-full h-56 object-cover rounded-2xl mb-4 border border-neonMagenta/40">
                 <div class="flex justify-between items-center mb-2">
@@ -1190,7 +1108,8 @@
                     <span class="text-xs text-gray-400">${product.category}</span>
                 </div>
                 <h3 class="text-xl font-black text-white mb-2">${product.name}</h3>
-                <p class="text-xs text-gray-300 leading-relaxed bg-darkBg/60 p-3.5 rounded-xl border border-gray-800 mb-4">${product.description}</p>
+                <p class="text-xs text-gray-300 leading-relaxed bg-darkBg/60 p-3.5 rounded-xl border border-gray-800 mb-2">${product.description}</p>
+                ${inventoryDisplay}
                 <div class="flex justify-between items-center mb-6">
                     <span class="text-xs text-gray-400 font-bold">Price:</span>
                     <span class="text-2xl font-black text-neonGold">$${product.price.toLocaleString()} JMD</span>
@@ -1221,10 +1140,9 @@
 
                 if (menuProducts.length === 0) {
                     const defaults = [
-                        { id: 'cloth-1', name: 'Gosh Neon Signature Hoodie 👕', category: 'Clothing 👕', price: 6500, badge: '✨ Best Seller', image: 'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=600&q=80', description: 'Heavyweight custom cotton fleece hoodie with vibrant neon magenta & cyan branding.', available: true, featured: true },
-                        { id: 'shoe-1', name: 'Neon Streetwear Kicks 👟', category: 'Groceries 🥦', price: 12500, badge: '🔥 Drop', image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=600&q=80', description: 'Limited edition comfortable streetwear sneakers designed for all-day city walking.', available: true, featured: true },
-                        { id: 'cos-1', name: 'Glossy Hydrating Lip Tint Set 💄', category: 'Gifts 💄', price: 2200, badge: '💋 Trending', image: 'https://images.unsplash.com/photo-1586495777744-4413f21062fa?auto=format&fit=crop&w=600&q=80', description: 'Long-lasting high-shine glossy lip tints with a sweet tropical fruit flavor.', available: true, featured: true },
-                        { id: 'slushie-1', name: 'Loaded Krazy Slushie 🍧', category: 'Slushies 🥤', price: 1500, badge: '🔥 Hot Seller', image: 'https://images.unsplash.com/photo-1553787499-6f9133860278?auto=format&fit=crop&w=600&q=80', description: 'Signature layered icy slushie topped with gummy bears and sour candy belts.', available: true, featured: true }
+                        { id: 'cloth-1', name: 'Gosh Neon Signature Hoodie 👕', category: 'Clothing 👕', price: 6500, inventory: 15, badge: '✨ Best Seller', image: 'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=600&q=80', description: 'Heavyweight custom cotton fleece hoodie with vibrant neon magenta & cyan branding.', available: true, featured: true },
+                        { id: 'gro-1', name: 'Loaded Krazy Slushie 🍧', category: 'Menu 🍔', price: 1500, badge: '🔥 Hot Seller', image: 'https://images.unsplash.com/photo-1553787499-6f9133860278?auto=format&fit=crop&w=600&q=80', description: 'Signature layered icy slushie topped with gummy bears and sour candy belts.', available: true, featured: true },
+                        { id: 'cos-1', name: 'Glossy Hydrating Lip Tint Set 💄', category: 'Gifts 💄', price: 2200, inventory: 25, badge: '💋 Trending', image: 'https://images.unsplash.com/photo-1586495777744-4413f21062fa?auto=format&fit=crop&w=600&q=80', description: 'Long-lasting high-shine glossy lip tints with a sweet tropical fruit flavor.', available: true, featured: true }
                     ];
                     defaults.forEach(item => db.collection("products").add(item));
                 } else {
@@ -1258,11 +1176,22 @@
             }
         }
 
+        function toggleInventoryInputVisibility() {
+            const catSelect = document.getElementById('newProdCategory');
+            const invWrapper = document.getElementById('newProdInventoryWrapper');
+            if (catSelect.value === 'Menu 🍔') {
+                invWrapper.style.display = 'none';
+            } else {
+                invWrapper.style.display = 'block';
+            }
+        }
+
         function addNewProductItem() {
             const fileInput = document.getElementById('newProdDirectFile');
             const name = document.getElementById('newProdName').value.trim();
             const category = document.getElementById('newProdCategory').value;
             const price = parseFloat(document.getElementById('newProdPrice').value) || 0;
+            const inventory = category === 'Menu 🍔' ? 0 : (parseInt(document.getElementById('newProdInventory').value) || 10);
             const badge = document.getElementById('newProdBadge').value.trim() || '🔥 New Item';
             const description = document.getElementById('newProdDesc').value.trim();
             const featured = document.getElementById('newProdFeatured').checked;
@@ -1278,6 +1207,7 @@
                     name,
                     category,
                     price,
+                    inventory,
                     badge,
                     description,
                     image: imageUrl,
@@ -1290,6 +1220,7 @@
                         showToastNotification(`Successfully saved ${name} to Firebase Cloud!`);
                         document.getElementById('newProdName').value = '';
                         document.getElementById('newProdPrice').value = '';
+                        document.getElementById('newProdInventory').value = '10';
                         document.getElementById('newProdDesc').value = '';
                         document.getElementById('newProdFeatured').checked = false;
                         document.getElementById('newProdDirectFile').value = '';
@@ -1334,24 +1265,32 @@
 
         function renderAdminDashboard() {
             const container = document.getElementById('adminProductListContainer');
-            container.innerHTML = menuProducts.map((p, index) => `
+            container.innerHTML = menuProducts.map((p, index) => {
+                const isMenuCat = p.category === 'Menu 🍔';
+                const inventoryInputHTML = !isMenuCat ? `
+                    <div>
+                        <label class="block text-[10px] font-bold text-neonGold mb-1">📦 Inventory:</label>
+                        <input type="number" id="adminInv-${index}" value="${p.inventory ?? 10}" class="bg-darkBg border border-neonGold/50 rounded-lg px-2 py-1 text-xs text-white font-bold w-full">
+                    </div>
+                ` : `<input type="hidden" id="adminInv-${index}" value="0">`;
+
+                return `
                 <div class="p-4 glass-card rounded-2xl border border-gray-800 space-y-3">
                     <div class="flex flex-col sm:flex-row gap-4 items-center justify-between">
                         <img src="${p.image}" class="w-16 h-16 object-cover rounded-xl border border-neonMagenta">
                         <div class="flex-1 space-y-2 w-full">
-                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                                <input type="text" id="adminName-${index}" value="${p.name}" class="bg-darkBg border border-gray-700 rounded-lg px-2 py-1 text-xs text-white font-bold">
+                            <div class="grid grid-cols-1 sm:grid-cols-4 gap-2">
+                                <input type="text" id="adminName-${index}" value="${p.name}" class="bg-darkBg border border-gray-700 rounded-lg px-2 py-1 text-xs text-white font-bold sm:col-span-1">
                                 <input type="number" id="adminPrice-${index}" value="${p.price}" class="bg-darkBg border border-gray-700 rounded-lg px-2 py-1 text-xs text-neonGold font-bold">
-                                <select id="adminCat-${index}" class="bg-darkBg border border-gray-700 rounded-lg px-2 py-1 text-xs text-neonCyan">
+                                <select id="adminCat-${index}" onchange="toggleAdminInventoryVisibility(${index})" class="bg-darkBg border border-gray-700 rounded-lg px-2 py-1 text-xs text-neonCyan">
                                     <option value="Clothing 👕" ${p.category === 'Clothing 👕' ? 'selected' : ''}>Clothing 👕</option>
                                     <option value="Groceries 🥦" ${p.category === 'Groceries 🥦' ? 'selected' : ''}>Groceries 🥦</option>
                                     <option value="Gifts 💄" ${p.category === 'Gifts 💄' ? 'selected' : ''}>Gifts 💄</option>
-                                    <option value="Slushies 🥤" ${p.category === 'Slushies 🥤' ? 'selected' : ''}>Slushies 🥤</option>
-                                    <option value="Spicy Bowls 🍜" ${p.category === 'Spicy Bowls 🍜' ? 'selected' : ''}>Spicy Bowls 🍜</option>
-                                    <option value="Mini Treats 🥞" ${p.category === 'Mini Treats 🥞' ? 'selected' : ''}>Mini Treats 🥞</option>
-                                    <option value="Frosty Cups 🍨" ${p.category === 'Frosty Cups 🍨' ? 'selected' : ''}>Frosty Cups 🍨</option>
-                                    <option value="Exotic Snacks 🧀" ${p.category === 'Exotic Snacks 🧀' ? 'selected' : ''}>Exotic Snacks 🧀</option>
+                                    <option value="Menu 🍔" ${p.category === 'Menu 🍔' ? 'selected' : ''}>Menu 🍔</option>
                                 </select>
+                                <div id="adminInvContainer-${index}">
+                                    ${inventoryInputHTML}
+                                </div>
                             </div>
                             <div>
                                 <label class="block text-[11px] font-bold text-gray-400 mb-1">Update Image File (Optional):</label>
@@ -1377,7 +1316,23 @@
                         </div>
                     </div>
                 </div>
-            `).join('');
+            `;
+            }).join('');
+        }
+
+        function toggleAdminInventoryVisibility(index) {
+            const catSelect = document.getElementById(`adminCat-${index}`);
+            const invContainer = document.getElementById(`adminInvContainer-${index}`);
+            if (catSelect.value === 'Menu 🍔') {
+                invContainer.innerHTML = `<input type="hidden" id="adminInv-${index}" value="0">`;
+            } else {
+                invContainer.innerHTML = `
+                    <div>
+                        <label class="block text-[10px] font-bold text-neonGold mb-1">📦 Inventory:</label>
+                        <input type="number" id="adminInv-${index}" value="10" class="bg-darkBg border border-neonGold/50 rounded-lg px-2 py-1 text-xs text-white font-bold w-full">
+                    </div>
+                `;
+            }
         }
 
         function saveAdminProduct(firestoreId, index) {
@@ -1387,6 +1342,7 @@
             const updatedName = document.getElementById(`adminName-${index}`).value;
             const updatedPrice = parseFloat(document.getElementById(`adminPrice-${index}`).value) || 0;
             const updatedCat = document.getElementById(`adminCat-${index}`).value;
+            const updatedInv = updatedCat === 'Menu 🍔' ? 0 : (parseInt(document.getElementById(`adminInv-${index}`).value) || 0);
             const updatedDesc = document.getElementById(`adminDesc-${index}`).value;
             const updatedAvail = document.getElementById(`adminAvail-${index}`).checked;
             const updatedFeatured = document.getElementById(`adminFeatured-${index}`).checked;
@@ -1396,6 +1352,7 @@
                     name: updatedName,
                     price: updatedPrice,
                     category: updatedCat,
+                    inventory: updatedInv,
                     description: updatedDesc,
                     available: updatedAvail,
                     featured: updatedFeatured,
@@ -1446,7 +1403,7 @@
         }
 
         function renderCategoryFilters() {
-            const categories = ['All', 'Clothing 👕', 'Groceries 🥦', 'Gifts 💄', 'Slushies 🥤', 'Spicy Bowls 🍜', 'Mini Treats 🥞', 'Frosty Cups 🍨', 'Exotic Snacks 🧀'];
+            const categories = ['All', 'Clothing 👕', 'Groceries 🥦', 'Gifts 💄', 'Menu 🍔'];
             const container = document.getElementById('categoryFilterButtons');
             
             container.innerHTML = categories.map(cat => `
@@ -1478,6 +1435,9 @@
 
             container.innerHTML = itemsToDisplay.map((product, index) => {
                 const uniqueItemId = product.firestoreId || product.id || `item-${index}`;
+                const hasInventory = product.category !== 'Menu 🍔';
+                const inventoryBadge = hasInventory ? `<span class="text-[10px] text-neonGold font-bold block mb-1">📦 Stock: ${product.inventory ?? 10} available</span>` : '';
+
                 return `
                 <div class="glass-card rounded-2xl sm:rounded-3xl p-3.5 sm:p-5 border border-neonMagenta/20 transition-all flex flex-col justify-between ${!product.available ? 'opacity-60 grayscale' : ''}">
                     <div onclick="openProductModal('${uniqueItemId}')" class="cursor-pointer">
@@ -1489,7 +1449,8 @@
                             ${!product.available ? '<span class="absolute inset-0 bg-black/70 flex items-center justify-center text-red-400 font-black text-xs sm:text-sm uppercase tracking-wider">Out of Stock</span>' : ''}
                         </div>
                         <h3 class="text-sm sm:text-lg font-extrabold text-white mb-1 leading-snug break-words">${product.name}</h3>
-                        <p class="text-[11px] sm:text-xs text-gray-400 mb-3 line-clamp-2 leading-relaxed">${product.description}</p>
+                        <p class="text-[11px] sm:text-xs text-gray-400 mb-2 line-clamp-2 leading-relaxed">${product.description}</p>
+                        ${inventoryBadge}
                     </div>
                     <div>
                         <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-3 gap-0.5 sm:gap-0" onclick="openProductModal('${uniqueItemId}')" class="cursor-pointer">
@@ -1649,19 +1610,16 @@
             updateCartDisplay();
         }
 
-        // Helper function to get the correct delivery/bearer fee based on selected area/parish
         function getSelectedDeliveryFee() {
             if (fulfillmentType !== 'Delivery') return 0;
             const area = document.getElementById('customerParishSelect').value;
             switch(area) {
-                // Local delivery fees
                 case 'Round Town': return 1000;
                 case 'Downtown Kingston': return 1000;
                 case 'Papine': return 1200;
                 case 'Portmore': return 1800;
                 case 'Spanish Town': return 1800;
                 case 'Old Harbour': return 2500;
-                // Knutsford Express All 14 Parishes ($1,000 Bearer Fee)
                 case 'Kingston (Knutsford)':
                 case 'St. Andrew (Knutsford)':
                 case 'St. Catherine (Knutsford)':
@@ -1747,7 +1705,6 @@
             updateCartDisplay();
         }
 
-        // Handle WiPay Success Return & WhatsApp Order Dispatch
         window.addEventListener('DOMContentLoaded', () => {
             const urlParams = new URLSearchParams(window.location.search);
             
@@ -1775,10 +1732,7 @@
 
                     message += `\n*Total Paid:* $${total} JMD`;
 
-                    // Clear cart
                     shoppingCart = [];
-                    
-                    // Clean up URL
                     window.history.replaceState({}, document.title, window.location.pathname);
 
                     const clientWhatsAppNumber = '18764254849'; 
@@ -1908,182 +1862,6 @@
                 toast.classList.add('translate-y-20', 'opacity-0');
             }, 3000);
         }
-
-        // --- Seasonal Theme & Animation Switcher Integration ---
-        window.addEventListener('DOMContentLoaded', () => {
-            initThemeSync();
-        });
-
-        function initThemeSync() {
-            db.collection("siteConfig").doc("themeSettings").onSnapshot((doc) => {
-                if (doc.exists) {
-                    const data = doc.data();
-                    applyThemeToDOM(data.activeTheme || 'default');
-                } else {
-                    db.collection("siteConfig").doc("themeSettings").set({ activeTheme: 'default' });
-                    applyThemeToDOM('default');
-                }
-            }, (error) => {
-                console.error("Error syncing theme from Firestore:", error);
-            });
-        }
-
-        function applyAndSaveTheme(themeName) {
-            db.collection("siteConfig").doc("themeSettings").set({
-                activeTheme: themeName,
-                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-            }).then(() => {
-                showToastNotification(`Theme successfully switched to ${themeName.replace('-', ' ').toUpperCase()}!`);
-            }).catch((error) => {
-                console.error("Error saving theme:", error);
-                alert("Failed to save theme settings to Firebase.");
-            });
-        }
-
-        function applyThemeToDOM(themeName) {
-            if (themeName === 'default') {
-                document.documentElement.removeAttribute('data-theme');
-            } else {
-                document.documentElement.setAttribute('data-theme', themeName);
-            }
-            renderAnimationLayer(themeName);
-        }
-
-        function renderAnimationLayer(themeName) {
-            let layer = document.getElementById('seasonalAnimationLayer');
-            if (!layer) {
-                layer = document.createElement('div');
-                layer.id = 'seasonalAnimationLayer';
-                document.body.appendChild(layer);
-            }
-
-            layer.innerHTML = '';
-
-            let particleSymbol = '';
-            let particleCount = 0;
-            let animationType = 'float';
-            let speedRange = [4, 8];
-
-            switch (themeName) {
-                case 'cancer-awareness':
-                    particleSymbol = '🎀';
-                    particleCount = 15;
-                    animationType = 'float';
-                    speedRange = [5, 9];
-                    break;
-                case 'valentines':
-                    particleSymbol = '❤️';
-                    particleCount = 18;
-                    animationType = 'float';
-                    speedRange = [4, 8];
-                    break;
-                case 'halloween':
-                    renderHalloweenParticles(layer);
-                    return;
-                case 'christmas':
-                    particleSymbol = '❄️';
-                    particleCount = 35;
-                    animationType = 'fall';
-                    speedRange = [3, 7];
-                    break;
-                case 'summer-sale':
-                    particleSymbol = '☀️';
-                    particleCount = 15;
-                    animationType = 'float';
-                    speedRange = [6, 10];
-                    break;
-                default:
-                    return;
-            }
-
-            for (let i = 0; i < particleCount; i++) {
-                const span = document.createElement('span');
-                span.className = 'seasonal-particle';
-                span.innerText = particleSymbol;
-                
-                const leftPos = Math.random() * 100;
-                const duration = Math.random() * (speedRange[1] - speedRange[0]) + speedRange[0];
-                const delay = Math.random() * 5;
-                const size = Math.random() * 1.2 + 0.8;
-
-                span.style.left = `${leftPos}vw`;
-                span.style.fontSize = `${size}rem`;
-                span.style.animationName = animationType;
-                span.style.animationDuration = `${duration}s`;
-                span.style.animationDelay = `${delay}s`;
-
-                layer.appendChild(span);
-            }
-        }
-
-        function renderHalloweenParticles(layer) {
-            const symbols = ['🎃', '🦇', '🕷️'];
-            for (let i = 0; i < 20; i++) {
-                const span = document.createElement('span');
-                span.className = 'seasonal-particle';
-                span.innerText = symbols[Math.floor(Math.random() * symbols.length)];
-                
-                span.style.left = `${Math.random() * 100}vw`;
-                span.style.fontSize = `${Math.random() * 1 + 0.9}rem`;
-                span.style.animationName = 'float';
-                span.style.animationDuration = `${Math.random() * 5 + 4}s`;
-                span.style.animationDelay = `${Math.random() * 5}s`;
-
-                layer.appendChild(span);
-            }
-        }
-
-        // Automatically inject Theme Switcher Grid into Admin Modal when opened
-        const originalRenderAdminDashboard = typeof renderAdminDashboard === 'function' ? renderAdminDashboard : null;
-
-        window.renderAdminDashboard = function() {
-            if (originalRenderAdminDashboard) originalRenderAdminDashboard();
-
-            const adminModalContent = document.querySelector('#hiddenAdminModal .glass-card');
-            if (adminModalContent && !document.getElementById('seasonalAdminSection')) {
-                const seasonalDiv = document.createElement('div');
-                seasonalDiv.id = 'seasonalAdminSection';
-                seasonalDiv.className = 'mb-8 p-4 glass-card rounded-2xl border border-neonMagenta/50';
-                seasonalDiv.innerHTML = `
-                    <h4 class="text-base font-bold text-neonMagenta mb-2 flex items-center gap-2">
-                        <i class="fas fa-palette"></i> Seasonal Theme & Animation Switcher
-                    </h4>
-                    <p class="text-xs text-gray-300 mb-4">Choose a theme to instantly apply matching color schemes and floating/falling background effects for all visitors.</p>
-                    
-                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-4">
-                        <button onclick="applyAndSaveTheme('default')" class="p-3 rounded-xl bg-darkBg border border-gray-700 hover:border-neonMagenta text-xs font-bold text-white flex flex-col items-center gap-1 transition-all cursor-pointer">
-                            <span class="text-lg">🏠</span> Default / Standard
-                        </button>
-                        <button onclick="applyAndSaveTheme('cancer-awareness')" class="p-3 rounded-xl bg-darkBg border border-pink-500/40 hover:border-pink-500 text-xs font-bold text-pink-400 flex flex-col items-center gap-1 transition-all cursor-pointer">
-                            <span class="text-lg">🎀</span> Cancer Awareness
-                        </button>
-                        <button onclick="applyAndSaveTheme('valentines')" class="p-3 rounded-xl bg-darkBg border border-red-500/40 hover:border-red-500 text-xs font-bold text-red-400 flex flex-col items-center gap-1 transition-all cursor-pointer">
-                            <span class="text-lg">❤️</span> Valentine's Day
-                        </button>
-                        <button onclick="applyAndSaveTheme('halloween')" class="p-3 rounded-xl bg-darkBg border border-orange-500/40 hover:border-orange-500 text-xs font-bold text-orange-400 flex flex-col items-center gap-1 transition-all cursor-pointer">
-                            <span class="text-lg">🎃</span> Halloween
-                        </button>
-                        <button onclick="applyAndSaveTheme('christmas')" class="p-3 rounded-xl bg-darkBg border border-green-500/40 hover:border-green-500 text-xs font-bold text-green-400 flex flex-col items-center gap-1 transition-all cursor-pointer">
-                            <span class="text-lg">❄️</span> Christmas
-                        </button>
-                        <button onclick="applyAndSaveTheme('summer-sale')" class="p-3 rounded-xl bg-darkBg border border-yellow-500/40 hover:border-yellow-500 text-xs font-bold text-yellow-400 flex flex-col items-center gap-1 transition-all cursor-pointer">
-                            <span class="text-lg">☀️</span> Summer Sale
-                        </button>
-                    </div>
-
-                    <button onclick="applyAndSaveTheme('default')" class="w-full bg-gradient-to-r from-neonMagenta to-neonCyan text-black font-extrabold text-xs py-3 rounded-xl shadow-lg hover:opacity-90 transition-all uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer">
-                        <i class="fas fa-undo"></i> ✨ Reset to Default Theme
-                    </button>
-                `;
-                
-                const headerDivider = adminModalContent.querySelector('.border-b');
-                if (headerDivider && headerDivider.nextSibling) {
-                    adminModalContent.insertBefore(seasonalDiv, headerDivider.nextSibling);
-                } else {
-                    adminModalContent.prepend(seasonalDiv);
-                }
-            }
-        };
     </script>
 </body>
 </html>
