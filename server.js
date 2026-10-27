@@ -26,7 +26,7 @@ app.post('/create-wipay-payment', async (req, res) => {
     payload.append('environment', 'live');
     payload.append('fee_structure', 'customer_pay');
     payload.append('method', 'credit_card');
-    payload.append('origin', 'Gosh Exotic');
+    payload.append('origin', 'Gosh_Exotic');
     payload.append('total', parseFloat(amount).toFixed(2));
     payload.append('order_id', orderId || 'GOSH-' + Date.now());
     
