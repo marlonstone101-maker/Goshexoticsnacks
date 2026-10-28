@@ -1102,7 +1102,7 @@
             const inventoryDisplay = hasInventory ? `<p class="text-xs text-neonGold font-bold mb-2">📦 Stock Available: ${product.inventory ?? 10} units</p>` : '';
 
             modalContent.innerHTML = `
-                <img src="${product.image}" alt="${product.name}" class="w-full h-56 object-cover rounded-2xl mb-4 border border-neonMagenta/40">
+                <img src="${product.image}" alt="${product.name}" class="w-full h-56 object-cover rounded-2xl mb-4 border border-neonMagenta/40 cursor-pointer" onclick="openLightbox('${product.image}')">
                 <div class="flex justify-between items-center mb-2">
                     <span class="bg-neonCyan/20 text-neonCyan font-bold text-xs px-2.5 py-1 rounded-full border border-neonCyan/30">${product.badge}</span>
                     <span class="text-xs text-gray-400">${product.category}</span>
@@ -1277,7 +1277,7 @@
                 return `
                 <div class="p-4 glass-card rounded-2xl border border-gray-800 space-y-3">
                     <div class="flex flex-col sm:flex-row gap-4 items-center justify-between">
-                        <img src="${p.image}" class="w-16 h-16 object-cover rounded-xl border border-neonMagenta">
+                        <img src="${p.image}" class="w-16 h-16 object-cover rounded-xl border border-neonMagenta cursor-pointer" onclick="openLightbox('${p.image}')">
                         <div class="flex-1 space-y-2 w-full">
                             <div class="grid grid-cols-1 sm:grid-cols-4 gap-2">
                                 <input type="text" id="adminName-${index}" value="${p.name}" class="bg-darkBg border border-gray-700 rounded-lg px-2 py-1 text-xs text-white font-bold sm:col-span-1">
@@ -1440,20 +1440,22 @@
 
                 return `
                 <div class="glass-card rounded-2xl sm:rounded-3xl p-3.5 sm:p-5 border border-neonMagenta/20 transition-all flex flex-col justify-between ${!product.available ? 'opacity-60 grayscale' : ''}">
-                    <div onclick="openProductModal('${uniqueItemId}')" class="cursor-pointer">
-                        <div class="relative mb-3 overflow-hidden rounded-xl sm:rounded-2xl">
+                    <div>
+                        <div class="relative mb-3 overflow-hidden rounded-xl sm:rounded-2xl cursor-pointer" onclick="openLightbox('${product.image}')" title="Click to view full image">
                             <img src="${product.image}" alt="${product.name}" class="w-full h-32 sm:h-48 object-cover hover:scale-110 transition-transform duration-500">
                             <span class="absolute top-2 left-2 bg-black/80 backdrop-blur-md text-neonCyan font-bold text-[9px] sm:text-[10px] px-2.5 py-0.5 sm:py-1 rounded-full border border-neonCyan/30">
                                 ${product.badge}
                             </span>
                             ${!product.available ? '<span class="absolute inset-0 bg-black/70 flex items-center justify-center text-red-400 font-black text-xs sm:text-sm uppercase tracking-wider">Out of Stock</span>' : ''}
                         </div>
-                        <h3 class="text-sm sm:text-lg font-extrabold text-white mb-1 leading-snug break-words">${product.name}</h3>
-                        <p class="text-[11px] sm:text-xs text-gray-400 mb-2 line-clamp-2 leading-relaxed">${product.description}</p>
-                        ${inventoryBadge}
+                        <div onclick="openProductModal('${uniqueItemId}')" class="cursor-pointer">
+                            <h3 class="text-sm sm:text-lg font-extrabold text-white mb-1 leading-snug break-words">${product.name}</h3>
+                            <p class="text-[11px] sm:text-xs text-gray-400 mb-2 line-clamp-2 leading-relaxed">${product.description}</p>
+                            ${inventoryBadge}
+                        </div>
                     </div>
                     <div>
-                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-3 gap-0.5 sm:gap-0" onclick="openProductModal('${uniqueItemId}')" class="cursor-pointer">
+                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-3 gap-0.5 sm:gap-0 cursor-pointer" onclick="openProductModal('${uniqueItemId}')">
                             <span class="text-[10px] sm:text-xs font-bold text-gray-400">Price:</span>
                             <span class="text-base sm:text-xl font-black text-neonGold">$${product.price.toLocaleString()} JMD</span>
                         </div>
