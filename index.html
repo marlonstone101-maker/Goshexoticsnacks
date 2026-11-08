@@ -165,8 +165,17 @@
             </div>
         </header>
 
-        <!-- Hero Section with Product Slideshow -->
+        <!-- Hero Section with Background Video & Product Slideshow -->
         <section id="hero" class="relative py-12 lg:py-20 overflow-hidden">
+            <!-- Hero Background Video Container -->
+            <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+                <video autoplay muted loop playsinline class="w-full h-full object-cover opacity-35 filter brightness-75">
+                    <source src="video1.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <div class="absolute inset-0 bg-gradient-to-b from-darkBg/80 via-darkBg/60 to-darkBg"></div>
+            </div>
+
             <div class="absolute top-1/4 left-1/4 w-80 h-80 bg-neonMagenta/20 rounded-full blur-3xl pointer-events-none"></div>
             <div class="absolute bottom-10 right-10 w-96 h-96 bg-neonCyan/20 rounded-full blur-3xl pointer-events-none"></div>
 
@@ -300,7 +309,7 @@
                         <!-- Gift Card 1: Gosh It's Cute Kidz -->
                         <div class="glass-card p-4 sm:p-6 rounded-3xl border-2 border-pink-500/40 shadow-2xl flex flex-col justify-between">
                             <div class="relative overflow-hidden rounded-2xl mb-4 group aspect-[16/10]">
-                                <img src="giftcard1.jpg" alt="Gosh It's Cute Kidz Gift Card" class="w-full h-full object-cover cursor-pointer hover:scale-105 transition-transform duration-500" onclick="openLightbox('IMG-20261019-WA0004.jpg')">
+                                <img src="giftcard1.jpg" alt="Gosh It's Cute Kidz Gift Card" class="w-full h-full object-cover cursor-pointer hover:scale-105 transition-transform duration-500" onclick="openLightbox('giftcard1.jpg')">
                                 <span class="absolute top-2 left-2 bg-black/80 text-pink-400 font-bold text-[10px] px-3 py-1 rounded-full border border-pink-500/30">
                                     🎀 Cute Kidz Edition
                                 </span>
@@ -310,16 +319,16 @@
                             
                             <!-- Denominations Grid -->
                             <div class="grid grid-cols-2 gap-2 mb-4">
-                                <button onclick="addCustomItemToCart('Gosh It\'s Cute Kidz Gift Card (J$2,500)', 2500, 'Gifts 💄', 'IMG-20261019-WA0004.jpg')" class="bg-darkBg hover:bg-pink-600 hover:text-white border border-pink-500/40 text-pink-400 font-extrabold py-2 px-3 rounded-xl text-xs transition-all flex items-center justify-between">
+                                <button onclick="addCustomItemToCart('Gosh It\'s Cute Kidz Gift Card (J$2,500)', 2500, 'Gifts 💄', 'giftcard1.jpg')" class="bg-darkBg hover:bg-pink-600 hover:text-white border border-pink-500/40 text-pink-400 font-extrabold py-2 px-3 rounded-xl text-xs transition-all flex items-center justify-between">
                                     <span>J$2,500</span> <i class="fas fa-plus"></i>
                                 </button>
-                                <button onclick="addCustomItemToCart('Gosh It\'s Cute Kidz Gift Card (J$5,000)', 5000, 'Gifts 💄', 'IMG-20261019-WA0004.jpg')" class="bg-darkBg hover:bg-pink-600 hover:text-white border border-pink-500/40 text-pink-400 font-extrabold py-2 px-3 rounded-xl text-xs transition-all flex items-center justify-between">
+                                <button onclick="addCustomItemToCart('Gosh It\'s Cute Kidz Gift Card (J$5,000)', 5000, 'Gifts 💄', 'giftcard1.jpg')" class="bg-darkBg hover:bg-pink-600 hover:text-white border border-pink-500/40 text-pink-400 font-extrabold py-2 px-3 rounded-xl text-xs transition-all flex items-center justify-between">
                                     <span>J$5,000</span> <i class="fas fa-plus"></i>
                                 </button>
-                                <button onclick="addCustomItemToCart('Gosh It\'s Cute Kidz Gift Card (J$10,000)', 10000, 'Gifts 💄', 'IMG-20261019-WA0004.jpg')" class="bg-darkBg hover:bg-pink-600 hover:text-white border border-pink-500/40 text-pink-400 font-extrabold py-2 px-3 rounded-xl text-xs transition-all flex items-center justify-between">
+                                <button onclick="addCustomItemToCart('Gosh It\'s Cute Kidz Gift Card (J$10,000)', 10000, 'Gifts 💄', 'giftcard1.jpg')" class="bg-darkBg hover:bg-pink-600 hover:text-white border border-pink-500/40 text-pink-400 font-extrabold py-2 px-3 rounded-xl text-xs transition-all flex items-center justify-between">
                                     <span>J$10,000</span> <i class="fas fa-plus"></i>
                                 </button>
-                                <button onclick="addCustomItemToCart('Gosh It\'s Cute Kidz Gift Card (J$20,000)', 20000, 'Gifts 💄', 'IMG-20261019-WA0004.jpg')" class="bg-darkBg hover:bg-pink-600 hover:text-white border border-pink-500/40 text-pink-400 font-extrabold py-2 px-3 rounded-xl text-xs transition-all flex items-center justify-between">
+                                <button onclick="addCustomItemToCart('Gosh It\'s Cute Kidz Gift Card (J$20,000)', 20000, 'Gifts 💄', 'giftcard1.jpg')" class="bg-darkBg hover:bg-pink-600 hover:text-white border border-pink-500/40 text-pink-400 font-extrabold py-2 px-3 rounded-xl text-xs transition-all flex items-center justify-between">
                                     <span>J$20,000</span> <i class="fas fa-plus"></i>
                                 </button>
                             </div>
@@ -328,7 +337,7 @@
                         <!-- Gift Card 2: Gosh Exotic Snacks -->
                         <div class="glass-card p-4 sm:p-6 rounded-3xl border-2 border-neonCyan/40 shadow-2xl flex flex-col justify-between">
                             <div class="relative overflow-hidden rounded-2xl mb-4 group aspect-[16/10]">
-                                <img src="giftcard2.jpg" alt="Gosh Exotic Snacks Gift Card" class="w-full h-full object-cover cursor-pointer hover:scale-105 transition-transform duration-500" onclick="openLightbox('IMG-20261019-WA0003.jpg')">
+                                <img src="giftcard2.jpg" alt="Gosh Exotic Snacks Gift Card" class="w-full h-full object-cover cursor-pointer hover:scale-105 transition-transform duration-500" onclick="openLightbox('giftcard2.jpg')">
                                 <span class="absolute top-2 left-2 bg-black/80 text-neonCyan font-bold text-[10px] px-3 py-1 rounded-full border border-neonCyan/30">
                                     🥤 Exotic Snacks Edition
                                 </span>
@@ -338,16 +347,16 @@
                             
                             <!-- Denominations Grid -->
                             <div class="grid grid-cols-2 gap-2 mb-4">
-                                <button onclick="addCustomItemToCart('Gosh Exotic Snacks Gift Card (J$2,500)', 2500, 'Gifts 💄', 'IMG-20261019-WA0003.jpg')" class="bg-darkBg hover:bg-neonCyan hover:text-black border border-neonCyan/40 text-neonCyan font-extrabold py-2 px-3 rounded-xl text-xs transition-all flex items-center justify-between">
+                                <button onclick="addCustomItemToCart('Gosh Exotic Snacks Gift Card (J$2,500)', 2500, 'Gifts 💄', 'giftcard2.jpg')" class="bg-darkBg hover:bg-neonCyan hover:text-black border border-neonCyan/40 text-neonCyan font-extrabold py-2 px-3 rounded-xl text-xs transition-all flex items-center justify-between">
                                     <span>J$2,500</span> <i class="fas fa-plus"></i>
                                 </button>
-                                <button onclick="addCustomItemToCart('Gosh Exotic Snacks Gift Card (J$5,000)', 5000, 'Gifts 💄', 'IMG-20261019-WA0003.jpg')" class="bg-darkBg hover:bg-neonCyan hover:text-black border border-neonCyan/40 text-neonCyan font-extrabold py-2 px-3 rounded-xl text-xs transition-all flex items-center justify-between">
+                                <button onclick="addCustomItemToCart('Gosh Exotic Snacks Gift Card (J$5,000)', 5000, 'Gifts 💄', 'giftcard2.jpg')" class="bg-darkBg hover:bg-neonCyan hover:text-black border border-neonCyan/40 text-neonCyan font-extrabold py-2 px-3 rounded-xl text-xs transition-all flex items-center justify-between">
                                     <span>J$5,000</span> <i class="fas fa-plus"></i>
                                 </button>
-                                <button onclick="addCustomItemToCart('Gosh Exotic Snacks Gift Card (J$10,000)', 10000, 'Gifts 💄', 'IMG-20261019-WA0003.jpg')" class="bg-darkBg hover:bg-neonCyan hover:text-black border border-neonCyan/40 text-neonCyan font-extrabold py-2 px-3 rounded-xl text-xs transition-all flex items-center justify-between">
+                                <button onclick="addCustomItemToCart('Gosh Exotic Snacks Gift Card (J$10,000)', 10000, 'Gifts 💄', 'giftcard2.jpg')" class="bg-darkBg hover:bg-neonCyan hover:text-black border border-neonCyan/40 text-neonCyan font-extrabold py-2 px-3 rounded-xl text-xs transition-all flex items-center justify-between">
                                     <span>J$10,000</span> <i class="fas fa-plus"></i>
                                 </button>
-                                <button onclick="addCustomItemToCart('Gosh Exotic Snacks Gift Card (J$20,000)', 20000, 'Gifts 💄', 'IMG-20261019-WA0003.jpg')" class="bg-darkBg hover:bg-neonCyan hover:text-black border border-neonCyan/40 text-neonCyan font-extrabold py-2 px-3 rounded-xl text-xs transition-all flex items-center justify-between">
+                                <button onclick="addCustomItemToCart('Gosh Exotic Snacks Gift Card (J$20,000)', 20000, 'Gifts 💄', 'giftcard2.jpg')" class="bg-darkBg hover:bg-neonCyan hover:text-black border border-neonCyan/40 text-neonCyan font-extrabold py-2 px-3 rounded-xl text-xs transition-all flex items-center justify-between">
                                     <span>J$20,000</span> <i class="fas fa-plus"></i>
                                 </button>
                             </div>
@@ -785,7 +794,7 @@
                     </div>
                     <div class="sm:col-span-2">
                         <label class="block text-xs font-bold text-gray-300 mb-1">Upload Direct Image (Syncs to Cloud):</label>
-                        <input type="hidden" id="newProdImage" value="https://images.unsplash.com/photo-1553787499-6f9133860278?auto=format&fit=crop&w=600&q=80">
+                        <input type="hidden" id="newProdImage" value="">
                         <input type="file" id="newProdDirectFile" accept="image/*" class="w-full bg-darkBg border border-gray-700 rounded-xl px-3 py-2 text-xs text-white file:mr-4 file:py-1 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-neonCyan file:text-black hover:file:bg-neonMagenta transition-all cursor-pointer">
                     </div>
                 </div>
@@ -947,6 +956,47 @@
             renderCategoryFilters();
             updateCartDisplay();
             fetchReviewsFromFirebase();
+
+            // WiPay Success Redirect Handler & WhatsApp Order Forwarding
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('status') === 'success') {
+                const savedOrderData = localStorage.getItem('gosh_pending_wipay_order');
+                if (savedOrderData) {
+                    try {
+                        const orderInfo = JSON.parse(savedOrderData);
+                        let message = `*NEW PAID ORDER (WiPay)* 💳✅\n`;
+                        message += `---------------------------------\n`;
+                        message += `👤 *Customer:* ${orderInfo.customerName}\n`;
+                        message += `📞 *Phone:* ${orderInfo.customerPhone}\n`;
+                        message += `📍 *Fulfillment:* ${orderInfo.fulfillmentType}\n`;
+                        if (orderInfo.fulfillmentType === 'Delivery') {
+                            message += `🛵 *Delivery Destination:* ${orderInfo.deliveryArea}\n`;
+                        }
+                        message += `\n*PAID ITEMS:*\n`;
+
+                        let total = 0;
+                        orderInfo.items.forEach((item, idx) => {
+                            message += `${idx + 1}. *${item.name}* (x${item.quantity})\n`;
+                            message += `   Price: $${(item.price * item.quantity).toLocaleString()} JMD\n\n`;
+                            total += (item.price * item.quantity);
+                        });
+
+                        message += `---------------------------------\n`;
+                        message += `💰 *TOTAL PAID:* $${total.toLocaleString()} JMD\n\n`;
+                        message += `Payment confirmed via WiPay! Please process order. 🇯🇲`;
+
+                        localStorage.removeItem('gosh_pending_wipay_order');
+                        window.history.replaceState({}, document.title, window.location.pathname);
+
+                        const clientWhatsAppNumber = '18764254849';
+                        if (confirm('WiPay Payment Successful! Click OK to forward your order directly to WhatsApp.')) {
+                            window.location.href = `https://wa.me/${clientWhatsAppNumber}?text=` + encodeURIComponent(message);
+                        }
+                    } catch (e) {
+                        console.error("Error parsing saved order info:", e);
+                    }
+                }
+            }
         });
 
         // Toggle Gift Card Box Vault Open / Close
@@ -1138,19 +1188,10 @@
                     menuProducts.push({ firestoreId: doc.id, ...doc.data() });
                 });
 
-                if (menuProducts.length === 0) {
-                    const defaults = [
-                        { id: 'cloth-1', name: 'Gosh Neon Signature Hoodie 👕', category: 'Clothing 👕', price: 6500, inventory: 15, badge: '✨ Best Seller', image: 'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=600&q=80', description: 'Heavyweight custom cotton fleece hoodie with vibrant neon magenta & cyan branding.', available: true, featured: true },
-                        { id: 'gro-1', name: 'Loaded Krazy Slushie 🍧', category: 'Menu 🍔', price: 1500, badge: '🔥 Hot Seller', image: 'https://images.unsplash.com/photo-1553787499-6f9133860278?auto=format&fit=crop&w=600&q=80', description: 'Signature layered icy slushie topped with gummy bears and sour candy belts.', available: true, featured: true },
-                        { id: 'cos-1', name: 'Glossy Hydrating Lip Tint Set 💄', category: 'Gifts 💄', price: 2200, inventory: 25, badge: '💋 Trending', image: 'https://images.unsplash.com/photo-1586495777744-4413f21062fa?auto=format&fit=crop&w=600&q=80', description: 'Long-lasting high-shine glossy lip tints with a sweet tropical fruit flavor.', available: true, featured: true }
-                    ];
-                    defaults.forEach(item => db.collection("products").add(item));
-                } else {
-                    renderProductsGrid();
-                    initSlideshow();
-                    if (!document.getElementById('hiddenAdminModal').classList.contains('hidden')) {
-                        renderAdminDashboard();
-                    }
+                renderProductsGrid();
+                initSlideshow();
+                if (!document.getElementById('hiddenAdminModal').classList.contains('hidden')) {
+                    renderAdminDashboard();
                 }
             }, (error) => {
                 console.error("Error fetching from Firebase Firestore:", error);
@@ -1201,6 +1242,11 @@
                 return;
             }
 
+            if (!fileInput.files || !fileInput.files[0]) {
+                alert("Please upload a product image!");
+                return;
+            }
+
             const saveToFirestore = (imageUrl) => {
                 const newProduct = {
                     id: 'item-' + Date.now(),
@@ -1230,37 +1276,32 @@
                     });
             };
 
-            if (fileInput.files && fileInput.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const img = new Image();
-                    img.onload = function() {
-                        const canvas = document.createElement('canvas');
-                        let width = img.width;
-                        let height = img.height;
-                        const MAX_SIZE = 700;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    let width = img.width;
+                    let height = img.height;
+                    const MAX_SIZE = 700;
 
-                        if (width > height) {
-                            if (width > MAX_SIZE) { height *= MAX_SIZE / width; width = MAX_SIZE; }
-                        } else {
-                            if (height > MAX_SIZE) { width *= MAX_SIZE / height; height = MAX_SIZE; }
-                        }
+                    if (width > height) {
+                        if (width > MAX_SIZE) { height *= MAX_SIZE / width; width = MAX_SIZE; }
+                    } else {
+                        if (height > MAX_SIZE) { width *= MAX_SIZE / height; height = MAX_SIZE; }
+                    }
 
-                        canvas.width = width;
-                        canvas.height = height;
-                        const ctx = canvas.getContext('2d');
-                        ctx.drawImage(img, 0, 0, width, height);
-                        
-                        const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.7);
-                        saveToFirestore(compressedDataUrl);
-                    };
-                    img.src = e.target.result;
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+                    
+                    const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.7);
+                    saveToFirestore(compressedDataUrl);
                 };
-                reader.readAsDataURL(fileInput.files[0]);
-            } else {
-                const fallbackImage = document.getElementById('newProdImage').value;
-                saveToFirestore(fallbackImage);
-            }
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(fileInput.files[0]);
         }
 
         function renderAdminDashboard() {
@@ -1707,44 +1748,6 @@
             updateCartDisplay();
         }
 
-        window.addEventListener('DOMContentLoaded', () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            
-            if (urlParams.get('status') === 'success') {
-                const customerName = document.getElementById('customerName')?.value || localStorage.getItem('gosh_customer_name') || 'Valued Customer';
-                const customerPhone = document.getElementById('customerPhone')?.value || localStorage.getItem('gosh_customer_phone') || '';
-                const fulfillmentMethod = typeof fulfillmentType !== 'undefined' ? fulfillmentType : 'Delivery';
-                const deliveryAddress = typeof deliveryArea !== 'undefined' ? deliveryArea : 'N/A';
-
-                if (typeof shoppingCart !== 'undefined' && shoppingCart.length > 0) {
-                    let message = `*NEW PAID ORDER (WiPay)* \n`;
-                    message += `*Customer:* ${customerName} \n`;
-                    message += `*Phone:* ${customerPhone} \n`;
-                    message += `*Fulfillment:* ${fulfillmentMethod} \n`;
-                    if (fulfillmentMethod === 'delivery') {
-                        message += `*Address:* ${deliveryAddress} \n`;
-                    }
-                    message += `\n*Items Purchased:*\n`;
-
-                    let total = 0;
-                    shoppingCart.forEach(item => {
-                        message += `- ${item.name} (x${item.quantity}): $${item.price * item.quantity} JMD\n`;
-                        total += item.price * item.quantity;
-                    });
-
-                    message += `\n*Total Paid:* $${total} JMD`;
-
-                    shoppingCart = [];
-                    window.history.replaceState({}, document.title, window.location.pathname);
-
-                    const clientWhatsAppNumber = '18764254849'; 
-
-                    alert('Payment Successful! Click OK to forward your order to WhatsApp.');
-                    window.location.href = `https://wa.me/${clientWhatsAppNumber}?text=` + encodeURIComponent(message);
-                }
-            }
-        });
-
         async function checkoutViaWiPayCard() {
             if (shoppingCart.length === 0) {
                 showToastNotification("Please add items to your bag before checking out!");
@@ -1767,6 +1770,16 @@
                 return;
             }
 
+            // Save order info to local storage so it can be forwarded to WhatsApp after successful return from WiPay
+            const orderPayload = {
+                items: shoppingCart,
+                customerName: customerName,
+                customerPhone: customerPhone,
+                fulfillmentType: fulfillmentType,
+                deliveryArea: deliveryArea || 'N/A'
+            };
+            localStorage.setItem('gosh_pending_wipay_order', JSON.stringify(orderPayload));
+
             showToastNotification("Connecting to secure WiPay Checkout...");
 
             try {
@@ -1782,12 +1795,7 @@
                         orderId: 'GOSH-' + Date.now(),
                         customerEmail: customerName.toLowerCase().replace(/\s+/g, '') + '@goshexotics.com',
                         customerPhone: customerPhone,
-                        fulfillment: JSON.stringify({
-                            items: shoppingCart,
-                            customerName: customerName,
-                            fulfillmentType: fulfillmentType,
-                            deliveryArea: deliveryArea || 'N/A'
-                        })
+                        fulfillment: JSON.stringify(orderPayload)
                     })
                 });
 
