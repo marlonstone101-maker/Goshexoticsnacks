@@ -1147,6 +1147,21 @@
             const hasInventory = product.category !== 'Menu 🍔';
             const inventoryDisplay = hasInventory ? `<p class="text-xs text-neonGold font-bold mb-2">📦 Stock Available: ${product.inventory ?? 10} units</p>` : '';
 
+            // Check if product is Clothing to display size selector
+            const isClothing = product.category === 'Clothing 👕';
+            const sizeSelectorHTML = isClothing ? `
+                <div class="mb-4">
+                    <label class="block text-xs font-bold text-neonCyan mb-2">Select Size (Kids):</label>
+                    <div class="grid grid-cols-4 gap-2" id="clothingSizeSelector">
+                        <button type="button" onclick="selectClothingSize('S')" class="size-btn py-2 px-3 rounded-xl text-xs font-bold border border-neonMagenta/40 bg-darkBg text-white hover:border-neonMagenta transition-all" data-size="S">S</button>
+                        <button type="button" onclick="selectClothingSize('M')" class="size-btn py-2 px-3 rounded-xl text-xs font-bold border border-neonMagenta/40 bg-darkBg text-white hover:border-neonMagenta transition-all" data-size="M">M</button>
+                        <button type="button" onclick="selectClothingSize('L')" class="size-btn py-2 px-3 rounded-xl text-xs font-bold border border-neonMagenta/40 bg-darkBg text-white hover:border-neonMagenta transition-all" data-size="L">L</button>
+                        <button type="button" onclick="selectClothingSize('xxL')" class="size-btn py-2 px-3 rounded-xl text-xs font-bold border border-neonMagenta/40 bg-darkBg text-white hover:border-neonMagenta transition-all" data-size="xxL">xxL</button>
+                    </div>
+                    <input type="hidden" id="selectedClothingSize" value="M">
+                </div>
+            ` : '';
+
             modalContent.innerHTML = `
                 <img src="${product.image}" alt="${product.name}" class="w-full h-56 object-cover rounded-2xl mb-4 border border-neonMagenta/40 cursor-pointer" onclick="openLightbox('${product.image}')">
                 <div class="flex justify-between items-center mb-2">
@@ -1156,6 +1171,7 @@
                 <h3 class="text-xl font-black text-white mb-2">${product.name}</h3>
                 <p class="text-xs text-gray-300 leading-relaxed bg-darkBg/60 p-3.5 rounded-xl border border-gray-800 mb-2">${product.description}</p>
                 ${inventoryDisplay}
+                ${sizeSelectorHTML}
                 <div class="flex justify-between items-center mb-6">
                     <span class="text-xs text-gray-400 font-bold">Price:</span>
                     <span class="text-2xl font-black text-neonGold">$${product.price.toLocaleString()} JMD</span>
@@ -1165,7 +1181,23 @@
                 </button>
             `;
 
+            if (isClothing) {
+                selectClothingSize('M'); // Set default selected size to M
+            }
+
             document.getElementById('productDetailModal').classList.remove('hidden');
+        }
+
+        function selectClothingSize(size) {
+            document.getElementById('selectedClothingSize').value = size;
+            const buttons = document.querySelectorAll('.size-btn');
+            buttons.forEach(btn => {
+                if (btn.getAttribute('data-size') === size) {
+                    btn.className = 'size-btn py-2 px-3 rounded-xl text-xs font-bold border border-neonMagenta bg-neonMagenta text-black transition-all shadow-md';
+                } else {
+                    btn.className = 'size-btn py-2 px-3 rounded-xl text-xs font-bold border border-neonMagenta/40 bg-darkBg text-white hover:border-neonMagenta transition-all';
+                }
+            });
         }
 
         function closeProductModal() {
@@ -1173,7 +1205,9 @@
         }
 
         function addToCartFromModal(itemId) {
-            addToCart(itemId);
+            const sizeInput = document.getElementById('selectedClothingSize');
+            const selectedSize = sizeInput ? sizeInput.value : null;
+            addToCart(itemId, selectedSize);
             closeProductModal();
         }
 
@@ -1496,8 +1530,8 @@
                             <span class="text-[10px] sm:text-xs font-bold text-gray-400">Price:</span>
                             <span class="text-base sm:text-xl font-black text-neonGold">$${product.price.toLocaleString()} JMD</span>
                         </div>
-                        <button onclick="addToCart('${uniqueItemId}')" ${!product.available ? 'disabled' : ''} class="w-full ${product.available ? 'bg-darkCard hover:bg-neonMagenta text-white border-neonMagenta/40' : 'bg-gray-800 text-gray-500 cursor-not-allowed border-gray-800'} border font-bold py-2 sm:py-2.5 px-2 rounded-xl transition-all flex items-center justify-center gap-1.5 text-[11px] sm:text-xs text-center cursor-pointer">
-                            <i class="fas fa-plus"></i> <span class="truncate">${product.available ? 'Add To Order' : 'Unavailable'}</span>
+                        <button onclick="openProductModal('${uniqueItemId}')" ${!product.available ? 'disabled' : ''} class="w-full ${product.available ? 'bg-darkCard hover:bg-neonMagenta text-white border-neonMagenta/40' : 'bg-gray-800 text-gray-500 cursor-not-allowed border-gray-800'} border font-bold py-2 sm:py-2.5 px-2 rounded-xl transition-all flex items-center justify-center gap-1.5 text-[11px] sm:text-xs text-center cursor-pointer">
+                            <i class="fas fa-plus"></i> <span class="truncate">${product.available ? 'Select Options' : 'Unavailable'}</span>
                         </button>
                     </div>
                 </div>
@@ -1617,17 +1651,20 @@
             document.getElementById('reviewDetailsModal').classList.add('hidden');
         }
 
-        function addToCart(itemId) {
+        function addToCart(itemId, size = null) {
             const product = menuProducts.find(p => (p.firestoreId === itemId || p.id === itemId));
             if (!product || !product.available) return;
 
-            const existing = shoppingCart.find(item => item.id === itemId);
+            const itemName = size ? `${product.name} (Size: ${size})` : product.name;
+            const cartItemId = size ? `${itemId}-${size}` : itemId;
+
+            const existing = shoppingCart.find(item => item.id === cartItemId);
             if (existing) {
                 existing.quantity += 1;
             } else {
                 shoppingCart.push({
-                    id: itemId,
-                    name: product.name,
+                    id: cartItemId,
+                    name: itemName,
                     price: product.price,
                     quantity: 1,
                     details: product.category
@@ -1635,7 +1672,7 @@
             }
 
             updateCartDisplay();
-            showToastNotification(`Added ${product.name} to cart!`);
+            showToastNotification(`Added ${itemName} to cart!`);
         }
 
         function updateItemQuantity(id, delta) {
