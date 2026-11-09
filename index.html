@@ -72,6 +72,26 @@
             box-shadow: 0 0 25px rgba(6, 182, 212, 0.35);
         }
 
+        /* 3D Tab Style for Mobile and Tablets */
+        .tab-3d {
+            perspective: 600px;
+            transform-style: preserve-3d;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 6px 0px rgba(139, 92, 246, 0.5), 0 10px 20px rgba(0, 0, 0, 0.5);
+            transform: translateY(-2px);
+        }
+        .tab-3d:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0px rgba(139, 92, 246, 0.5), 0 5px 10px rgba(0, 0, 0, 0.5);
+        }
+        .tab-3d.active-tab {
+            background: linear-gradient(135deg, #d946ef 0%, #8b5cf6 50%, #06b6d4 100%);
+            color: #000000;
+            font-weight: 900;
+            box-shadow: 0 6px 0px rgba(6, 182, 212, 0.8), 0 12px 25px rgba(217, 70, 239, 0.4);
+            transform: translateY(-4px) scale(1.03);
+        }
+
         @keyframes float {
             0%, 100% { transform: translateY(0px) rotate(0deg); }
             50% { transform: translateY(-15px) rotate(5deg); }
@@ -259,7 +279,24 @@
                 </p>
             </div>
 
-            <div class="flex flex-wrap justify-center gap-2 sm:gap-3 mb-10" id="categoryFilterButtons"></div>
+            <!-- Search Bar Optimized for Mobile and Tablets -->
+            <div class="max-w-xl mx-auto mb-8 px-2">
+                <div class="relative">
+                    <span class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-neonCyan">
+                        <i class="fas fa-search text-base"></i>
+                    </span>
+                    <input 
+                        type="text" 
+                        id="productSearchInput" 
+                        oninput="filterProductsBySearch()" 
+                        placeholder="Search viral snacks, hoodies, gifts, drinks..." 
+                        class="w-full bg-darkCard/95 border-2 border-neonCyan/40 focus:border-neonMagenta rounded-2xl pl-11 pr-4 py-3.5 text-sm sm:text-base text-white placeholder-gray-400 shadow-xl focus:outline-none transition-all"
+                    >
+                </div>
+            </div>
+
+            <!-- 3D Enhanced Category Filter Tabs -->
+            <div class="flex flex-wrap justify-center gap-3 sm:gap-4 mb-12 px-2" id="categoryFilterButtons"></div>
 
             <div class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6" id="productsGridContainer"></div>
         </section>
@@ -941,6 +978,7 @@
 
         let menuProducts = [];
         let selectedCategoryFilter = 'All';
+        let searchQuery = '';
         let fulfillmentType = 'Pickup';
         let currentSlideIndex = 0;
         let slideshowInterval = null;
@@ -1480,7 +1518,7 @@
             container.innerHTML = categories.map(cat => `
                 <button 
                     onclick="filterMenuCategory('${cat}')"
-                    class="px-4 py-2 rounded-2xl text-xs sm:text-sm font-extrabold transition-all duration-300 ${selectedCategoryFilter === cat ? 'bg-gradient-to-r from-neonMagenta to-neonCyan text-black shadow-lg scale-105' : 'glass-card text-gray-300 hover:text-white border-gray-800'}"
+                    class="tab-3d px-5 py-3 rounded-2xl text-xs sm:text-sm font-extrabold transition-all duration-300 ${selectedCategoryFilter === cat ? 'active-tab' : 'glass-card text-gray-200 border-neonMagenta/40 hover:border-neonCyan'}"
                 >
                     ${cat}
                 </button>
@@ -1493,14 +1531,29 @@
             renderProductsGrid();
         }
 
+        function filterProductsBySearch() {
+            const input = document.getElementById('productSearchInput');
+            searchQuery = input ? input.value.toLowerCase().trim() : '';
+            renderProductsGrid();
+        }
+
         function renderProductsGrid() {
             const container = document.getElementById('productsGridContainer');
-            const itemsToDisplay = selectedCategoryFilter === 'All' 
+            
+            let itemsToDisplay = selectedCategoryFilter === 'All' 
                 ? menuProducts 
                 : menuProducts.filter(p => p.category === selectedCategoryFilter);
 
+            if (searchQuery) {
+                itemsToDisplay = itemsToDisplay.filter(p => 
+                    (p.name && p.name.toLowerCase().includes(searchQuery)) || 
+                    (p.description && p.description.toLowerCase().includes(searchQuery)) ||
+                    (p.category && p.category.toLowerCase().includes(searchQuery))
+                );
+            }
+
             if (itemsToDisplay.length === 0) {
-                container.innerHTML = `<div class="col-span-full text-center py-12 text-gray-400">No items available in this category yet. Add items via the Admin dashboard!</div>`;
+                container.innerHTML = `<div class="col-span-full text-center py-12 text-gray-400">No matching items found. Try a different search term!</div>`;
                 return;
             }
 
