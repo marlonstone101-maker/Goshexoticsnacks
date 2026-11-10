@@ -842,10 +842,10 @@
         </div>
     </div>
 
-    <!-- Product Details Modal -->
-    <div id="productDetailModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
-        <div class="glass-card max-w-md w-full p-6 sm:p-8 rounded-3xl border-2 border-neonMagenta shadow-2xl relative">
-            <button onclick="closeProductModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white p-2 text-lg">
+    <!-- Luxury Product Details Modal -->
+    <div id="productDetailModal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-3 sm:p-4">
+        <div class="glass-card max-w-lg w-full p-6 sm:p-8 rounded-3xl border-2 border-neonMagenta shadow-2xl relative max-h-[92vh] overflow-y-auto">
+            <button onclick="closeProductModal()" class="absolute top-4 right-4 text-gray-300 hover:text-white bg-darkCard/90 hover:bg-neonMagenta w-10 h-10 rounded-full flex items-center justify-center border border-neonMagenta/40 transition-colors text-lg z-20 shadow-lg">
                 <i class="fas fa-times"></i>
             </button>
             
@@ -1185,42 +1185,53 @@
             const hasInventory = product.category !== 'Menu 🍔';
             const inventoryDisplay = hasInventory ? `<p class="text-xs text-neonGold font-bold mb-2">📦 Stock Available: ${product.inventory ?? 10} units</p>` : '';
 
-            // Check if product is Clothing to display size selector
+            // Check if product is Clothing to display age selector (4yo to 12yo)
             const isClothing = product.category === 'Clothing 👕';
             const sizeSelectorHTML = isClothing ? `
                 <div class="mb-4">
-                    <label class="block text-xs font-bold text-neonCyan mb-2">Select Size (Kids):</label>
-                    <div class="grid grid-cols-4 gap-2" id="clothingSizeSelector">
-                        <button type="button" onclick="selectClothingSize('S')" class="size-btn py-2 px-3 rounded-xl text-xs font-bold border border-neonMagenta/40 bg-darkBg text-white hover:border-neonMagenta transition-all" data-size="S">S</button>
-                        <button type="button" onclick="selectClothingSize('M')" class="size-btn py-2 px-3 rounded-xl text-xs font-bold border border-neonMagenta/40 bg-darkBg text-white hover:border-neonMagenta transition-all" data-size="M">M</button>
-                        <button type="button" onclick="selectClothingSize('L')" class="size-btn py-2 px-3 rounded-xl text-xs font-bold border border-neonMagenta/40 bg-darkBg text-white hover:border-neonMagenta transition-all" data-size="L">L</button>
-                        <button type="button" onclick="selectClothingSize('xxL')" class="size-btn py-2 px-3 rounded-xl text-xs font-bold border border-neonMagenta/40 bg-darkBg text-white hover:border-neonMagenta transition-all" data-size="xxL">xxL</button>
+                    <label class="block text-xs font-bold text-neonCyan mb-2">Select Age Size:</label>
+                    <div class="grid grid-cols-3 sm:grid-cols-4 gap-2" id="clothingSizeSelector">
+                        <button type="button" onclick="selectClothingSize('4yo')" class="size-btn py-2 px-3 rounded-xl text-xs font-bold border border-neonMagenta/40 bg-darkBg text-white hover:border-neonMagenta transition-all" data-size="4yo">4yo</button>
+                        <button type="button" onclick="selectClothingSize('5yo')" class="size-btn py-2 px-3 rounded-xl text-xs font-bold border border-neonMagenta/40 bg-darkBg text-white hover:border-neonMagenta transition-all" data-size="5yo">5yo</button>
+                        <button type="button" onclick="selectClothingSize('6yo')" class="size-btn py-2 px-3 rounded-xl text-xs font-bold border border-neonMagenta/40 bg-darkBg text-white hover:border-neonMagenta transition-all" data-size="6yo">6yo</button>
+                        <button type="button" onclick="selectClothingSize('7yo')" class="size-btn py-2 px-3 rounded-xl text-xs font-bold border border-neonMagenta/40 bg-darkBg text-white hover:border-neonMagenta transition-all" data-size="7yo">7yo</button>
+                        <button type="button" onclick="selectClothingSize('8yo')" class="size-btn py-2 px-3 rounded-xl text-xs font-bold border border-neonMagenta/40 bg-darkBg text-white hover:border-neonMagenta transition-all" data-size="8yo">8yo</button>
+                        <button type="button" onclick="selectClothingSize('9yo')" class="size-btn py-2 px-3 rounded-xl text-xs font-bold border border-neonMagenta/40 bg-darkBg text-white hover:border-neonMagenta transition-all" data-size="9yo">9yo</button>
+                        <button type="button" onclick="selectClothingSize('10yo')" class="size-btn py-2 px-3 rounded-xl text-xs font-bold border border-neonMagenta/40 bg-darkBg text-white hover:border-neonMagenta transition-all" data-size="10yo">10yo</button>
+                        <button type="button" onclick="selectClothingSize('11yo')" class="size-btn py-2 px-3 rounded-xl text-xs font-bold border border-neonMagenta/40 bg-darkBg text-white hover:border-neonMagenta transition-all" data-size="11yo">11yo</button>
+                        <button type="button" onclick="selectClothingSize('12yo')" class="size-btn py-2 px-3 rounded-xl text-xs font-bold border border-neonMagenta/40 bg-darkBg text-white hover:border-neonMagenta transition-all" data-size="12yo">12yo</button>
                     </div>
-                    <input type="hidden" id="selectedClothingSize" value="M">
+                    <input type="hidden" id="selectedClothingSize" value="6yo">
                 </div>
             ` : '';
 
             modalContent.innerHTML = `
-                <img src="${product.image}" alt="${product.name}" class="w-full h-56 object-cover rounded-2xl mb-4 border border-neonMagenta/40 cursor-pointer" onclick="openLightbox('${product.image}')">
+                <div class="relative overflow-hidden rounded-2xl mb-4 border border-neonMagenta/40 shadow-xl aspect-[4/3] sm:aspect-[16/10] bg-black/60 cursor-pointer" onclick="openLightbox('${product.image}')" title="Click to view full image">
+                    <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none"></div>
+                    <span class="absolute bottom-3 left-3 bg-black/80 backdrop-blur-md text-neonCyan font-bold text-xs px-3 py-1 rounded-full border border-neonCyan/30">
+                        🔍 Tap image to zoom
+                    </span>
+                </div>
                 <div class="flex justify-between items-center mb-2">
                     <span class="bg-neonCyan/20 text-neonCyan font-bold text-xs px-2.5 py-1 rounded-full border border-neonCyan/30">${product.badge}</span>
-                    <span class="text-xs text-gray-400">${product.category}</span>
+                    <span class="text-xs text-gray-400 font-semibold">${product.category}</span>
                 </div>
-                <h3 class="text-xl font-black text-white mb-2">${product.name}</h3>
-                <p class="text-xs text-gray-300 leading-relaxed bg-darkBg/60 p-3.5 rounded-xl border border-gray-800 mb-2">${product.description}</p>
+                <h3 class="text-xl sm:text-2xl font-black text-white mb-2 leading-tight">${product.name}</h3>
+                <p class="text-xs sm:text-sm text-gray-300 leading-relaxed bg-darkBg/70 p-4 rounded-2xl border border-gray-800 mb-3 whitespace-pre-line">${product.description}</p>
                 ${inventoryDisplay}
                 ${sizeSelectorHTML}
-                <div class="flex justify-between items-center mb-6">
-                    <span class="text-xs text-gray-400 font-bold">Price:</span>
-                    <span class="text-2xl font-black text-neonGold">$${product.price.toLocaleString()} JMD</span>
+                <div class="flex justify-between items-center mb-6 pt-2 border-t border-gray-800">
+                    <span class="text-xs text-gray-400 font-bold uppercase tracking-wider">Price:</span>
+                    <span class="text-2xl sm:text-3xl font-black text-neonGold">$${product.price.toLocaleString()} JMD</span>
                 </div>
-                <button onclick="addToCartFromModal('${product.firestoreId || product.id}')" ${!product.available ? 'disabled' : ''} class="w-full ${product.available ? 'bg-gradient-to-r from-neonMagenta to-neonCyan text-white hover:opacity-95' : 'bg-gray-800 text-gray-500 cursor-not-allowed'} font-black py-3 rounded-xl transition-all flex items-center justify-center gap-2 text-sm uppercase tracking-wider shadow-lg">
+                <button onclick="addToCartFromModal('${product.firestoreId || product.id}')" ${!product.available ? 'disabled' : ''} class="w-full ${product.available ? 'bg-gradient-to-r from-neonMagenta via-neonPurple to-neonCyan text-white hover:opacity-95' : 'bg-gray-800 text-gray-500 cursor-not-allowed'} font-black py-3.5 rounded-2xl transition-all flex items-center justify-center gap-2 text-sm uppercase tracking-wider shadow-2xl">
                     <i class="fas fa-shopping-bag"></i> <span>${product.available ? 'Add To Order' : 'Out of Stock'}</span>
                 </button>
             `;
 
             if (isClothing) {
-                selectClothingSize('M'); // Set default selected size to M
+                selectClothingSize('6yo'); // Set default selected age size to 6yo
             }
 
             document.getElementById('productDetailModal').classList.remove('hidden');
@@ -1708,7 +1719,7 @@
             const product = menuProducts.find(p => (p.firestoreId === itemId || p.id === itemId));
             if (!product || !product.available) return;
 
-            const itemName = size ? `${product.name} (Size: ${size})` : product.name;
+            const itemName = size ? `${product.name} (Age: ${size})` : product.name;
             const cartItemId = size ? `${itemId}-${size}` : itemId;
 
             const existing = shoppingCart.find(item => item.id === cartItemId);
