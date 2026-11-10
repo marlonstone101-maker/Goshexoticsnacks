@@ -30,7 +30,7 @@ app.post('/create-wipay-payment', async (req, res) => {
     payload.append('total', parseFloat(amount).toFixed(2));
     payload.append('order_id', orderId || 'GOSH-' + Date.now());
     
-    // Fixed: Added backticks around the template literal
+    
     payload.append('response_url', `${req.headers.origin || 'https://goshexotics.onrender.com'}?status=success`);
     
     if (customerEmail) payload.append('email', customerEmail);
