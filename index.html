@@ -1001,8 +1001,8 @@
             updateCartDisplay();
             fetchReviewsFromFirebase();
 
-            // Auto-restore admin modal if it was open before Safari refreshed/reloaded
-            if (sessionStorage.getItem('gosh_admin_unlocked') === 'true' && sessionStorage.getItem('gosh_admin_modal_open') === 'true') {
+            // Auto-restore admin modal from localStorage if it was open before iOS memory refresh
+            if (localStorage.getItem('gosh_admin_unlocked') === 'true' && localStorage.getItem('gosh_admin_modal_open') === 'true') {
                 toggleHiddenAdminModal(true);
                 renderAdminDashboard();
             }
@@ -1293,26 +1293,47 @@
             });
         }
 
-        // Updated Admin Trigger with sessionStorage Persistence for iPhone Safari
+        // Updated Inline Passcode PIN Modal Trigger for iPhone Safari & Chrome
         function triggerHiddenAdmin() {
-            let isUnlocked = sessionStorage.getItem('gosh_admin_unlocked') === 'true';
+            let isUnlocked = localStorage.getItem('gosh_admin_unlocked') === 'true';
 
             if (!isUnlocked) {
-                const pin = prompt("Enter Admin Passcode:");
-                if (pin === "1234") { 
-                    sessionStorage.setItem('gosh_admin_unlocked', 'true');
-                    isUnlocked = true;
-                } else if (pin !== null) {
-                    alert("Incorrect Passcode!");
-                    return;
-                } else {
-                    return;
+                let pinBox = document.getElementById('inlineAdminPasscodeBox');
+                if (!pinBox) {
+                    pinBox = document.createElement('div');
+                    pinBox.id = 'inlineAdminPasscodeBox';
+                    pinBox.className = 'fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center p-4';
+                    pinBox.innerHTML = `
+                        <div class="glass-card max-w-sm w-full p-6 rounded-3xl border-2 border-neonCyan shadow-2xl text-center space-y-4">
+                            <h3 class="text-xl font-extrabold text-white">Enter Admin Passcode</h3>
+                            <p class="text-xs text-gray-300">Enter PIN to unlock inventory manager:</p>
+                            <input type="password" id="modalPinInput" placeholder="Enter PIN (1234)" class="w-full bg-darkBg border border-neonCyan rounded-xl px-4 py-3 text-center text-xl text-white tracking-widest focus:outline-none">
+                            <div class="flex gap-2">
+                                <button onclick="verifyInlinePin()" class="flex-1 bg-neonCyan text-black font-extrabold py-3 rounded-xl text-sm cursor-pointer">Unlock</button>
+                                <button onclick="document.getElementById('inlineAdminPasscodeBox').remove()" class="flex-1 bg-gray-800 text-gray-300 font-bold py-3 rounded-xl text-sm cursor-pointer">Cancel</button>
+                            </div>
+                        </div>
+                    `;
+                    document.body.appendChild(pinBox);
+                    document.getElementById('modalPinInput').focus();
                 }
+                return;
             }
 
-            if (isUnlocked) {
+            toggleHiddenAdminModal(true);
+            renderAdminDashboard();
+        }
+
+        function verifyInlinePin() {
+            const pin = document.getElementById('modalPinInput').value;
+            if (pin === "1234") {
+                localStorage.setItem('gosh_admin_unlocked', 'true');
+                document.getElementById('inlineAdminPasscodeBox').remove();
                 toggleHiddenAdminModal(true);
                 renderAdminDashboard();
+            } else {
+                alert("Incorrect Passcode!");
+                document.getElementById('modalPinInput').value = '';
             }
         }
 
@@ -1320,10 +1341,10 @@
             const modal = document.getElementById('hiddenAdminModal');
             if (show) {
                 modal.classList.remove('hidden');
-                sessionStorage.setItem('gosh_admin_modal_open', 'true');
+                localStorage.setItem('gosh_admin_modal_open', 'true');
             } else {
                 modal.classList.add('hidden');
-                sessionStorage.removeItem('gosh_admin_modal_open');
+                localStorage.removeItem('gosh_admin_modal_open');
             }
         }
 
@@ -1414,11 +1435,11 @@
             reader.readAsDataURL(fileInput.files[0]);
         }
 
-        // Updated Render Admin Dashboard to prevent wiping active inputs on iPhone
+        // Updated Render Admin Dashboard with strict input focus guard to prevent refreshing while typing
         function renderAdminDashboard() {
-            const activeElement = document.activeElement;
-            if (activeElement && activeElement.tagName === 'INPUT' && activeElement.id.startsWith('admin')) {
-                return; // Skip re-rendering while typing to prevent kicking out or clearing focus on iPhone Safari
+            const activeEl = document.activeElement;
+            if (activeEl && (activeEl.tagName === 'INPUT' || activeEl.tagName === 'TEXTAREA' || activeEl.tagName === 'SELECT')) {
+                return; // Skip re-rendering entirely while keyboard is active and typing
             }
 
             const container = document.getElementById('adminProductListContainer');
