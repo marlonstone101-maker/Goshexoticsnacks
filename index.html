@@ -72,6 +72,16 @@
             box-shadow: 0 0 25px rgba(6, 182, 212, 0.35);
         }
 
+        /* Prevent mobile Safari keyboard resize/glitch issues on the Admin Modal */
+        #hiddenAdminModal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            height: -webkit-fill-available;
+        }
+
         /* 3D Tab Style for Mobile and Tablets */
         .tab-3d {
             perspective: 600px;
@@ -991,9 +1001,10 @@
             updateCartDisplay();
             fetchReviewsFromFirebase();
 
-            // Check if admin was previously unlocked in this browser session
-            if (sessionStorage.getItem('gosh_admin_unlocked') === 'true') {
-                // Keep session ready
+            // Auto-restore admin modal if it was open before Safari refreshed/reloaded
+            if (sessionStorage.getItem('gosh_admin_unlocked') === 'true' && sessionStorage.getItem('gosh_admin_modal_open') === 'true') {
+                toggleHiddenAdminModal(true);
+                renderAdminDashboard();
             }
 
             // WiPay Success Redirect Handler & WhatsApp Order Forwarding
@@ -1309,8 +1320,10 @@
             const modal = document.getElementById('hiddenAdminModal');
             if (show) {
                 modal.classList.remove('hidden');
+                sessionStorage.setItem('gosh_admin_modal_open', 'true');
             } else {
                 modal.classList.add('hidden');
+                sessionStorage.removeItem('gosh_admin_modal_open');
             }
         }
 
