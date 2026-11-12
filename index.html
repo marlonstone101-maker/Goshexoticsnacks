@@ -991,6 +991,11 @@
             updateCartDisplay();
             fetchReviewsFromFirebase();
 
+            // Check if admin was previously unlocked in this browser session
+            if (sessionStorage.getItem('gosh_admin_unlocked') === 'true') {
+                // Keep session ready
+            }
+
             // WiPay Success Redirect Handler & WhatsApp Order Forwarding
             const urlParams = new URLSearchParams(window.location.search);
             if (urlParams.get('status') === 'success') {
@@ -1231,7 +1236,7 @@
             `;
 
             if (isClothing) {
-                selectClothingSize('6yo'); // Set default selected age size to 6yo
+                selectClothingSize('6yo');
             }
 
             document.getElementById('productDetailModal').classList.remove('hidden');
@@ -1277,13 +1282,26 @@
             });
         }
 
+        // Updated Admin Trigger with sessionStorage Persistence for iPhone Safari
         function triggerHiddenAdmin() {
-            const pin = prompt("Enter Admin Passcode:");
-            if (pin === "1234") { 
+            let isUnlocked = sessionStorage.getItem('gosh_admin_unlocked') === 'true';
+
+            if (!isUnlocked) {
+                const pin = prompt("Enter Admin Passcode:");
+                if (pin === "1234") { 
+                    sessionStorage.setItem('gosh_admin_unlocked', 'true');
+                    isUnlocked = true;
+                } else if (pin !== null) {
+                    alert("Incorrect Passcode!");
+                    return;
+                } else {
+                    return;
+                }
+            }
+
+            if (isUnlocked) {
                 toggleHiddenAdminModal(true);
                 renderAdminDashboard();
-            } else if (pin !== null) {
-                alert("Incorrect Passcode!");
             }
         }
 
@@ -1383,7 +1401,13 @@
             reader.readAsDataURL(fileInput.files[0]);
         }
 
+        // Updated Render Admin Dashboard to prevent wiping active inputs on iPhone
         function renderAdminDashboard() {
+            const activeElement = document.activeElement;
+            if (activeElement && activeElement.tagName === 'INPUT' && activeElement.id.startsWith('admin')) {
+                return; // Skip re-rendering while typing to prevent kicking out or clearing focus on iPhone Safari
+            }
+
             const container = document.getElementById('adminProductListContainer');
             container.innerHTML = menuProducts.map((p, index) => {
                 const isMenuCat = p.category === 'Menu 🍔';
@@ -1867,7 +1891,6 @@
                 return;
             }
 
-            // Save order info to local storage so it can be forwarded to WhatsApp after successful return from WiPay
             const orderPayload = {
                 items: shoppingCart,
                 customerName: customerName,
