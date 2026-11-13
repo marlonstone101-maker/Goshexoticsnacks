@@ -1201,7 +1201,6 @@
             const hasInventory = product.category !== 'Menu 🍔';
             const inventoryDisplay = hasInventory ? `<p class="text-xs text-neonGold font-bold mb-2">📦 Stock Available: ${product.inventory ?? 10} units</p>` : '';
 
-            // Check if product is Clothing to display age selector (4yo to 12yo)
             const isClothing = product.category === 'Clothing 👕';
             const sizeSelectorHTML = isClothing ? `
                 <div class="mb-4">
@@ -1293,9 +1292,14 @@
             });
         }
 
-        // Updated Inline Passcode PIN Modal Trigger for iPhone Safari & Chrome
+        window.memoryAdminUnlocked = window.memoryAdminUnlocked || false;
+
         function triggerHiddenAdmin() {
-            let isUnlocked = localStorage.getItem('gosh_admin_unlocked') === 'true';
+            let storageUnlocked = false;
+            try {
+                storageUnlocked = localStorage.getItem('gosh_admin_unlocked') === 'true';
+            } catch (e) {}
+            let isUnlocked = window.memoryAdminUnlocked || storageUnlocked;
 
             if (!isUnlocked) {
                 let pinBox = document.getElementById('inlineAdminPasscodeBox');
@@ -1327,7 +1331,10 @@
         function verifyInlinePin() {
             const pin = document.getElementById('modalPinInput').value;
             if (pin === "1234") {
-                localStorage.setItem('gosh_admin_unlocked', 'true');
+                window.memoryAdminUnlocked = true;
+                try {
+                    localStorage.setItem('gosh_admin_unlocked', 'true');
+                } catch (e) {}
                 document.getElementById('inlineAdminPasscodeBox').remove();
                 toggleHiddenAdminModal(true);
                 renderAdminDashboard();
@@ -1341,10 +1348,10 @@
             const modal = document.getElementById('hiddenAdminModal');
             if (show) {
                 modal.classList.remove('hidden');
-                localStorage.setItem('gosh_admin_modal_open', 'true');
+                try { localStorage.setItem('gosh_admin_modal_open', 'true'); } catch (e) {}
             } else {
                 modal.classList.add('hidden');
-                localStorage.removeItem('gosh_admin_modal_open');
+                try { localStorage.removeItem('gosh_admin_modal_open'); } catch (e) {}
             }
         }
 
@@ -1435,11 +1442,10 @@
             reader.readAsDataURL(fileInput.files[0]);
         }
 
-        // Updated Render Admin Dashboard with strict input focus guard to prevent refreshing while typing
         function renderAdminDashboard() {
             const activeEl = document.activeElement;
             if (activeEl && (activeEl.tagName === 'INPUT' || activeEl.tagName === 'TEXTAREA' || activeEl.tagName === 'SELECT')) {
-                return; // Skip re-rendering entirely while keyboard is active and typing
+                return;
             }
 
             const container = document.getElementById('adminProductListContainer');
