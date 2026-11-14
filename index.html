@@ -1713,7 +1713,6 @@
                     const ctx = canvas.getContext('2d');
                     ctx.drawImage(img, 0, 0, width, height);
                     
-                    // Optimized compression quality (0.45) for lightning-fast database loads
                     const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.45);
                     saveToFirestore(compressedDataUrl);
                 };
@@ -1957,7 +1956,6 @@
                 <div class="glass-card rounded-2xl sm:rounded-3xl p-3.5 sm:p-5 border transition-all flex flex-col justify-between ${!product.available ? 'opacity-60 grayscale' : ''}" style="border-color: var(--accent-primary);">
                     <div>
                         <div class="relative mb-3 overflow-hidden rounded-xl sm:rounded-2xl cursor-pointer" onclick="openLightbox('${product.image}')" title="Click to view full image">
-                            <!-- Added loading="lazy" for instant scrolling and rendering performance -->
                             <img src="${product.image}" alt="${product.name}" loading="lazy" class="w-full h-32 sm:h-48 object-cover hover:scale-110 transition-transform duration-500">
                             <span class="absolute top-2 left-2 bg-black/85 backdrop-blur-md font-bold text-[9px] sm:text-[10px] px-2.5 py-0.5 sm:py-1 rounded-full border" style="color: var(--accent-primary); border-color: var(--accent-primary);">
                                 ${product.badge}
