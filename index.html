@@ -1129,20 +1129,7 @@
         let shoppingCart = [];
 
         window.addEventListener('DOMContentLoaded', () => {
-            try {
-                const isUnlocked = localStorage.getItem('gosh_admin_unlocked') === 'true';
-                const wasModalOpen = localStorage.getItem('gosh_admin_modal_open') === 'true';
-                
-                if (isUnlocked || wasModalOpen) {
-                    toggleHiddenAdminModal(true);
-                    if (typeof renderAdminDashboard === 'function') {
-                        renderAdminDashboard();
-                    }
-                }
-            } catch (e) {
-                console.warn("Secure admin initialization check failed safely:", e);
-            }
-
+           
             fetchProductsFromFirebase();
             renderCategoryFilters();
             updateCartDisplay();
@@ -1564,42 +1551,30 @@
                 }
             });
         }
-        window.memoryAdminUnlocked = window.memoryAdminUnlocked || false;
+       function triggerHiddenAdmin() {
+  const isUnlocked = false;
 
-        function triggerHiddenAdmin() {
-            let storageUnlocked = false;
-            try {
-                storageUnlocked = localStorage.getItem('gosh_admin_unlocked') === 'true';
-            } catch (e) {}
-            let isUnlocked = window.memoryAdminUnlocked || storageUnlocked;
-
-            if (!isUnlocked) {
-                let pinBox = document.getElementById('inlineAdminPasscodeBox');
-                if (!pinBox) {
-                    pinBox = document.createElement('div');
-                    pinBox.id = 'inlineAdminPasscodeBox';
-                    pinBox.className = 'fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center p-4';
-                    pinBox.innerHTML = `
-                        <div class="glass-card max-w-sm w-full p-6 rounded-3xl border-2 shadow-2xl text-center space-y-4" style="border-color: var(--accent-primary);">
-                            <h3 class="text-xl font-extrabold text-white">Enter Admin Passcode</h3>
-                            <p class="text-xs text-gray-300">Enter PIN to unlock inventory manager:</p>
-                            <input type="password" id="modalPinInput" placeholder="Enter PIN" class="w-full bg-darkBg border rounded-xl px-4 py-3 text-center text-xl text-white tracking-widest focus:outline-none" style="border-color: var(--accent-primary);">
-                            <div class="flex gap-2">
-                                <button onclick="verifyInlinePin()" class="flex-1 text-black font-extrabold py-3 rounded-xl text-sm cursor-pointer" style="background: var(--accent-primary);">Unlock</button>
-                                <button onclick="document.getElementById('inlineAdminPasscodeBox').remove()" class="flex-1 bg-gray-800 text-gray-300 font-bold py-3 rounded-xl text-sm cursor-pointer">Cancel</button>
-                            </div>
-                        </div>
-                    `;
-                    document.body.appendChild(pinBox);
-                    const pinInput = document.getElementById('modalPinInput');
-                    if (pinInput) pinInput.focus();
-                }
-                return;
-            }
-
-            toggleHiddenAdminModal(true);
-            renderAdminDashboard();
-        }
+  if (!isUnlocked) {
+    let pinBox = document.getElementById('inlineAdminPasscodeBox');
+    if (!pinBox) {
+      pinBox = document.createElement('div');
+      pinBox.id = 'inlineAdminPasscodeBox';
+      pinBox.className = 'fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center p-4';
+      pinBox.innerHTML = `
+        <div class="glass-card max-w-sm w-full p-6 rounded-3xl border-2 border-white/20 shadow-2xl text-center space-y-4">
+          <h3 class="text-xl font-extrabold text-white">Enter Admin Passcode</h3>
+          <p class="text-xs text-gray-300">Enter PIN to unlock inventory management.</p>
+          <input type="password" id="modalPinInput" placeholder="Enter PIN" class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white text-center text-lg tracking-widest focus:outline-none focus:border-purple-500">
+          <div class="flex space-x-3 pt-2">
+            <button onclick="verifyInlinePin()" class="flex-1 py-3 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-xl transition">Unlock</button>
+            <button onclick="document.getElementById('inlineAdminPasscodeBox').remove()" class="px-4 py-3 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl transition">Cancel</button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(pinBox);
+    }
+  }
+}
 
         function verifyInlinePin() {
             const pinInput = document.getElementById('modalPinInput');
@@ -1991,7 +1966,7 @@
                 <div class="glass-card rounded-2xl sm:rounded-3xl p-3.5 sm:p-5 border transition-all flex flex-col justify-between ${!product.available ? 'opacity-60 grayscale' : ''}" style="border-color: var(--accent-primary);">
                     <div>
                         <div class="relative mb-3 overflow-hidden rounded-xl sm:rounded-2xl cursor-pointer" onclick="openLightbox('${product.image}')" title="Click to view full image">
-                            <img src="${product.image}" alt="${product.name}" loading="lazy" class="w-full h-32 sm:h-48 object-cover hover:scale-110 transition-transform duration-500">
+                            <img src="${product.image}" alt="${product.name}" loading="lazy" decoding="async" class="w-full h-32 sm:h-48 object-cover hover:scale-110 transition-transform duration-500">
                             <span class="absolute top-2 left-2 bg-black/85 backdrop-blur-md font-bold text-[9px] sm:text-[10px] px-2.5 py-0.5 sm:py-1 rounded-full border" style="color: var(--accent-primary); border-color: var(--accent-primary);">
                                 ${product.badge}
                             </span>
