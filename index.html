@@ -1512,39 +1512,58 @@
         }
 
         function fetchProductsFromFirebase() {
-    // Safety timeout: If Firebase takes longer than 3 seconds, stop loading and show empty state
-    const loadTimeout = setTimeout(() => {
-        if (!window.productsLoaded) {
-            console.warn("Firebase connection timed out. Loading fallback UI.");
-            menuProducts = [];
-            renderProductsGrid();
-        }
-    }, 3000);
+            // INSTANT SPEED UP: Load from browser cache immediately if available
+            try {
+                const cachedProducts = localStorage.getItem('gosh_cached_products');
+                if (cachedProducts) {
+                    menuProducts = JSON.parse(cachedProducts);
+                    renderProductsGrid();
+                    initSlideshow();
+                }
+            } catch (e) {
+                console.warn("Cache load skipped:", e);
+            }
 
-    db.collection("products").get().then((snapshot) => {
-        clearTimeout(loadTimeout);
-        window.productsLoaded = true;
-        menuProducts = [];
-        
-        snapshot.forEach((doc) => {
-            menuProducts.push({ firestoreId: doc.id, ...doc.data() });
-        });
+            // Safety timeout: If Firebase takes longer than 3 seconds, stop loading and show fallback UI
+            const loadTimeout = setTimeout(() => {
+                if (!window.productsLoaded && menuProducts.length === 0) {
+                    console.warn("Firebase connection timed out. Loading fallback UI.");
+                    renderProductsGrid();
+                }
+            }, 3000);
 
-        renderProductsGrid();
-        initSlideshow();
-        
-        const adminModal = document.getElementById('hiddenAdminModal');
-        if (adminModal && !adminModal.classList.contains('hidden')) {
-            renderAdminDashboard();
+            db.collection("products").get().then((snapshot) => {
+                clearTimeout(loadTimeout);
+                window.productsLoaded = true;
+                let freshProducts = [];
+                
+                snapshot.forEach((doc) => {
+                    freshProducts.push({ firestoreId: doc.id, ...doc.data() });
+                });
+
+                if (freshProducts.length > 0) {
+                    menuProducts = freshProducts;
+                    // Cache locally for instant loading on next visit
+                    try {
+                        localStorage.setItem('gosh_cached_products', JSON.stringify(menuProducts));
+                    } catch (e) {}
+
+                    renderProductsGrid();
+                    initSlideshow();
+                }
+                
+                const adminModal = document.getElementById('hiddenAdminModal');
+                if (adminModal && !adminModal.classList.contains('hidden')) {
+                    renderAdminDashboard();
+                }
+            }).catch((error) => {
+                clearTimeout(loadTimeout);
+                console.error("Error fetching from Firebase Firestore:", error);
+                if (menuProducts.length === 0) {
+                    renderProductsGrid();
+                }
+            });
         }
-    }).catch((error) => {
-        clearTimeout(loadTimeout);
-        console.error("Error fetching from Firebase Firestore:", error);
-        // Fallback so the site doesn't stay stuck on loading
-        menuProducts = [];
-        renderProductsGrid();
-    });
-}
         window.memoryAdminUnlocked = window.memoryAdminUnlocked || false;
 
         function triggerHiddenAdmin() {
