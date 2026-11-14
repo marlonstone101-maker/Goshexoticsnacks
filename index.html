@@ -1512,23 +1512,22 @@
         }
 
         function fetchProductsFromFirebase() {
-            db.collection("products").onSnapshot((snapshot) => {
-                menuProducts = [];
-                snapshot.forEach((doc) => {
-                    menuProducts.push({ firestoreId: doc.id, ...doc.data() });
-                });
+    db.collection("products").get().then((snapshot) => {
+        menuProducts = [];
+        snapshot.forEach((doc) => {
+            menuProducts.push({ firestoreId: doc.id, ...doc.data() });
+        });
 
-                renderProductsGrid();
-                initSlideshow();
-                const adminModal = document.getElementById('hiddenAdminModal');
-                if (adminModal && !adminModal.classList.contains('hidden')) {
-                    renderAdminDashboard();
-                }
-            }, (error) => {
-                console.error("Error fetching from Firebase Firestore:", error);
-            });
+        renderProductsGrid();
+        initSlideshow();
+        const adminModal = document.getElementById('hiddenAdminModal');
+        if (adminModal && !adminModal.classList.contains('hidden')) {
+            renderAdminDashboard();
         }
-
+    }).catch((error) => {
+        console.error("Error fetching from Firebase Firestore:", error);
+    });
+}
         window.memoryAdminUnlocked = window.memoryAdminUnlocked || false;
 
         function triggerHiddenAdmin() {
