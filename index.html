@@ -210,7 +210,6 @@
             box-shadow: 0 0 25px rgba(6, 182, 212, 0.35);
         }
 
-        /* Prevent mobile Safari keyboard resize/glitch issues on the Admin Modal */
         #hiddenAdminModal {
             position: fixed;
             top: 0;
@@ -220,7 +219,6 @@
             height: -webkit-fill-available;
         }
 
-        /* 3D Tab Style for Mobile and Tablets */
         .tab-3d {
             perspective: 600px;
             transform-style: preserve-3d;
@@ -249,7 +247,6 @@
             animation: float 4s ease-in-out infinite;
         }
 
-        /* Marquee Running Ticker Animation */
         @keyframes marquee {
             0% { transform: translateX(0%); }
             100% { transform: translateX(-50%); }
@@ -283,7 +280,7 @@
     <div id="dynamicEffectContainer"></div>
 
     <div>
-        <!-- Top Announcement Bar (Double-click the flags 🇯🇲 🇺🇸 to open admin passcode prompt) -->
+        <!-- Top Announcement Bar -->
         <div class="text-black font-extrabold text-xs sm:text-sm py-2 px-4 text-center tracking-wide flex justify-between items-center z-50 relative shadow-md" id="topAnnouncementBar" style="background: var(--header-gradient);">
             <div class="flex items-center gap-2 mx-auto">
                 <span>BARGAIN MALL SHOP #1, CLOCK TOWER PLAZA, JAMAICA <span ondblclick="triggerHiddenAdmin()" class="cursor-pointer select-none" title="Hidden Admin Passcode">🇯🇲 <span class="inline-block ml-0.5">🇺🇸</span></span></span>
@@ -336,9 +333,8 @@
             </div>
         </header>
 
-        <!-- Hero Section with Clear Background Video & Product Slideshow -->
+        <!-- Hero Section -->
         <section id="hero" class="relative py-12 lg:py-20 overflow-hidden">
-            <!-- Hero Background Video Container (Clear & Unfiltered) -->
             <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
                 <video autoplay muted loop playsinline class="w-full h-full object-cover opacity-90">
                     <source src="video1.mp4" type="video/mp4">
@@ -373,7 +369,7 @@
                     </div>
                 </div>
 
-                <!-- Product Showcase Slideshow (Dynamic Name, Price & Description) -->
+                <!-- Product Showcase Slideshow -->
                 <div class="lg:col-span-6 relative">
                     <div class="glass-card rounded-3xl p-5 sm:p-6 relative z-10 border-2 shadow-2xl" style="border-color: var(--accent-primary);">
                         <div class="flex justify-between items-center mb-4">
@@ -383,17 +379,13 @@
                             <span id="slideshowCounter" class="text-xs text-neonGold font-bold">1 / 4</span>
                         </div>
 
-                        <!-- Slideshow Container -->
                         <div class="relative overflow-hidden rounded-2xl mb-4 group aspect-[4/3] sm:aspect-[16/10]">
-                            <div id="heroSlidesWrapper" class="w-full h-full flex transition-transform duration-500 ease-out">
-                                <!-- Slides injected dynamically via JS -->
-                            </div>
+                            <div id="heroSlidesWrapper" class="w-full h-full flex transition-transform duration-500 ease-out"></div>
 
-                            <!-- Carousel Navigation Arrows -->
-                            <button onclick="prevSlide()" class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/60 text-white w-9 h-9 rounded-full flex items-center justify-center transition-colors border border-white/20" style="hover:background: var(--accent-primary);">
+                            <button onclick="prevSlide()" class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/60 text-white w-9 h-9 rounded-full flex items-center justify-center transition-colors border border-white/20">
                                 <i class="fas fa-chevron-left text-xs"></i>
                             </button>
-                            <button onclick="nextSlide()" class="absolute right-2 top-1/2 -translate-y-1/2 bg-black/60 text-white w-9 h-9 rounded-full flex items-center justify-center transition-colors border border-white/20" style="hover:background: var(--accent-primary);">
+                            <button onclick="nextSlide()" class="absolute right-2 top-1/2 -translate-y-1/2 bg-black/60 text-white w-9 h-9 rounded-full flex items-center justify-center transition-colors border border-white/20">
                                 <i class="fas fa-chevron-right text-xs"></i>
                             </button>
                         </div>
@@ -406,7 +398,6 @@
                                 </div>
                                 <span id="slidePrice" class="text-lg sm:text-xl font-black text-neonGold shrink-0">$0 JMD</span>
                             </div>
-                            <!-- Slideshow Item Description Added Here -->
                             <p id="slideDescription" class="text-xs text-gray-300 leading-relaxed bg-darkBg/60 p-2.5 rounded-xl border border-gray-800 line-clamp-2">Loading description...</p>
                         </div>
 
@@ -426,11 +417,10 @@
                     EXPLORE <span class="text-transparent bg-clip-text" style="background-image: var(--header-gradient);">SHOP & MENU</span> 🛍️
                 </h2>
                 <p class="text-gray-400 text-sm sm:text-base">
-                    Shop viral snacks, trendy clothing, gifts, icy slushies, and exclusive items! Tap any product to view full details.
+                    Shop viral snacks, trendy clothing, gifts, bags, cosmetics, footwear, and icy slushies! Tap any product to view full details.
                 </p>
             </div>
 
-            <!-- Search Bar Optimized for Mobile and Tablets -->
             <div class="max-w-xl mx-auto mb-8 px-2">
                 <div class="relative">
                     <span class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none" style="color: var(--accent-primary);">
@@ -440,14 +430,13 @@
                         type="text" 
                         id="productSearchInput" 
                         oninput="filterProductsBySearch()" 
-                        placeholder="Search viral snacks, hoodies, gifts, drinks..." 
+                        placeholder="Search viral snacks, hoodies, bags, shoes, gifts..." 
                         class="w-full bg-darkCard/95 border-2 rounded-2xl pl-11 pr-4 py-3.5 text-sm sm:text-base text-white placeholder-gray-400 shadow-xl focus:outline-none transition-all"
                         style="border-color: var(--accent-primary);"
                     >
                 </div>
             </div>
 
-            <!-- 3D Enhanced Category Filter Tabs -->
             <div class="flex flex-wrap justify-center gap-3 sm:gap-4 mb-12 px-2" id="categoryFilterButtons"></div>
 
             <div class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6" id="productsGridContainer"></div>
@@ -466,7 +455,6 @@
                     Give the ultimate gift of choice! Tap the gift box below to open it and explore our exclusive Gosh gift card designs & denominations.
                 </p>
 
-                <!-- Interactive Gift Box Container -->
                 <div id="giftBoxContainer" class="max-w-md mx-auto mb-12 cursor-pointer group transition-transform duration-300 hover:scale-105" onclick="toggleGiftCardsVault()">
                     <div class="glass-card p-8 rounded-3xl border-2 shadow-2xl relative overflow-hidden bg-gradient-to-br from-black/60 via-darkCard to-black/80" style="border-color: var(--accent-primary);">
                         <div class="absolute -right-10 -top-10 w-32 h-32 rounded-full blur-2xl" style="background: var(--accent-primary); opacity: 0.2;"></div>
@@ -486,11 +474,9 @@
                     </div>
                 </div>
 
-                <!-- Revealed Gift Cards Vault -->
                 <div id="revealedGiftCardsVault" class="hidden space-y-10 animate-fadeIn">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center max-w-5xl mx-auto">
                         
-                        <!-- Gift Card 1: Gosh It's Cute Kidz -->
                         <div class="glass-card p-4 sm:p-6 rounded-3xl border-2 shadow-2xl flex flex-col justify-between" style="border-color: var(--accent-primary);">
                             <div class="relative overflow-hidden rounded-2xl mb-4 group aspect-[16/10]">
                                 <img src="giftcard1.jpg" alt="Gosh It's Cute Kidz Gift Card" class="w-full h-full object-cover cursor-pointer hover:scale-105 transition-transform duration-500" onclick="openLightbox('giftcard1.jpg')">
@@ -499,9 +485,8 @@
                                 </span>
                             </div>
                             <h3 class="text-lg font-extrabold text-white mb-1">Gosh It's Cute Kidz Gift Card</h3>
-                            <p class="text-xs text-gray-300 mb-4 leading-relaxed">Perfect for kids fashion, handbags, footwear, and cute accessories!</p>
+                            <p class="text-xs text-gray-300 mb-4 leading-relaxed">Perfect for kids fashion, handbags, footwear, and cute cosmetics!</p>
                             
-                            <!-- Denominations Grid -->
                             <div class="grid grid-cols-2 gap-2 mb-4">
                                 <button onclick="addCustomItemToCart('Gosh It\'s Cute Kidz Gift Card (J$2,500)', 2500, 'Gifts 💄', 'giftcard1.jpg')" class="bg-darkBg hover:bg-white hover:text-black border text-white font-extrabold py-2 px-3 rounded-xl text-xs transition-all flex items-center justify-between" style="border-color: var(--accent-primary);">
                                     <span>J$2,500</span> <i class="fas fa-plus"></i>
@@ -518,7 +503,6 @@
                             </div>
                         </div>
 
-                        <!-- Gift Card 2: Gosh Exotic Snacks -->
                         <div class="glass-card p-4 sm:p-6 rounded-3xl border-2 shadow-2xl flex flex-col justify-between" style="border-color: var(--accent-primary);">
                             <div class="relative overflow-hidden rounded-2xl mb-4 group aspect-[16/10]">
                                 <img src="giftcard2.jpg" alt="Gosh Exotic Snacks Gift Card" class="w-full h-full object-cover cursor-pointer hover:scale-105 transition-transform duration-500" onclick="openLightbox('giftcard2.jpg')">
@@ -529,7 +513,6 @@
                             <h3 class="text-lg font-extrabold text-white mb-1">Gosh Exotic Snacks Gift Card</h3>
                             <p class="text-xs text-gray-300 mb-4 leading-relaxed">Redeemable for viral snacks, drinks, desserts, Stanley mugs & more!</p>
                             
-                            <!-- Denominations Grid -->
                             <div class="grid grid-cols-2 gap-2 mb-4">
                                 <button onclick="addCustomItemToCart('Gosh Exotic Snacks Gift Card (J$2,500)', 2500, 'Gifts 💄', 'giftcard2.jpg')" class="bg-darkBg hover:bg-white hover:text-black border text-white font-extrabold py-2 px-3 rounded-xl text-xs transition-all flex items-center justify-between" style="border-color: var(--accent-primary);">
                                     <span>J$2,500</span> <i class="fas fa-plus"></i>
@@ -551,7 +534,7 @@
             </div>
         </section>
 
-        <!-- Frequently Asked Questions (FAQ) Section -->
+        <!-- FAQ Section -->
         <section id="faq" class="py-16 bg-darkCard/40 border-t relative" style="border-color: var(--accent-primary);">
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center max-w-3xl mx-auto mb-12">
@@ -567,7 +550,7 @@
                 </div>
 
                 <div class="space-y-4 max-w-3xl mx-auto">
-                    <!-- FAQ Item 1 -->
+                    <!-- FAQ 1 -->
                     <div class="glass-card rounded-2xl border overflow-hidden transition-all duration-300" style="border-color: var(--accent-primary);">
                         <button onclick="toggleFaqAccordion(1)" class="w-full p-5 text-left flex justify-between items-center gap-4 bg-darkBg/60 hover:bg-darkCard/80 transition-colors">
                             <div class="flex items-center gap-3">
@@ -618,22 +601,10 @@
                                     </tbody>
                                 </table>
                             </div>
-
-                            <div class="bg-darkBg/80 p-3.5 sm:p-4 rounded-xl border border-gray-800 space-y-2 mt-2">
-                                <p class="text-white font-bold text-xs flex items-center gap-1.5">
-                                    <i class="fas fa-circle-info" style="color: var(--accent-primary);"></i> Important Delivery Information:
-                                </p>
-                                <ul class="list-disc pl-4 space-y-1 text-[11px] sm:text-xs text-gray-300">
-                                    <li>All delivery fees are quoted in Jamaican dollars (JMD).</li>
-                                    <li>Delivery fees are separate from the cost of your purchase.</li>
-                                    <li>Customers can select their preferred delivery location at checkout.</li>
-                                    <li>Delivery times and availability will be confirmed after your order is placed.</li>
-                                </ul>
-                            </div>
                         </div>
                     </div>
 
-                    <!-- FAQ Item 2 -->
+                    <!-- FAQ 2 -->
                     <div class="glass-card rounded-2xl border overflow-hidden transition-all duration-300" style="border-color: var(--accent-primary);">
                         <button onclick="toggleFaqAccordion(2)" class="w-full p-5 text-left flex justify-between items-center gap-4 bg-darkBg/60 hover:bg-darkCard/80 transition-colors">
                             <div class="flex items-center gap-3">
@@ -647,19 +618,11 @@
                         <div id="faqContent-2" class="hidden px-6 pb-6 pt-2 text-xs sm:text-sm text-gray-300 leading-relaxed border-t border-gray-800/80 space-y-3">
                             <p class="font-semibold text-white">Islandwide Delivery via Knutsford Express 🇯🇲</p>
                             <p>We offer delivery arrangements for customers across all 14 parishes of Jamaica through Knutsford Express.</p>
-                            <p><strong class="text-neonGold">Bearer Fee:</strong> JMD $1,000 per order. This fee covers the cost of transporting your package from our store to Knutsford Express for shipment.</p>
-                            <div class="bg-darkBg/80 p-3.5 rounded-xl border border-gray-800 space-y-2">
-                                <p class="text-white font-bold text-xs">IMPORTANT NOTICE:</p>
-                                <ul class="list-disc pl-4 space-y-1 text-[11px] text-gray-300">
-                                    <li>The $1,000 bearer fee is charged by our store and is NOT affiliated with Knutsford Express.</li>
-                                    <li>This fee does NOT include Knutsford Express shipping charges.</li>
-                                    <li>Customers are responsible for paying Knutsford Express shipping fees separately.</li>
-                                </ul>
-                            </div>
+                            <p><strong class="text-neonGold">Bearer Fee:</strong> JMD $1,000 per order.</p>
                         </div>
                     </div>
 
-                    <!-- FAQ Item 3 -->
+                    <!-- FAQ 3 -->
                     <div class="glass-card rounded-2xl border overflow-hidden transition-all duration-300" style="border-color: var(--accent-primary);">
                         <button onclick="toggleFaqAccordion(3)" class="w-full p-5 text-left flex justify-between items-center gap-4 bg-darkBg/60 hover:bg-darkCard/80 transition-colors">
                             <div class="flex items-center gap-3">
@@ -672,11 +635,11 @@
                         </button>
                         <div id="faqContent-3" class="hidden px-6 pb-6 pt-2 text-xs sm:text-sm text-gray-300 leading-relaxed border-t border-gray-800/80 space-y-3">
                             <p class="font-semibold text-white">Yes, absolutely! 🍭🍫🌎</p>
-                            <p>At Gosh Exotic Snacks, we love bringing you unique treats from around the world! If there’s a specific exotic snack or drink you’re craving, feel free to send us a picture or the name of the item.</p>
+                            <p>At Gosh Exotic Snacks, we love bringing you unique treats from around the world!</p>
                         </div>
                     </div>
 
-                    <!-- FAQ Item 4 -->
+                    <!-- FAQ 4 -->
                     <div class="glass-card rounded-2xl border overflow-hidden transition-all duration-300" style="border-color: var(--accent-primary);">
                         <button onclick="toggleFaqAccordion(4)" class="w-full p-5 text-left flex justify-between items-center gap-4 bg-darkBg/60 hover:bg-darkCard/80 transition-colors">
                             <div class="flex items-center gap-3">
@@ -688,11 +651,11 @@
                             <i id="faqIcon-4" class="fas fa-chevron-down transition-transform duration-300" style="color: var(--accent-primary);"></i>
                         </button>
                         <div id="faqContent-4" class="hidden px-6 pb-6 pt-2 text-xs sm:text-sm text-gray-300 leading-relaxed border-t border-gray-800/80 space-y-3">
-                            <p>Yes, we do! 💕 At Gosh, we offer wholesale options on selected items. Whether you’re purchasing for resale or buying in bulk, we’ve got you covered! For wholesale inquiries, pricing, and minimum order quantities, please contact us directly.</p>
+                            <p>Yes, we do! 💕 At Gosh, we offer wholesale options on selected items.</p>
                         </div>
                     </div>
 
-                    <!-- FAQ Item 5 -->
+                    <!-- FAQ 5 -->
                     <div class="glass-card rounded-2xl border overflow-hidden transition-all duration-300" style="border-color: var(--accent-primary);">
                         <button onclick="toggleFaqAccordion(5)" class="w-full p-5 text-left flex justify-between items-center gap-4 bg-darkBg/60 hover:bg-darkCard/80 transition-colors">
                             <div class="flex items-center gap-3">
@@ -704,11 +667,11 @@
                             <i id="faqIcon-5" class="fas fa-chevron-down transition-transform duration-300" style="color: var(--accent-primary);"></i>
                         </button>
                         <div id="faqContent-5" class="hidden px-6 pb-6 pt-2 text-xs sm:text-sm text-gray-300 leading-relaxed border-t border-gray-800/80 space-y-3">
-                            <p>Yes! 💜 Gosh gift cards are the perfect way to treat someone special! 🎁 Whether it’s for a birthday, holiday, or just because, let your loved ones choose something they’ll love. Contact us directly to purchase.</p>
+                            <p>Yes! 💜 Gosh gift cards are the perfect way to treat someone special!</p>
                         </div>
                     </div>
 
-                    <!-- FAQ Item 6 -->
+                    <!-- FAQ 6 -->
                     <div class="glass-card rounded-2xl border overflow-hidden transition-all duration-300" style="border-color: var(--accent-primary);">
                         <button onclick="toggleFaqAccordion(6)" class="w-full p-5 text-left flex justify-between items-center gap-4 bg-darkBg/60 hover:bg-darkCard/80 transition-colors">
                             <div class="flex items-center gap-3">
@@ -720,7 +683,7 @@
                             <i id="faqIcon-6" class="fas fa-chevron-down transition-transform duration-300" style="color: var(--accent-primary);"></i>
                         </button>
                         <div id="faqContent-6" class="hidden px-6 pb-6 pt-2 text-xs sm:text-sm text-gray-300 leading-relaxed border-t border-gray-800/80 space-y-3">
-                            <p>At Gosh, we make shopping easy, safe, and convenient! 💜🛍️ We accept cash, bank transfers, debit/credit cards, and direct online checkout through our website!</p>
+                            <p>At Gosh, we make shopping easy, safe, and convenient! 💜🛍️</p>
                         </div>
                     </div>
                 </div>
@@ -741,7 +704,6 @@
                 </p>
 
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
-                    <!-- Main Instagram -->
                     <a href="https://www.instagram.com/gosh_exotic_snacks?obrf=b2t1ajZmNm40bW1k&utm_source=qr" target="_blank" class="glass-card p-6 rounded-3xl border transition-all group flex flex-col items-center text-center" style="border-color: var(--accent-primary);">
                         <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 flex items-center justify-center text-white text-2xl mb-4 group-hover:scale-110 transition-transform shadow-lg">
                             <i class="fab fa-instagram"></i>
@@ -753,7 +715,6 @@
                         </span>
                     </a>
 
-                    <!-- Kids Clothing Instagram -->
                     <a href="https://www.instagram.com/gosh_its_cute_kids?xtok=M3BrcTBldHppOHZv&utm_source=qr" target="_blank" class="glass-card p-6 rounded-3xl border transition-all group flex flex-col items-center text-center" style="border-color: var(--accent-primary);">
                         <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-purple-500 via-indigo-500 to-pink-500 flex items-center justify-center text-white text-2xl mb-4 group-hover:scale-110 transition-transform shadow-lg">
                             <i class="fab fa-instagram"></i>
@@ -765,7 +726,6 @@
                         </span>
                     </a>
 
-                    <!-- TikTok -->
                     <a href="https://www.tiktok.com/@goshexoticsnacks" target="_blank" class="glass-card p-6 rounded-3xl border transition-all group flex flex-col items-center text-center" style="border-color: var(--accent-primary);">
                         <div class="w-14 h-14 rounded-2xl bg-black border flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform shadow-lg" style="border-color: var(--accent-primary); color: var(--accent-primary);">
                             <i class="fab fa-tiktok"></i>
@@ -844,9 +804,7 @@
                         <div class="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-darkBg to-transparent z-10 pointer-events-none"></div>
                         <div class="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-darkBg to-transparent z-10 pointer-events-none"></div>
                         
-                        <div id="reviewsListContainer" class="animate-marquee flex gap-6">
-                            <!-- Dynamic Marquee Reviews Injected Here -->
-                        </div>
+                        <div id="reviewsListContainer" class="animate-marquee flex gap-6"></div>
                     </div>
                 </div>
             </div>
@@ -912,15 +870,11 @@
         </section>
     </div>
 
-    <!-- Footer Copyright & Site Credit Section -->
+    <!-- Footer -->
     <footer class="bg-darkBg border-t py-8 px-4 text-center" style="border-color: var(--accent-primary);">
         <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-400">
-            <div>
-                &copy; 2026 Gosh Exotic Snacks. All Rights Reserved.
-            </div>
-            <div class="font-bold tracking-wider" style="color: var(--accent-primary);">
-                Site by M.S Media
-            </div>
+            <div>&copy; 2026 Gosh Exotic Snacks. All Rights Reserved.</div>
+            <div class="font-bold tracking-wider" style="color: var(--accent-primary);">Site by M.S Media</div>
         </div>
     </footer>
 
@@ -936,7 +890,7 @@
                 </button>
             </div>
 
-            <!-- THEME MANAGER SECTION -->
+            <!-- Theme Manager -->
             <div class="mb-8 p-4 sm:p-6 glass-card rounded-3xl border-2 shadow-xl" style="border-color: var(--accent-primary);">
                 <h4 class="text-lg font-black text-white mb-2 flex items-center gap-2">
                     <i class="fas fa-palette text-neonGold"></i> Store Seasonal Theme Manager
@@ -973,12 +927,15 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-xs font-bold text-gray-300 mb-1">Item Name:</label>
-                        <input type="text" id="newProdName" placeholder="e.g. Designer Hoodie or Matte Lipstick" class="w-full bg-darkBg border border-gray-700 rounded-xl px-3 py-2 text-xs text-white">
+                        <input type="text" id="newProdName" placeholder="e.g. Designer Hoodie or Sneakers" class="w-full bg-darkBg border border-gray-700 rounded-xl px-3 py-2 text-xs text-white">
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-gray-300 mb-1">Category:</label>
-                        <select id="newProdCategory" onchange="toggleInventoryInputVisibility()" class="w-full bg-darkBg border border-gray-700 rounded-xl px-3 py-2 text-xs text-white">
+                        <select id="newProdCategory" onchange="toggleAdminFieldVisibility()" class="w-full bg-darkBg border border-gray-700 rounded-xl px-3 py-2 text-xs text-white">
                             <option value="Clothing 👕">Clothing 👕</option>
+                            <option value="Footwear 👟">Footwear 👟</option>
+                            <option value="Bags 👜">Bags 👜</option>
+                            <option value="cosmetics 🕶️">cosmetics 🕶️</option>
                             <option value="Groceries 🥦">Groceries 🥦</option>
                             <option value="Gifts 💄">Gifts 💄</option>
                             <option value="Menu 🍔">Menu 🍔</option>
@@ -992,6 +949,18 @@
                         <label class="block text-xs font-bold text-neonGold mb-1">📦 Inventory (Stock Amount):</label>
                         <input type="number" id="newProdInventory" placeholder="50" class="w-full bg-darkBg border border-neonGold/50 rounded-xl px-3 py-2 text-xs text-white" value="10">
                     </div>
+
+                    <!-- Dynamic Size Input Fields for Admin -->
+                    <div id="newProdClothingSizesWrapper" class="sm:col-span-2">
+                        <label class="block text-xs font-bold text-neonCyan mb-1">👕 Age / Clothing Sizes (comma separated):</label>
+                        <input type="text" id="newProdClothingSizes" placeholder="e.g. 4yo, 5yo, 6yo, 7yo, 8yo" value="4yo, 5yo, 6yo, 7yo, 8yo, 9yo, 10yo, 11yo, 12yo" class="w-full bg-darkBg border border-cyan-500/40 rounded-xl px-3 py-2 text-xs text-white">
+                    </div>
+
+                    <div id="newProdShoeSizesWrapper" class="sm:col-span-2 hidden">
+                        <label class="block text-xs font-bold text-neonGold mb-1">👟 Shoe Sizes (comma separated):</label>
+                        <input type="text" id="newProdShoeSizes" placeholder="e.g. US 6, US 7, US 8, US 9" value="US 6, US 7, US 8, US 9, US 10" class="w-full bg-darkBg border border-neonGold/40 rounded-xl px-3 py-2 text-xs text-white">
+                    </div>
+
                     <div>
                         <label class="block text-xs font-bold text-gray-300 mb-1">Badge Tag:</label>
                         <input type="text" id="newProdBadge" placeholder="🔥 New Arrival" class="w-full bg-darkBg border border-gray-700 rounded-xl px-3 py-2 text-xs text-white" value="🔥 New Arrival">
@@ -1004,7 +973,7 @@
                         <input type="checkbox" id="newProdFeatured" class="w-4 h-4 accent-neonCyan">
                         <div>
                             <label for="newProdFeatured" class="text-xs font-bold text-neonGold cursor-pointer">🌟 Include in Featured Showcase Slideshow</label>
-                            <p class="text-[10px] text-gray-400">Check this box to automatically feature this item, its name, price, and description in the hero slideshow.</p>
+                            <p class="text-[10px] text-gray-400">Check this box to feature this item in the hero slideshow.</p>
                         </div>
                     </div>
                     <div class="sm:col-span-2">
@@ -1024,18 +993,16 @@
         </div>
     </div>
 
-    <!-- Luxury Product Details Modal -->
+    <!-- Modals & Drawers -->
     <div id="productDetailModal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-3 sm:p-4">
         <div class="glass-card max-w-lg w-full p-6 sm:p-8 rounded-3xl border-2 shadow-2xl relative max-h-[92vh] overflow-y-auto" style="border-color: var(--accent-primary);">
             <button onclick="closeProductModal()" class="absolute top-4 right-4 text-gray-300 hover:text-white bg-darkCard/95 w-10 h-10 rounded-full flex items-center justify-center border transition-colors text-lg z-20 shadow-lg" style="border-color: var(--accent-primary);">
                 <i class="fas fa-times"></i>
             </button>
-            
             <div id="modalProductContent" class="space-y-4"></div>
         </div>
     </div>
 
-    <!-- Review Details Reader Modal -->
     <div id="reviewDetailsModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
         <div class="glass-card max-w-lg w-full p-6 sm:p-8 rounded-3xl border-2 shadow-2xl relative" style="border-color: var(--accent-primary);">
             <button onclick="closeReviewModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white p-2 text-lg">
@@ -1048,7 +1015,6 @@
         </div>
     </div>
 
-    <!-- Slide-out Cart Drawer -->
     <div id="cartDrawer" class="fixed inset-y-0 right-0 w-full sm:w-96 bg-darkCard/95 backdrop-blur-2xl border-l z-50 transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col shadow-2xl" style="border-color: var(--accent-primary);">
         <div class="p-4 border-b border-gray-800 flex justify-between items-center bg-darkBg">
             <h3 class="text-lg font-extrabold text-white flex items-center gap-2">
@@ -1071,7 +1037,7 @@
             </div>
 
             <div class="space-y-2">
-                <input type="text" id="customerNameInput" placeholder="Your Name" class="w-full bg-darkCard border border-gray-700 rounded-xl px-3 py-1.5 text-xs text-white placeholder-gray-500 focus:outline-none" style="focus:border-color: var(--accent-primary);">
+                <input type="text" id="customerNameInput" placeholder="Your Name" class="w-full bg-darkCard border border-gray-700 rounded-xl px-3 py-1.5 text-xs text-white placeholder-gray-500 focus:outline-none">
                 <input type="tel" id="customerPhoneInput" placeholder="Your Phone / WhatsApp Number" class="w-full bg-darkCard border border-gray-700 rounded-xl px-3 py-1.5 text-xs text-white placeholder-gray-500 focus:outline-none">
                 
                 <div id="deliveryAddressContainer" class="hidden space-y-2">
@@ -1099,7 +1065,6 @@
                         <option value="St. Thomas (Knutsford)">Knutsford Express – St. Thomas - $1,000 JMD</option>
                     </select>
                     <textarea id="customerAddressInput" placeholder="Enter specific delivery drop-off address / directions..." class="w-full bg-darkCard border border-gray-700 rounded-xl px-3 py-1.5 text-xs text-white placeholder-gray-500 focus:outline-none h-12 resize-none"></textarea>
-                    <p class="text-[10px] text-gray-400 italic">Note: Delivery / bearer fees are added directly to your order total based on your selected destination.</p>
                 </div>
             </div>
 
@@ -1122,10 +1087,8 @@
         </div>
     </div>
 
-    <!-- Backdrop Overlay -->
     <div id="cartBackdrop" onclick="toggleCartDrawer()" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-40 hidden"></div>
 
-    <!-- Image Lightbox Modal -->
     <div id="imageLightboxModal" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 hidden flex items-center justify-center p-4" onclick="closeLightbox()">
         <div class="relative max-w-4xl max-h-[90vh] flex items-center justify-center" onclick="event.stopPropagation()">
             <button onclick="closeLightbox()" class="absolute -top-12 right-0 text-white hover:opacity-80 text-2xl font-bold bg-darkCard/80 w-10 h-10 rounded-full flex items-center justify-center border" style="border-color: var(--accent-primary);">
@@ -1135,13 +1098,12 @@
         </div>
     </div>
 
-    <!-- Toast Notification Box -->
     <div id="toastNotification" class="fixed bottom-6 right-6 text-white font-extrabold px-6 py-3 rounded-2xl shadow-2xl z-50 transform translate-y-20 opacity-0 transition-all duration-300 flex items-center gap-2" style="background: var(--accent-primary);">
         <i class="fas fa-check-circle"></i>
         <span id="toastMessageText">Item added successfully!</span>
     </div>
 
-    <!-- Main Application Scripts with Firebase Firestore Cloud Sync -->
+    <!-- JavaScript Application Logic -->
     <script>
         const firebaseConfig = {
             apiKey: "AIzaSyB8Zrb0UI8YRUUJVnVBDQGHOjHfWeGU5ZQ",
@@ -1164,23 +1126,29 @@
         let fulfillmentType = 'Pickup';
         let currentSlideIndex = 0;
         let slideshowInterval = null;
-
         let shoppingCart = [];
 
         window.addEventListener('DOMContentLoaded', () => {
+            try {
+                const isUnlocked = localStorage.getItem('gosh_admin_unlocked') === 'true';
+                const wasModalOpen = localStorage.getItem('gosh_admin_modal_open') === 'true';
+                
+                if (isUnlocked || wasModalOpen) {
+                    toggleHiddenAdminModal(true);
+                    if (typeof renderAdminDashboard === 'function') {
+                        renderAdminDashboard();
+                    }
+                }
+            } catch (e) {
+                console.warn("Secure admin initialization check failed safely:", e);
+            }
+
             fetchProductsFromFirebase();
             renderCategoryFilters();
             updateCartDisplay();
             fetchReviewsFromFirebase();
             loadStoredTheme();
 
-            // Auto-restore admin modal from localStorage if it was open before iOS memory refresh
-            if (localStorage.getItem('gosh_admin_unlocked') === 'true' && localStorage.getItem('gosh_admin_modal_open') === 'true') {
-                toggleHiddenAdminModal(true);
-                renderAdminDashboard();
-            }
-
-            // WiPay Success Redirect Handler & WhatsApp Order Forwarding
             const urlParams = new URLSearchParams(window.location.search);
             if (urlParams.get('status') === 'success') {
                 const savedOrderData = localStorage.getItem('gosh_pending_wipay_order');
@@ -1222,11 +1190,11 @@
             }
         });
 
-        // Store Seasonal Theme Manager
         function applyStoreTheme(themeName) {
             const body = document.getElementById('appBody');
             const effectContainer = document.getElementById('dynamicEffectContainer');
-            
+            if (!body || !effectContainer) return;
+
             body.className = "relative min-h-screen flex flex-col justify-between";
             effectContainer.innerHTML = '';
 
@@ -1234,7 +1202,6 @@
                 body.classList.add(`theme-${themeName}`);
             }
 
-            // Highlight Active Theme Button in Admin
             ['default', 'christmas', 'summer', 'halloween', 'breastcancer'].forEach(t => {
                 const btn = document.getElementById(`themeBtn-${t}`);
                 if (btn) {
@@ -1246,9 +1213,7 @@
                 }
             });
 
-            // Special Visual Effects per Theme
             if (themeName === 'christmas') {
-                // Falling Snow (Frozen White Snow Particles)
                 let snowHTML = '';
                 for (let i = 0; i < 50; i++) {
                     const left = Math.random() * 100;
@@ -1261,7 +1226,6 @@
             } else if (themeName === 'summer') {
                 effectContainer.innerHTML = `<div class="summer-sun-glow"></div>`;
             } else if (themeName === 'halloween') {
-                // Spooky Spiderwebs and Ghost Elements across the website
                 effectContainer.innerHTML = `
                     <div class="halloween-overlay"></div>
                     <div class="spooky-ghost-item text-6xl top-20 left-10"><i class="fas fa-ghost"></i></div>
@@ -1271,7 +1235,6 @@
                     <div class="spooky-ghost-item text-5xl top-12 right-1/3"><i class="fas fa-ghost"></i></div>
                 `;
             } else if (themeName === 'breastcancer') {
-                // Falling Pink & White Ribbons
                 let ribbonHTML = '';
                 for (let i = 0; i < 25; i++) {
                     const left = Math.random() * 100;
@@ -1298,10 +1261,10 @@
             applyStoreTheme(savedTheme);
         }
 
-        // Toggle Gift Card Box Vault Open / Close
         function toggleGiftCardsVault() {
             const vault = document.getElementById('revealedGiftCardsVault');
             const statusText = document.getElementById('giftBoxStatusText');
+            if (!vault || !statusText) return;
             if (vault.classList.contains('hidden')) {
                 vault.classList.remove('hidden');
                 statusText.innerText = "Gift Card Box Opened! ✨ Choose Your Gift Card";
@@ -1312,7 +1275,6 @@
             }
         }
 
-        // Add custom gift card item to cart directly
         function addCustomItemToCart(name, price, category, imageUrl) {
             const existing = shoppingCart.find(item => item.name === name);
             if (existing) {
@@ -1331,7 +1293,6 @@
             toggleCartDrawer();
         }
 
-        // Slideshow Navigation Functions (Filtered by Admin Featured Checkbox)
         function getFeaturedSlides() {
             const featured = menuProducts.filter(p => p.featured === true);
             return featured.length > 0 ? featured : menuProducts.slice(0, 4);
@@ -1349,7 +1310,6 @@
         function renderSlides() {
             const wrapper = document.getElementById('heroSlidesWrapper');
             if (!wrapper) return;
-
             const slideItems = getFeaturedSlides();
             wrapper.innerHTML = slideItems.map(p => `
                 <div class="w-full h-full shrink-0">
@@ -1361,7 +1321,6 @@
         function updateSlideDisplay() {
             const slideItems = getFeaturedSlides();
             if (slideItems.length === 0) return;
-            
             if (currentSlideIndex >= slideItems.length) currentSlideIndex = 0;
             if (currentSlideIndex < 0) currentSlideIndex = slideItems.length - 1;
 
@@ -1371,11 +1330,17 @@
             }
 
             const current = slideItems[currentSlideIndex];
-            document.getElementById('slideTitle').innerText = current.name;
-            document.getElementById('slideCategory').innerText = current.category + ' • ' + current.badge;
-            document.getElementById('slidePrice').innerText = `$${current.price.toLocaleString()} JMD`;
-            document.getElementById('slideDescription').innerText = current.description || 'Explore our viral collection';
-            document.getElementById('slideshowCounter').innerText = `${currentSlideIndex + 1} / ${slideItems.length}`;
+            const titleEl = document.getElementById('slideTitle');
+            const catEl = document.getElementById('slideCategory');
+            const priceEl = document.getElementById('slidePrice');
+            const descEl = document.getElementById('slideDescription');
+            const counterEl = document.getElementById('slideshowCounter');
+
+            if (titleEl) titleEl.innerText = current.name;
+            if (catEl) catEl.innerText = current.category + ' • ' + current.badge;
+            if (priceEl) priceEl.innerText = `$${current.price.toLocaleString()} JMD`;
+            if (descEl) descEl.innerText = current.description || 'Explore our viral collection';
+            if (counterEl) counterEl.innerText = `${currentSlideIndex + 1} / ${slideItems.length}`;
         }
 
         function nextSlide() {
@@ -1421,6 +1386,7 @@
         function toggleFaqAccordion(id) {
             const content = document.getElementById(`faqContent-${id}`);
             const icon = document.getElementById(`faqIcon-${id}`);
+            if (!content || !icon) return;
             if (content.classList.contains('hidden')) {
                 content.classList.remove('hidden');
                 icon.style.transform = 'rotate(180deg)';
@@ -1433,13 +1399,14 @@
         function openLightbox(imageSrc) {
             const modal = document.getElementById('imageLightboxModal');
             const img = document.getElementById('lightboxImage');
+            if (!modal || !img) return;
             img.src = imageSrc;
             modal.classList.remove('hidden');
         }
 
         function closeLightbox() {
             const modal = document.getElementById('imageLightboxModal');
-            modal.classList.add('hidden');
+            if (modal) modal.classList.add('hidden');
         }
 
         function openProductModal(firestoreOrId) {
@@ -1447,27 +1414,44 @@
             if (!product) return;
 
             const modalContent = document.getElementById('modalProductContent');
+            if (!modalContent) return;
+
             const hasInventory = product.category !== 'Menu 🍔';
             const inventoryDisplay = hasInventory ? `<p class="text-xs text-neonGold font-bold mb-2">📦 Stock Available: ${product.inventory ?? 10} units</p>` : '';
 
-            const isClothing = product.category === 'Clothing 👕';
-            const sizeSelectorHTML = isClothing ? `
-                <div class="mb-4">
-                    <label class="block text-xs font-bold mb-2" style="color: var(--accent-primary);">Select Age Size:</label>
-                    <div class="grid grid-cols-3 sm:grid-cols-4 gap-2" id="clothingSizeSelector">
-                        <button type="button" onclick="selectClothingSize('4yo')" class="size-btn py-2 px-3 rounded-xl text-xs font-bold border bg-darkBg text-white transition-all" style="border-color: var(--accent-primary);" data-size="4yo">4yo</button>
-                        <button type="button" onclick="selectClothingSize('5yo')" class="size-btn py-2 px-3 rounded-xl text-xs font-bold border bg-darkBg text-white transition-all" style="border-color: var(--accent-primary);" data-size="5yo">5yo</button>
-                        <button type="button" onclick="selectClothingSize('6yo')" class="size-btn py-2 px-3 rounded-xl text-xs font-bold border bg-darkBg text-white transition-all" style="border-color: var(--accent-primary);" data-size="6yo">6yo</button>
-                        <button type="button" onclick="selectClothingSize('7yo')" class="size-btn py-2 px-3 rounded-xl text-xs font-bold border bg-darkBg text-white transition-all" style="border-color: var(--accent-primary);" data-size="7yo">7yo</button>
-                        <button type="button" onclick="selectClothingSize('8yo')" class="size-btn py-2 px-3 rounded-xl text-xs font-bold border bg-darkBg text-white transition-all" style="border-color: var(--accent-primary);" data-size="8yo">8yo</button>
-                        <button type="button" onclick="selectClothingSize('9yo')" class="size-btn py-2 px-3 rounded-xl text-xs font-bold border bg-darkBg text-white transition-all" style="border-color: var(--accent-primary);" data-size="9yo">9yo</button>
-                        <button type="button" onclick="selectClothingSize('10yo')" class="size-btn py-2 px-3 rounded-xl text-xs font-bold border bg-darkBg text-white transition-all" style="border-color: var(--accent-primary);" data-size="10yo">10yo</button>
-                        <button type="button" onclick="selectClothingSize('11yo')" class="size-btn py-2 px-3 rounded-xl text-xs font-bold border bg-darkBg text-white transition-all" style="border-color: var(--accent-primary);" data-size="11yo">11yo</button>
-                        <button type="button" onclick="selectClothingSize('12yo')" class="size-btn py-2 px-3 rounded-xl text-xs font-bold border bg-darkBg text-white transition-all" style="border-color: var(--accent-primary);" data-size="12yo">12yo</button>
-                    </div>
-                    <input type="hidden" id="selectedClothingSize" value="6yo">
-                </div>
-            ` : '';
+            // Dynamic Size Selector for Clothing (Age sizes) or Footwear (Shoe sizes)
+            let sizeSelectorHTML = '';
+            if (product.category === 'Clothing 👕' && product.clothingSizes) {
+                const sizesArray = product.clothingSizes.split(',').map(s => s.trim()).filter(Boolean);
+                if (sizesArray.length > 0) {
+                    sizeSelectorHTML = `
+                        <div class="mb-4">
+                            <label class="block text-xs font-bold mb-2" style="color: var(--accent-primary);">Select Age Size:</label>
+                            <div class="grid grid-cols-3 sm:grid-cols-4 gap-2" id="itemSizeSelector">
+                                ${sizesArray.map((sz, idx) => `
+                                    <button type="button" onclick="selectItemSize('${sz}')" class="size-btn py-2 px-3 rounded-xl text-xs font-bold border ${idx === 0 ? 'text-black shadow-md' : 'bg-darkBg text-white'} transition-all" style="${idx === 0 ? 'background: var(--accent-primary); border-color: var(--accent-primary);' : 'border-color: var(--accent-primary);'}" data-size="${sz}">${sz}</button>
+                                `).join('')}
+                            </div>
+                            <input type="hidden" id="selectedItemSize" value="${sizesArray[0]}">
+                        </div>
+                    `;
+                }
+            } else if (product.category === 'Footwear 👟' && product.shoeSizes) {
+                const sizesArray = product.shoeSizes.split(',').map(s => s.trim()).filter(Boolean);
+                if (sizesArray.length > 0) {
+                    sizeSelectorHTML = `
+                        <div class="mb-4">
+                            <label class="block text-xs font-bold mb-2 text-neonGold">Select Shoe Size:</label>
+                            <div class="grid grid-cols-3 sm:grid-cols-4 gap-2" id="itemSizeSelector">
+                                ${sizesArray.map((sz, idx) => `
+                                    <button type="button" onclick="selectItemSize('${sz}')" class="size-btn py-2 px-3 rounded-xl text-xs font-bold border ${idx === 0 ? 'text-black shadow-md' : 'bg-darkBg text-white'} transition-all" style="${idx === 0 ? 'background: var(--accent-primary); border-color: var(--accent-primary);' : 'border-color: var(--accent-primary);'}" data-size="${sz}">${sz}</button>
+                                `).join('')}
+                            </div>
+                            <input type="hidden" id="selectedItemSize" value="${sizesArray[0]}">
+                        </div>
+                    `;
+                }
+            }
 
             modalContent.innerHTML = `
                 <div class="relative overflow-hidden rounded-2xl mb-4 border shadow-xl aspect-[4/3] sm:aspect-[16/10] bg-black/60 cursor-pointer" style="border-color: var(--accent-primary);" onclick="openLightbox('${product.image}')" title="Click to view full image">
@@ -1494,15 +1478,13 @@
                 </button>
             `;
 
-            if (isClothing) {
-                selectClothingSize('6yo');
-            }
-
-            document.getElementById('productDetailModal').classList.remove('hidden');
+            const productModal = document.getElementById('productDetailModal');
+            if (productModal) productModal.classList.remove('hidden');
         }
 
-        function selectClothingSize(size) {
-            document.getElementById('selectedClothingSize').value = size;
+        function selectItemSize(size) {
+            const sizeInput = document.getElementById('selectedItemSize');
+            if (sizeInput) sizeInput.value = size;
             const buttons = document.querySelectorAll('.size-btn');
             buttons.forEach(btn => {
                 if (btn.getAttribute('data-size') === size) {
@@ -1518,11 +1500,12 @@
         }
 
         function closeProductModal() {
-            document.getElementById('productDetailModal').classList.add('hidden');
+            const modal = document.getElementById('productDetailModal');
+            if (modal) modal.classList.add('hidden');
         }
 
         function addToCartFromModal(itemId) {
-            const sizeInput = document.getElementById('selectedClothingSize');
+            const sizeInput = document.getElementById('selectedItemSize');
             const selectedSize = sizeInput ? sizeInput.value : null;
             addToCart(itemId, selectedSize);
             closeProductModal();
@@ -1537,7 +1520,8 @@
 
                 renderProductsGrid();
                 initSlideshow();
-                if (!document.getElementById('hiddenAdminModal').classList.contains('hidden')) {
+                const adminModal = document.getElementById('hiddenAdminModal');
+                if (adminModal && !adminModal.classList.contains('hidden')) {
                     renderAdminDashboard();
                 }
             }, (error) => {
@@ -1572,7 +1556,8 @@
                         </div>
                     `;
                     document.body.appendChild(pinBox);
-                    document.getElementById('modalPinInput').focus();
+                    const pinInput = document.getElementById('modalPinInput');
+                    if (pinInput) pinInput.focus();
                 }
                 return;
             }
@@ -1582,23 +1567,27 @@
         }
 
         function verifyInlinePin() {
-            const pin = document.getElementById('modalPinInput').value;
+            const pinInput = document.getElementById('modalPinInput');
+            if (!pinInput) return;
+            const pin = pinInput.value;
             if (pin === "1234") {
                 window.memoryAdminUnlocked = true;
                 try {
                     localStorage.setItem('gosh_admin_unlocked', 'true');
                 } catch (e) {}
-                document.getElementById('inlineAdminPasscodeBox').remove();
+                const pinBox = document.getElementById('inlineAdminPasscodeBox');
+                if (pinBox) pinBox.remove();
                 toggleHiddenAdminModal(true);
                 renderAdminDashboard();
             } else {
                 alert("Incorrect Passcode!");
-                document.getElementById('modalPinInput').value = '';
+                pinInput.value = '';
             }
         } 
 
         function toggleHiddenAdminModal(show) {
             const modal = document.getElementById('hiddenAdminModal');
+            if (!modal) return;
             if (show) {
                 modal.classList.remove('hidden');
                 try { localStorage.setItem('gosh_admin_modal_open', 'true'); } catch (e) {}
@@ -1608,25 +1597,58 @@
             }
         }
 
-        function toggleInventoryInputVisibility() {
+        function toggleAdminFieldVisibility() {
             const catSelect = document.getElementById('newProdCategory');
             const invWrapper = document.getElementById('newProdInventoryWrapper');
-            if (catSelect.value === 'Menu 🍔') {
-                invWrapper.style.display = 'none';
+            const clothingSizesWrapper = document.getElementById('newProdClothingSizesWrapper');
+            const shoeSizesWrapper = document.getElementById('newProdShoeSizesWrapper');
+
+            if (!catSelect) return;
+
+            const category = catSelect.value;
+            if (category === 'Menu 🍔') {
+                if (invWrapper) invWrapper.style.display = 'none';
             } else {
-                invWrapper.style.display = 'block';
+                if (invWrapper) invWrapper.style.display = 'block';
+            }
+
+            if (clothingSizesWrapper && shoeSizesWrapper) {
+                if (category === 'Clothing 👕') {
+                    clothingSizesWrapper.style.display = 'block';
+                    shoeSizesWrapper.style.display = 'none';
+                } else if (category === 'Footwear 👟') {
+                    clothingSizesWrapper.style.display = 'none';
+                    shoeSizesWrapper.style.display = 'block';
+                } else {
+                    clothingSizesWrapper.style.display = 'none';
+                    shoeSizesWrapper.style.display = 'none';
+                }
             }
         }
 
         function addNewProductItem() {
             const fileInput = document.getElementById('newProdDirectFile');
-            const name = document.getElementById('newProdName').value.trim();
-            const category = document.getElementById('newProdCategory').value;
-            const price = parseFloat(document.getElementById('newProdPrice').value) || 0;
-            const inventory = category === 'Menu 🍔' ? 0 : (parseInt(document.getElementById('newProdInventory').value) || 10);
-            const badge = document.getElementById('newProdBadge').value.trim() || '🔥 New Item';
-            const description = document.getElementById('newProdDesc').value.trim();
-            const featured = document.getElementById('newProdFeatured').checked;
+            const nameEl = document.getElementById('newProdName');
+            const categoryEl = document.getElementById('newProdCategory');
+            const priceEl = document.getElementById('newProdPrice');
+            const inventoryEl = document.getElementById('newProdInventory');
+            const clothingSizesEl = document.getElementById('newProdClothingSizes');
+            const shoeSizesEl = document.getElementById('newProdShoeSizes');
+            const badgeEl = document.getElementById('newProdBadge');
+            const descEl = document.getElementById('newProdDesc');
+            const featuredEl = document.getElementById('newProdFeatured');
+
+            if (!fileInput || !nameEl || !categoryEl || !priceEl) return;
+
+            const name = nameEl.value.trim();
+            const category = categoryEl.value;
+            const price = parseFloat(priceEl.value) || 0;
+            const inventory = category === 'Menu 🍔' ? 0 : (parseInt(inventoryEl ? inventoryEl.value : 10) || 10);
+            const clothingSizes = clothingSizesEl ? clothingSizesEl.value.trim() : '';
+            const shoeSizes = shoeSizesEl ? shoeSizesEl.value.trim() : '';
+            const badge = badgeEl ? badgeEl.value.trim() || '🔥 New Item' : '🔥 New Item';
+            const description = descEl ? descEl.value.trim() : '';
+            const featured = featuredEl ? featuredEl.checked : false;
 
             if (!name || price <= 0) {
                 alert("Please enter a valid item name and price!");
@@ -1645,6 +1667,8 @@
                     category,
                     price,
                     inventory,
+                    clothingSizes,
+                    shoeSizes,
                     badge,
                     description,
                     image: imageUrl,
@@ -1655,12 +1679,14 @@
                 db.collection("products").add(newProduct)
                     .then(() => {
                         showToastNotification(`Successfully saved ${name} to Firebase Cloud!`);
-                        document.getElementById('newProdName').value = '';
-                        document.getElementById('newProdPrice').value = '';
-                        document.getElementById('newProdInventory').value = '10';
-                        document.getElementById('newProdDesc').value = '';
-                        document.getElementById('newProdFeatured').checked = false;
-                        document.getElementById('newProdDirectFile').value = '';
+                        nameEl.value = '';
+                        priceEl.value = '';
+                        if (inventoryEl) inventoryEl.value = '10';
+                        if (clothingSizesEl) clothingSizesEl.value = '';
+                        if (shoeSizesEl) shoeSizesEl.value = '';
+                        if (descEl) descEl.value = '';
+                        if (featuredEl) featuredEl.checked = false;
+                        fileInput.value = '';
                     })
                     .catch((error) => {
                         alert("Error saving to Firestore: " + error.message);
@@ -1702,6 +1728,8 @@
             }
 
             const container = document.getElementById('adminProductListContainer');
+            if (!container) return;
+
             container.innerHTML = menuProducts.map((p, index) => {
                 const isMenuCat = p.category === 'Menu 🍔';
                 const inventoryInputHTML = !isMenuCat ? `
@@ -1710,6 +1738,23 @@
                         <input type="number" id="adminInv-${index}" value="${p.inventory ?? 10}" class="bg-darkBg border border-neonGold/50 rounded-lg px-2 py-1 text-xs text-white font-bold w-full">
                     </div>
                 ` : `<input type="hidden" id="adminInv-${index}" value="0">`;
+
+                let extraSizeInputHTML = '';
+                if (p.category === 'Clothing 👕') {
+                    extraSizeInputHTML = `
+                        <div class="sm:col-span-2">
+                            <label class="block text-[10px] font-bold text-neonCyan mb-1">👕 Age / Clothing Sizes (comma separated):</label>
+                            <input type="text" id="adminClothingSizes-${index}" value="${p.clothingSizes ?? '4yo, 5yo, 6yo, 7yo, 8yo, 9yo, 10yo, 11yo, 12yo'}" class="bg-darkBg border border-cyan-500/40 rounded-lg px-2 py-1 text-xs text-white w-full">
+                        </div>
+                    `;
+                } else if (p.category === 'Footwear 👟') {
+                    extraSizeInputHTML = `
+                        <div class="sm:col-span-2">
+                            <label class="block text-[10px] font-bold text-neonGold mb-1">👟 Shoe Sizes (comma separated):</label>
+                            <input type="text" id="adminShoeSizes-${index}" value="${p.shoeSizes ?? 'US 6, US 7, US 8, US 9, US 10'}" class="bg-darkBg border border-neonGold/40 rounded-lg px-2 py-1 text-xs text-white w-full">
+                        </div>
+                    `;
+                }
 
                 return `
                 <div class="p-4 glass-card rounded-2xl border border-gray-800 space-y-3">
@@ -1721,6 +1766,9 @@
                                 <input type="number" id="adminPrice-${index}" value="${p.price}" class="bg-darkBg border border-gray-700 rounded-lg px-2 py-1 text-xs text-neonGold font-bold">
                                 <select id="adminCat-${index}" onchange="toggleAdminInventoryVisibility(${index})" class="bg-darkBg border border-gray-700 rounded-lg px-2 py-1 text-xs" style="color: var(--accent-primary);">
                                     <option value="Clothing 👕" ${p.category === 'Clothing 👕' ? 'selected' : ''}>Clothing 👕</option>
+                                    <option value="Footwear 👟" ${p.category === 'Footwear 👟' ? 'selected' : ''}>Footwear 👟</option>
+                                    <option value="Bags 👜" ${p.category === 'Bags 👜' ? 'selected' : ''}>Bags 👜</option>
+                                    <option value="Cosmetics 🕶️" ${p.category === 'Cosmetics 🕶️' ? 'selected' : ''}>Cosmetics 🕶️</option>
                                     <option value="Groceries 🥦" ${p.category === 'Groceries 🥦' ? 'selected' : ''}>Groceries 🥦</option>
                                     <option value="Gifts 💄" ${p.category === 'Gifts 💄' ? 'selected' : ''}>Gifts 💄</option>
                                     <option value="Menu 🍔" ${p.category === 'Menu 🍔' ? 'selected' : ''}>Menu 🍔</option>
@@ -1728,6 +1776,7 @@
                                 <div id="adminInvContainer-${index}">
                                     ${inventoryInputHTML}
                                 </div>
+                                ${extraSizeInputHTML}
                             </div>
                             <div>
                                 <label class="block text-[11px] font-bold text-gray-400 mb-1">Update Image File (Optional):</label>
@@ -1759,30 +1808,37 @@
 
         function toggleAdminInventoryVisibility(index) {
             const catSelect = document.getElementById(`adminCat-${index}`);
-            const invContainer = document.getElementById(`adminInvContainer-${index}`);
-            if (catSelect.value === 'Menu 🍔') {
-                invContainer.innerHTML = `<input type="hidden" id="adminInv-${index}" value="0">`;
-            } else {
-                invContainer.innerHTML = `
-                    <div>
-                        <label class="block text-[10px] font-bold text-neonGold mb-1">📦 Inventory:</label>
-                        <input type="number" id="adminInv-${index}" value="10" class="bg-darkBg border border-neonGold/50 rounded-lg px-2 py-1 text-xs text-white font-bold w-full">
-                    </div>
-                `;
-            }
+            if (catSelect) renderAdminDashboard();
         }
 
         function saveAdminProduct(firestoreId, index) {
             const p = menuProducts[index];
             const fileInput = document.getElementById(`adminFile-${index}`);
+            const nameEl = document.getElementById(`adminName-${index}`);
+            const priceEl = document.getElementById(`adminPrice-${index}`);
+            const catEl = document.getElementById(`adminCat-${index}`);
+            const invEl = document.getElementById(`adminInv-${index}`);
+            const descEl = document.getElementById(`adminDesc-${index}`);
+            const availEl = document.getElementById(`adminAvail-${index}`);
+            const featuredEl = document.getElementById(`adminFeatured-${index}`);
 
-            const updatedName = document.getElementById(`adminName-${index}`).value;
-            const updatedPrice = parseFloat(document.getElementById(`adminPrice-${index}`).value) || 0;
-            const updatedCat = document.getElementById(`adminCat-${index}`).value;
-            const updatedInv = updatedCat === 'Menu 🍔' ? 0 : (parseInt(document.getElementById(`adminInv-${index}`).value) || 0);
-            const updatedDesc = document.getElementById(`adminDesc-${index}`).value;
-            const updatedAvail = document.getElementById(`adminAvail-${index}`).checked;
-            const updatedFeatured = document.getElementById(`adminFeatured-${index}`).checked;
+            if (!nameEl || !priceEl || !catEl) return;
+
+            const updatedName = nameEl.value;
+            const updatedPrice = parseFloat(priceEl.value) || 0;
+            const updatedCat = catEl.value;
+            const updatedInv = updatedCat === 'Menu 🍔' ? 0 : (parseInt(invEl ? invEl.value : 10) || 0);
+            const updatedDesc = descEl ? descEl.value : '';
+            const updatedAvail = availEl ? availEl.checked : true;
+            const updatedFeatured = featuredEl ? featuredEl.checked : false;
+
+            let updatedClothingSizes = p.clothingSizes || '';
+            let updatedShoeSizes = p.shoeSizes || '';
+
+            const clothingSizesInput = document.getElementById(`adminClothingSizes-${index}`);
+            const shoeSizesInput = document.getElementById(`adminShoeSizes-${index}`);
+            if (clothingSizesInput) updatedClothingSizes = clothingSizesInput.value;
+            if (shoeSizesInput) updatedShoeSizes = shoeSizesInput.value;
 
             const commitUpdate = (imgUrl) => {
                 db.collection("products").doc(firestoreId).update({
@@ -1790,6 +1846,8 @@
                     price: updatedPrice,
                     category: updatedCat,
                     inventory: updatedInv,
+                    clothingSizes: updatedClothingSizes,
+                    shoeSizes: updatedShoeSizes,
                     description: updatedDesc,
                     available: updatedAvail,
                     featured: updatedFeatured,
@@ -1799,7 +1857,7 @@
                 });
             };
 
-            if (fileInput.files && fileInput.files[0]) {
+            if (fileInput && fileInput.files && fileInput.files[0]) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     const img = new Image();
@@ -1832,7 +1890,8 @@
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    document.getElementById('storeLogoImg').src = e.target.result;
+                    const storeLogoImg = document.getElementById('storeLogoImg');
+                    if (storeLogoImg) storeLogoImg.src = e.target.result;
                     showToastNotification("Logo updated successfully!");
                 }
                 reader.readAsDataURL(file);
@@ -1840,9 +1899,10 @@
         }
 
         function renderCategoryFilters() {
-            const categories = ['All', 'Clothing 👕', 'Groceries 🥦', 'Gifts 💄', 'Menu 🍔'];
+            const categories = ['All', 'Clothing 👕', 'Footwear 👟', 'Bags 👜', 'Cosmetics 🕶️', 'Groceries 🥦', 'Gifts 💄', 'Menu 🍔'];
             const container = document.getElementById('categoryFilterButtons');
-            
+            if (!container) return;
+
             container.innerHTML = categories.map(cat => `
                 <button 
                     onclick="filterMenuCategory('${cat}')"
@@ -1868,6 +1928,7 @@
 
         function renderProductsGrid() {
             const container = document.getElementById('productsGridContainer');
+            if (!container) return;
             
             let itemsToDisplay = selectedCategoryFilter === 'All' 
                 ? menuProducts 
@@ -1926,7 +1987,8 @@
 
         function setReviewRating(rating) {
             currentRating = rating;
-            document.getElementById('reviewRatingInput').value = rating;
+            const ratingInput = document.getElementById('reviewRatingInput');
+            if (ratingInput) ratingInput.value = rating;
             const stars = document.querySelectorAll('.star-btn');
             stars.forEach((btn) => {
                 const starVal = parseInt(btn.getAttribute('data-value'));
@@ -1942,9 +2004,14 @@
 
         function submitCustomerReview(event) {
             event.preventDefault();
-            const name = document.getElementById('reviewAuthorName').value.trim();
-            const comment = document.getElementById('reviewCommentText').value.trim();
-            const rating = parseInt(document.getElementById('reviewRatingInput').value) || 5;
+            const nameEl = document.getElementById('reviewAuthorName');
+            const commentEl = document.getElementById('reviewCommentText');
+            const ratingEl = document.getElementById('reviewRatingInput');
+            if (!nameEl || !commentEl) return;
+
+            const name = nameEl.value.trim();
+            const comment = commentEl.value.trim();
+            const rating = parseInt(ratingEl ? ratingEl.value : 5) || 5;
 
             if (!name || !comment) {
                 alert("Please fill in your name and review message!");
@@ -1961,8 +2028,8 @@
 
             db.collection("reviews").add(newReview).then(() => {
                 showToastNotification("Thank you for your 5-star review!");
-                document.getElementById('reviewAuthorName').value = '';
-                document.getElementById('reviewCommentText').value = '';
+                nameEl.value = '';
+                commentEl.value = '';
                 setReviewRating(5);
             }).catch((error) => {
                 console.error("Error submitting review:", error);
@@ -1973,6 +2040,8 @@
         function fetchReviewsFromFirebase() {
             db.collection("reviews").orderBy("timestamp", "desc").onSnapshot((snapshot) => {
                 const container = document.getElementById('reviewsListContainer');
+                if (!container) return;
+
                 let reviews = [];
                 snapshot.forEach((doc) => {
                     reviews.push({ id: doc.id, ...doc.data() });
@@ -1994,7 +2063,7 @@
                 container.innerHTML = tickerItems.map((rev, idx) => {
                     const starsHTML = Array.from({length: 5}, (_, i) => `<i class="fas fa-star ${i < rev.rating ? 'text-neonGold' : 'text-gray-600'}"></i>`).join('');
                     return `
-                        <div onclick="openReviewModal('${rev.id || idx}')" class="glass-card p-4 rounded-2xl border border-gray-800 space-y-2 w-72 sm:w-80 shrink-0 cursor-pointer transition-all shadow-lg" style="hover:border-color: var(--accent-primary);">
+                        <div onclick="openReviewModal('${rev.id || idx}')" class="glass-card p-4 rounded-2xl border border-gray-800 space-y-2 w-72 sm:w-80 shrink-0 cursor-pointer transition-all shadow-lg">
                             <div class="flex justify-between items-center">
                                 <h4 class="font-extrabold text-white text-xs truncate max-w-[170px]">${rev.author}</h4>
                                 <span class="text-[9px] text-gray-400">${rev.date || 'Recent'}</span>
@@ -2019,25 +2088,31 @@
             }
             if (!rev) return;
 
-            document.getElementById('modalReviewAuthor').innerText = rev.author;
-            document.getElementById('modalReviewDate').innerText = rev.date || 'Recent Review';
-            document.getElementById('modalReviewComment').innerText = rev.comment;
+            const authorEl = document.getElementById('modalReviewAuthor');
+            const dateEl = document.getElementById('modalReviewDate');
+            const commentEl = document.getElementById('modalReviewComment');
+            const starsEl = document.getElementById('modalReviewStars');
+            const modalEl = document.getElementById('reviewDetailsModal');
+
+            if (authorEl) authorEl.innerText = rev.author;
+            if (dateEl) dateEl.innerText = rev.date || 'Recent Review';
+            if (commentEl) commentEl.innerText = rev.comment;
             
             const starsHTML = Array.from({length: 5}, (_, i) => `<i class="fas fa-star ${i < rev.rating ? 'text-neonGold' : 'text-gray-600'} text-base"></i>`).join('');
-            document.getElementById('modalReviewStars').innerHTML = starsHTML;
-
-            document.getElementById('reviewDetailsModal').classList.remove('hidden');
+            if (starsEl) starsEl.innerHTML = starsHTML;
+            if (modalEl) modalEl.classList.remove('hidden');
         }
 
         function closeReviewModal() {
-            document.getElementById('reviewDetailsModal').classList.add('hidden');
+            const modal = document.getElementById('reviewDetailsModal');
+            if (modal) modal.classList.add('hidden');
         }
 
         function addToCart(itemId, size = null) {
             const product = menuProducts.find(p => (p.firestoreId === itemId || p.id === itemId));
             if (!product || !product.available) return;
 
-            const itemName = size ? `${product.name} (Age: ${size})` : product.name;
+            const itemName = size ? `${product.name} (Size: ${size})` : product.name;
             const cartItemId = size ? `${itemId}-${size}` : itemId;
 
             const existing = shoppingCart.find(item => item.id === cartItemId);
@@ -2070,7 +2145,9 @@
 
         function getSelectedDeliveryFee() {
             if (fulfillmentType !== 'Delivery') return 0;
-            const area = document.getElementById('customerParishSelect').value;
+            const parishSelect = document.getElementById('customerParishSelect');
+            if (!parishSelect) return 0;
+            const area = parishSelect.value;
             switch(area) {
                 case 'Round Town': return 1000;
                 case 'Downtown Kingston': return 1000;
@@ -2099,9 +2176,12 @@
 
         function updateCartDisplay() {
             const totalCount = shoppingCart.reduce((sum, item) => sum + item.quantity, 0);
-            document.getElementById('cartItemCount').innerText = totalCount;
+            const badgeCount = document.getElementById('cartItemCount');
+            if (badgeCount) badgeCount.innerText = totalCount;
 
             const container = document.getElementById('cartItemsListContainer');
+            if (!container) return;
+
             if (shoppingCart.length === 0) {
                 container.innerHTML = `
                     <div class="text-center py-12 text-gray-500">
@@ -2131,14 +2211,17 @@
             const deliveryFee = getSelectedDeliveryFee();
             const grandTotal = subtotal + deliveryFee;
 
-            document.getElementById('cartGrandTotal').innerText = `$${grandTotal.toLocaleString()} JMD` + (deliveryFee > 0 ? ` (incl. $${deliveryFee.toLocaleString()} Delivery)` : '');
+            const grandTotalEl = document.getElementById('cartGrandTotal');
+            if (grandTotalEl) {
+                grandTotalEl.innerText = `$${grandTotal.toLocaleString()} JMD` + (deliveryFee > 0 ? ` (incl. $${deliveryFee.toLocaleString()} Delivery)` : '');
+            }
         }
 
         function toggleCartDrawer() {
             const drawer = document.getElementById('cartDrawer');
             const backdrop = document.getElementById('cartBackdrop');
-            drawer.classList.toggle('translate-x-full');
-            backdrop.classList.toggle('hidden');
+            if (drawer) drawer.classList.toggle('translate-x-full');
+            if (backdrop) backdrop.classList.toggle('hidden');
         }
 
         function setOrderFulfillment(type) {
@@ -2146,6 +2229,8 @@
             const btnP = document.getElementById('btnPickup');
             const btnD = document.getElementById('btnDelivery');
             const addressContainer = document.getElementById('deliveryAddressContainer');
+
+            if (!btnP || !btnD || !addressContainer) return;
 
             if (type === 'Pickup') {
                 btnP.className = 'py-1.5 px-2 rounded-xl text-xs font-bold border text-black transition-all';
@@ -2175,19 +2260,25 @@
                 return;
             }
 
-            const customerName = document.getElementById('customerNameInput').value.trim();
-            const customerPhone = document.getElementById('customerPhoneInput').value.trim();
-            const deliveryArea = document.getElementById('customerParishSelect').value;
+            const nameInput = document.getElementById('customerNameInput');
+            const phoneInput = document.getElementById('customerPhoneInput');
+            const parishSelect = document.getElementById('customerParishSelect');
+
+            if (!nameInput || !phoneInput) return;
+
+            const customerName = nameInput.value.trim();
+            const customerPhone = phoneInput.value.trim();
+            const deliveryArea = parishSelect ? parishSelect.value : '';
 
             if (!customerName || !customerPhone) {
                 alert("Please enter your Name and Phone Number before paying with card!");
-                document.getElementById('customerNameInput').focus();
+                nameInput.focus();
                 return;
             }
 
             if (fulfillmentType === 'Delivery' && !deliveryArea) {
                 alert("Please select your delivery area / parish!");
-                document.getElementById('customerParishSelect').focus();
+                if (parishSelect) parishSelect.focus();
                 return;
             }
 
@@ -2238,14 +2329,19 @@
                 return;
             }
 
-            const customerName = document.getElementById('customerNameInput').value.trim() || 'Valued Customer';
-            const customerPhone = document.getElementById('customerPhoneInput').value.trim() || 'Not specified';
-            const deliveryArea = document.getElementById('customerParishSelect').value;
-            const customerAddress = document.getElementById('customerAddressInput').value.trim();
+            const nameInput = document.getElementById('customerNameInput');
+            const phoneInput = document.getElementById('customerPhoneInput');
+            const parishSelect = document.getElementById('customerParishSelect');
+            const addressInput = document.getElementById('customerAddressInput');
+
+            const customerName = nameInput && nameInput.value.trim() ? nameInput.value.trim() : 'Valued Customer';
+            const customerPhone = phoneInput && phoneInput.value.trim() ? phoneInput.value.trim() : 'Not specified';
+            const deliveryArea = parishSelect ? parishSelect.value : '';
+            const customerAddress = addressInput ? addressInput.value.trim() : '';
 
             if (fulfillmentType === 'Delivery' && !deliveryArea) {
                 alert("Please select your delivery area / parish!");
-                document.getElementById('customerParishSelect').focus();
+                if (parishSelect) parishSelect.focus();
                 return;
             }
 
@@ -2285,7 +2381,9 @@
 
         function showToastNotification(text) {
             const toast = document.getElementById('toastNotification');
-            document.getElementById('toastMessageText').innerText = text;
+            const msg = document.getElementById('toastMessageText');
+            if (!toast || !msg) return;
+            msg.innerText = text;
             toast.classList.remove('translate-y-20', 'opacity-0');
             
             setTimeout(() => {
