@@ -1512,20 +1512,37 @@
         }
 
         function fetchProductsFromFirebase() {
+    // Safety timeout: If Firebase takes longer than 3 seconds, stop loading and show empty state
+    const loadTimeout = setTimeout(() => {
+        if (!window.productsLoaded) {
+            console.warn("Firebase connection timed out. Loading fallback UI.");
+            menuProducts = [];
+            renderProductsGrid();
+        }
+    }, 3000);
+
     db.collection("products").get().then((snapshot) => {
+        clearTimeout(loadTimeout);
+        window.productsLoaded = true;
         menuProducts = [];
+        
         snapshot.forEach((doc) => {
             menuProducts.push({ firestoreId: doc.id, ...doc.data() });
         });
 
         renderProductsGrid();
         initSlideshow();
+        
         const adminModal = document.getElementById('hiddenAdminModal');
         if (adminModal && !adminModal.classList.contains('hidden')) {
             renderAdminDashboard();
         }
     }).catch((error) => {
+        clearTimeout(loadTimeout);
         console.error("Error fetching from Firebase Firestore:", error);
+        // Fallback so the site doesn't stay stuck on loading
+        menuProducts = [];
+        renderProductsGrid();
     });
 }
         window.memoryAdminUnlocked = window.memoryAdminUnlocked || false;
