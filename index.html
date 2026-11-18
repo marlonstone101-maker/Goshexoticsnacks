@@ -396,7 +396,9 @@
                                     <h3 id="slideTitle" class="text-lg sm:text-xl font-extrabold text-white">Loading Showcase...</h3>
                                     <p id="slideCategory" class="text-xs font-medium mt-0.5" style="color: var(--accent-primary);">Explore our viral collection</p>
                                 </div>
-                                <span id="slidePrice" class="text-lg sm:text-xl font-black text-neonGold shrink-0">$0 JMD</span>
+                                <div id="slidePriceContainer" class="text-right">
+                                    <span id="slidePrice" class="text-lg sm:text-xl font-black text-neonGold shrink-0">$0 JMD</span>
+                                </div>
                             </div>
                             <p id="slideDescription" class="text-xs text-gray-300 leading-relaxed bg-darkBg/60 p-2.5 rounded-xl border border-gray-800 line-clamp-2">Loading description...</p>
                         </div>
@@ -945,6 +947,10 @@
                         <label class="block text-xs font-bold text-gray-300 mb-1">Price (JMD):</label>
                         <input type="number" id="newProdPrice" placeholder="3500" class="w-full bg-darkBg border border-gray-700 rounded-xl px-3 py-2 text-xs text-white">
                     </div>
+                    <div>
+                        <label class="block text-xs font-bold text-neonGold mb-1">🏷️ Discount Percentage (% off, e.g. 5 or 10):</label>
+                        <input type="number" id="newProdDiscount" placeholder="0" min="0" max="100" value="0" class="w-full bg-darkBg border border-neonGold/50 rounded-xl px-3 py-2 text-xs text-white">
+                    </div>
                     <div id="newProdInventoryWrapper">
                         <label class="block text-xs font-bold text-neonGold mb-1">📦 Inventory (Stock Amount):</label>
                         <input type="number" id="newProdInventory" placeholder="50" class="w-full bg-darkBg border border-neonGold/50 rounded-xl px-3 py-2 text-xs text-white" value="10">
@@ -1319,13 +1325,29 @@
             const current = slideItems[currentSlideIndex];
             const titleEl = document.getElementById('slideTitle');
             const catEl = document.getElementById('slideCategory');
-            const priceEl = document.getElementById('slidePrice');
+            const priceContainerEl = document.getElementById('slidePriceContainer');
             const descEl = document.getElementById('slideDescription');
             const counterEl = document.getElementById('slideshowCounter');
 
             if (titleEl) titleEl.innerText = current.name;
             if (catEl) catEl.innerText = current.category + ' • ' + current.badge;
-            if (priceEl) priceEl.innerText = `$${current.price.toLocaleString()} JMD`;
+            
+            const disc = parseFloat(current.discount) || 0;
+            if (priceContainerEl) {
+                if (disc > 0) {
+                    const finalPrice = Math.round(current.price * (1 - disc / 100));
+                    priceContainerEl.innerHTML = `
+                        <div class="flex items-center gap-2 justify-end">
+                            <span class="text-xs line-through text-gray-400">$${current.price.toLocaleString()} JMD</span>
+                            <span class="text-xs bg-red-500 text-white font-extrabold px-2 py-0.5 rounded-full">-${disc}%</span>
+                        </div>
+                        <span class="text-lg sm:text-xl font-black text-neonGold shrink-0">$${finalPrice.toLocaleString()} JMD</span>
+                    `;
+                } else {
+                    priceContainerEl.innerHTML = `<span id="slidePrice" class="text-lg sm:text-xl font-black text-neonGold shrink-0">$${current.price.toLocaleString()} JMD</span>`;
+                }
+            }
+
             if (descEl) descEl.innerText = current.description || 'Explore our viral collection';
             if (counterEl) counterEl.innerText = `${currentSlideIndex + 1} / ${slideItems.length}`;
         }
@@ -1440,6 +1462,23 @@
                 }
             }
 
+            const disc = parseFloat(product.discount) || 0;
+            const finalPrice = disc > 0 ? Math.round(product.price * (1 - disc / 100)) : product.price;
+            let priceDisplayHTML = `
+                <span class="text-2xl sm:text-3xl font-black text-neonGold">$${finalPrice.toLocaleString()} JMD</span>
+            `;
+            if (disc > 0) {
+                priceDisplayHTML = `
+                    <div class="text-right">
+                        <div class="flex items-center gap-2 justify-end">
+                            <span class="text-sm line-through text-gray-400">$${product.price.toLocaleString()} JMD</span>
+                            <span class="text-xs bg-red-500 text-white font-extrabold px-2.5 py-0.5 rounded-full">-${disc}% OFF</span>
+                        </div>
+                        <span class="text-2xl sm:text-3xl font-black text-neonGold">$${finalPrice.toLocaleString()} JMD</span>
+                    </div>
+                `;
+            }
+
             modalContent.innerHTML = `
                 <div class="relative overflow-hidden rounded-2xl mb-4 border shadow-xl aspect-[4/3] sm:aspect-[16/10] bg-black/60 cursor-pointer" style="border-color: var(--accent-primary);" onclick="openLightbox('${product.image}')" title="Click to view full image">
                     <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
@@ -1458,7 +1497,7 @@
                 ${sizeSelectorHTML}
                 <div class="flex justify-between items-center mb-6 pt-2 border-t border-gray-800">
                     <span class="text-xs text-gray-400 font-bold uppercase tracking-wider">Price:</span>
-                    <span class="text-2xl sm:text-3xl font-black text-neonGold">$${product.price.toLocaleString()} JMD</span>
+                    ${priceDisplayHTML}
                 </div>
                 <button onclick="addToCartFromModal('${product.firestoreId || product.id}')" ${!product.available ? 'disabled' : ''} class="w-full ${product.available ? 'text-white hover:opacity-95' : 'bg-gray-800 text-gray-500 cursor-not-allowed'} font-black py-3.5 rounded-2xl transition-all flex items-center justify-center gap-2 text-sm uppercase tracking-wider shadow-2xl" style="${product.available ? 'background: var(--header-gradient);' : ''}">
                     <i class="fas fa-shopping-bag"></i> <span>${product.available ? 'Add To Order' : 'Out of Stock'}</span>
@@ -1641,6 +1680,7 @@
             const nameEl = document.getElementById('newProdName');
             const categoryEl = document.getElementById('newProdCategory');
             const priceEl = document.getElementById('newProdPrice');
+            const discountEl = document.getElementById('newProdDiscount');
             const inventoryEl = document.getElementById('newProdInventory');
             const clothingSizesEl = document.getElementById('newProdClothingSizes');
             const shoeSizesEl = document.getElementById('newProdShoeSizes');
@@ -1653,6 +1693,7 @@
             const name = nameEl.value.trim();
             const category = categoryEl.value;
             const price = parseFloat(priceEl.value) || 0;
+            const discount = parseFloat(discountEl ? discountEl.value : 0) || 0;
             const inventory = category === 'Menu 🍔' ? 0 : (parseInt(inventoryEl ? inventoryEl.value : 10) || 10);
             const clothingSizes = clothingSizesEl ? clothingSizesEl.value.trim() : '';
             const shoeSizes = shoeSizesEl ? shoeSizesEl.value.trim() : '';
@@ -1676,6 +1717,7 @@
                     name,
                     category,
                     price,
+                    discount,
                     inventory,
                     clothingSizes,
                     shoeSizes,
@@ -1691,6 +1733,7 @@
                         showToastNotification(`Successfully saved ${name} to Firebase Cloud!`);
                         nameEl.value = '';
                         priceEl.value = '';
+                        if (discountEl) discountEl.value = '0';
                         if (inventoryEl) inventoryEl.value = '10';
                         if (clothingSizesEl) clothingSizesEl.value = '';
                         if (shoeSizesEl) shoeSizesEl.value = '';
@@ -1771,9 +1814,10 @@
                     <div class="flex flex-col sm:flex-row gap-4 items-center justify-between">
                         <img src="${p.image}" class="w-16 h-16 object-cover rounded-xl border cursor-pointer" style="border-color: var(--accent-primary);" onclick="openLightbox('${p.image}')">
                         <div class="flex-1 space-y-2 w-full">
-                            <div class="grid grid-cols-1 sm:grid-cols-4 gap-2">
+                            <div class="grid grid-cols-1 sm:grid-cols-5 gap-2">
                                 <input type="text" id="adminName-${index}" value="${p.name}" class="bg-darkBg border border-gray-700 rounded-lg px-2 py-1 text-xs text-white font-bold sm:col-span-1">
-                                <input type="number" id="adminPrice-${index}" value="${p.price}" class="bg-darkBg border border-gray-700 rounded-lg px-2 py-1 text-xs text-neonGold font-bold">
+                                <input type="number" id="adminPrice-${index}" value="${p.price}" class="bg-darkBg border border-gray-700 rounded-lg px-2 py-1 text-xs text-neonGold font-bold" placeholder="Price">
+                                <input type="number" id="adminDiscount-${index}" value="${p.discount ?? 0}" min="0" max="100" class="bg-darkBg border border-yellow-500/50 rounded-lg px-2 py-1 text-xs text-neonGold font-bold" placeholder="Disc %">
                                 <select id="adminCat-${index}" onchange="toggleAdminInventoryVisibility(${index})" class="bg-darkBg border border-gray-700 rounded-lg px-2 py-1 text-xs" style="color: var(--accent-primary);">
                                     <option value="Clothing 👕" ${p.category === 'Clothing 👕' ? 'selected' : ''}>Clothing 👕</option>
                                     <option value="Footwear 👟" ${p.category === 'Footwear 👟' ? 'selected' : ''}>Footwear 👟</option>
@@ -1826,6 +1870,7 @@
             const fileInput = document.getElementById(`adminFile-${index}`);
             const nameEl = document.getElementById(`adminName-${index}`);
             const priceEl = document.getElementById(`adminPrice-${index}`);
+            const discountEl = document.getElementById(`adminDiscount-${index}`);
             const catEl = document.getElementById(`adminCat-${index}`);
             const invEl = document.getElementById(`adminInv-${index}`);
             const descEl = document.getElementById(`adminDesc-${index}`);
@@ -1836,6 +1881,7 @@
 
             const updatedName = nameEl.value;
             const updatedPrice = parseFloat(priceEl.value) || 0;
+            const updatedDiscount = parseFloat(discountEl ? discountEl.value : 0) || 0;
             const updatedCat = catEl.value;
             const updatedInv = updatedCat === 'Menu 🍔' ? 0 : (parseInt(invEl ? invEl.value : 10) || 0);
             const updatedDesc = descEl ? descEl.value : '';
@@ -1854,6 +1900,7 @@
                 db.collection("products").doc(firestoreId).update({
                     name: updatedName,
                     price: updatedPrice,
+                    discount: updatedDiscount,
                     category: updatedCat,
                     inventory: updatedInv,
                     clothingSizes: updatedClothingSizes,
@@ -1962,6 +2009,22 @@
                 const hasInventory = product.category !== 'Menu 🍔';
                 const inventoryBadge = hasInventory ? `<span class="text-[10px] text-neonGold font-bold block mb-1">📦 Stock: ${product.inventory ?? 10} available</span>` : '';
 
+                const disc = parseFloat(product.discount) || 0;
+                const finalPrice = disc > 0 ? Math.round(product.price * (1 - disc / 100)) : product.price;
+
+                let priceCardHTML = `<span class="text-base sm:text-xl font-black text-neonGold">$${finalPrice.toLocaleString()} JMD</span>`;
+                if (disc > 0) {
+                    priceCardHTML = `
+                        <div class="text-right">
+                            <div class="flex items-center gap-1.5 justify-end">
+                                <span class="text-[11px] line-through text-gray-400">$${product.price.toLocaleString()} JMD</span>
+                                <span class="text-[10px] bg-red-500 text-white font-extrabold px-1.5 py-0.2 rounded">-${disc}%</span>
+                            </div>
+                            <span class="text-base sm:text-xl font-black text-neonGold">$${finalPrice.toLocaleString()} JMD</span>
+                        </div>
+                    `;
+                }
+
                 return `
                 <div class="glass-card rounded-2xl sm:rounded-3xl p-3.5 sm:p-5 border transition-all flex flex-col justify-between ${!product.available ? 'opacity-60 grayscale' : ''}" style="border-color: var(--accent-primary);">
                     <div>
@@ -1970,6 +2033,7 @@
                             <span class="absolute top-2 left-2 bg-black/85 backdrop-blur-md font-bold text-[9px] sm:text-[10px] px-2.5 py-0.5 sm:py-1 rounded-full border" style="color: var(--accent-primary); border-color: var(--accent-primary);">
                                 ${product.badge}
                             </span>
+                            ${disc > 0 ? `<span class="absolute top-2 right-2 bg-red-600 text-white font-black text-[9px] sm:text-[10px] px-2 py-0.5 rounded-full shadow-lg animate-pulse">🔥 ${disc}% OFF</span>` : ''}
                             ${!product.available ? '<span class="absolute inset-0 bg-black/70 flex items-center justify-center text-red-400 font-black text-xs sm:text-sm uppercase tracking-wider">Out of Stock</span>' : ''}
                         </div>
                         <div onclick="openProductModal('${uniqueItemId}')" class="cursor-pointer">
@@ -1981,7 +2045,7 @@
                     <div>
                         <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-3 gap-0.5 sm:gap-0 cursor-pointer" onclick="openProductModal('${uniqueItemId}')">
                             <span class="text-[10px] sm:text-xs font-bold text-gray-400">Price:</span>
-                            <span class="text-base sm:text-xl font-black text-neonGold">$${product.price.toLocaleString()} JMD</span>
+                            ${priceCardHTML}
                         </div>
                         <button onclick="openProductModal('${uniqueItemId}')" ${!product.available ? 'disabled' : ''} class="w-full ${product.available ? 'bg-darkCard text-white hover:opacity-80' : 'bg-gray-800 text-gray-500 cursor-not-allowed'} border font-bold py-2 sm:py-2.5 px-2 rounded-xl transition-all flex items-center justify-center gap-1.5 text-[11px] sm:text-xs text-center cursor-pointer" style="border-color: var(--accent-primary);">
                             <i class="fas fa-plus"></i> <span class="truncate">${product.available ? 'Select Options' : 'Unavailable'}</span>
@@ -2122,6 +2186,9 @@
             const product = menuProducts.find(p => (p.firestoreId === itemId || p.id === itemId));
             if (!product || !product.available) return;
 
+            const disc = parseFloat(product.discount) || 0;
+            const finalPrice = disc > 0 ? Math.round(product.price * (1 - disc / 100)) : product.price;
+
             const itemName = size ? `${product.name} (Size: ${size})` : product.name;
             const cartItemId = size ? `${itemId}-${size}` : itemId;
 
@@ -2132,9 +2199,9 @@
                 shoppingCart.push({
                     id: cartItemId,
                     name: itemName,
-                    price: product.price,
+                    price: finalPrice,
                     quantity: 1,
-                    details: product.category
+                    details: product.category + (disc > 0 ? ` (${disc}% OFF applied)` : '')
                 });
             }
 
