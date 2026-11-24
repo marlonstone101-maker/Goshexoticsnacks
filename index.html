@@ -4,6 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gosh Exotic Snacks | Kingston, Jamaica 🇯🇲</title>
+
+    <!-- Security Meta Tags -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data: blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://www.gstatic.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com data:; img-src 'self' data: blob: https:; media-src 'self' data: blob: https:; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com wss://*.firebaseio.com https://firestore.googleapis.com; frame-src 'self' https://www.google.com https://maps.google.com;">
+
+    <!-- SEO & Social Preview Metadata -->
+    <meta name="description" content="Shop Gosh Exotic Snacks in Kingston, Jamaica (Clock Tower Plaza) and worldwide/islandwide via Knutsford Express. Exotic snacks, drinks, kids clothing, gifts, and accessories.">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Gosh Exotic Snacks | Kingston, Jamaica">
+    <meta property="og:description" content="Exotic snacks, drinks, kids clothing, gifts, and accessories at Bargain Mall Shop #1, Clock Tower Plaza, Jamaica.">
+    <meta property="og:image" content="logo.png">
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Store",
+      "name": "Gosh Exotic Snacks",
+      "description": "Exotic snacks, drinks, kids clothing, gifts, and accessories in Kingston, Jamaica with islandwide Knutsford Express shipping.",
+      "telephone": "+1-876-425-4849",
+      "priceRange": "$$",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Bargain Mall Shop #1, Clock Tower Plaza",
+        "addressLocality": "Kingston",
+        "addressCountry": "JM"
+      },
+      "openingHours": "Mo-Sa 10:00-20:00"
+    }
+    </script>
     
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -1111,6 +1142,15 @@
 
     <!-- JavaScript Application Logic -->
     <script>
+        function escapeHtml(str) {
+            return String(str || '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
         const firebaseConfig = {
             apiKey: "AIzaSyB8Zrb0UI8YRUUJVnVBDQGHOjHfWeGU5ZQ",
             authDomain: "gosh-exotic.firebaseapp.com",
@@ -1133,6 +1173,7 @@
         let currentSlideIndex = 0;
         let slideshowInterval = null;
         let shoppingCart = [];
+        let isApplyingRemoteTheme = false;
 
         window.addEventListener('DOMContentLoaded', () => {
            
@@ -1183,7 +1224,7 @@
             }
         });
 
-        function applyStoreTheme(themeName) {
+        function applyStoreTheme(themeName, fromFirestore = false) {
             const body = document.getElementById('appBody');
             const effectContainer = document.getElementById('dynamicEffectContainer');
             if (!body || !effectContainer) return;
@@ -1243,6 +1284,15 @@
                 localStorage.setItem('gosh_store_theme', themeName);
             } catch (e) {}
 
+            if (!fromFirestore && !isApplyingRemoteTheme) {
+                db.collection("settings").doc("storefront").set({
+                    activeTheme: themeName,
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                }, { merge: true }).catch((error) => {
+                    console.error("Error syncing theme to Firestore:", error);
+                });
+            }
+
             showToastNotification(`Successfully activated ${themeName.toUpperCase()} theme!`);
         }
 
@@ -1251,7 +1301,20 @@
             try {
                 savedTheme = localStorage.getItem('gosh_store_theme') || 'default';
             } catch (e) {}
-            applyStoreTheme(savedTheme);
+            isApplyingRemoteTheme = true;
+            applyStoreTheme(savedTheme, true);
+            isApplyingRemoteTheme = false;
+
+            db.collection("settings").doc("storefront").onSnapshot((docSnap) => {
+                if (docSnap.exists) {
+                    const remoteTheme = docSnap.data().activeTheme || 'default';
+                    isApplyingRemoteTheme = true;
+                    applyStoreTheme(remoteTheme, true);
+                    isApplyingRemoteTheme = false;
+                }
+            }, (error) => {
+                console.error("Error listening to global theme setting:", error);
+            });
         }
 
         function toggleGiftCardsVault() {
@@ -2139,13 +2202,13 @@
                     return `
                         <div onclick="openReviewModal('${rev.id || idx}')" class="glass-card p-4 rounded-2xl border border-gray-800 space-y-2 w-72 sm:w-80 shrink-0 cursor-pointer transition-all shadow-lg">
                             <div class="flex justify-between items-center">
-                                <h4 class="font-extrabold text-white text-xs truncate max-w-[170px]">${rev.author}</h4>
-                                <span class="text-[9px] text-gray-400">${rev.date || 'Recent'}</span>
+                                <h4 class="font-extrabold text-white text-xs truncate max-w-[170px]">${escapeHtml(rev.author)}</h4>
+                                <span class="text-[9px] text-gray-400">${escapeHtml(rev.date || 'Recent')}</span>
                             </div>
                             <div class="flex items-center gap-1 text-[11px]">
                                 ${starsHTML}
                             </div>
-                            <p class="text-xs text-gray-300 line-clamp-2 leading-relaxed">${rev.comment}</p>
+                            <p class="text-xs text-gray-300 line-clamp-2 leading-relaxed">${escapeHtml(rev.comment)}</p>
                             <div class="text-[10px] font-bold text-right" style="color: var(--accent-primary);">Click to read full review 🔍</div>
                         </div>
                     `;
