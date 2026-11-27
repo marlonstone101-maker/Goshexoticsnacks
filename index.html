@@ -293,6 +293,21 @@
             animation-play-state: paused;
         }
 
+        @keyframes topBarMarquee {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .animate-top-bar-marquee {
+            display: flex;
+            width: max-content;
+            animation: topBarMarquee 22s linear infinite;
+        }
+
+        .animate-top-bar-marquee:hover {
+            animation-play-state: paused;
+        }
+
         ::-webkit-scrollbar {
             width: 8px;
         }
@@ -312,10 +327,14 @@
 
     <div>
         <!-- Top Announcement Bar -->
-        <div class="text-black font-extrabold text-xs sm:text-sm py-2 px-4 text-center tracking-wide flex justify-between items-center z-50 relative shadow-md" id="topAnnouncementBar" style="background: var(--header-gradient);">
-            <div class="flex items-center gap-2 mx-auto">
-                <span>BARGAIN MALL SHOP #1, CLOCK TOWER PLAZA, JAMAICA <span ondblclick="triggerHiddenAdmin()" class="cursor-pointer select-none" title="Hidden Admin Passcode">🇯🇲 <span class="inline-block ml-0.5">🇺🇸</span></span></span>
-                <span class="hidden md:inline font-black ml-2">1(876) 425-4849</span>
+        <div class="text-black font-extrabold text-xs sm:text-sm py-2 overflow-hidden tracking-wide flex items-center z-50 relative shadow-md" id="topAnnouncementBar" style="background: var(--header-gradient);">
+            <div class="animate-top-bar-marquee whitespace-nowrap flex items-center">
+                <span class="mx-6">🔥 BLACK FRIDAY DEAL: 30% OFF CLOTHING 🔥</span>
+                <span class="mx-6">BARGAIN MALL SHOP #1, CLOCK TOWER PLAZA, JAMAICA <span ondblclick="triggerHiddenAdmin()" class="cursor-pointer select-none" title="Hidden Admin Passcode">🇯🇲 <span class="inline-block ml-0.5">🇺🇸</span></span></span>
+                <span class="mx-6 font-black">1(876) 425-4849</span>
+                <span class="mx-6">🔥 BLACK FRIDAY DEAL: 30% OFF CLOTHING 🔥</span>
+                <span class="mx-6">BARGAIN MALL SHOP #1, CLOCK TOWER PLAZA, JAMAICA <span ondblclick="triggerHiddenAdmin()" class="cursor-pointer select-none" title="Hidden Admin Passcode">🇯🇲 <span class="inline-block ml-0.5">🇺🇸</span></span></span>
+                <span class="mx-6 font-black">1(876) 425-4849</span>
             </div>
         </div>
 
